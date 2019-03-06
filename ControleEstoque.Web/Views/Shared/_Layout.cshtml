@@ -8,81 +8,88 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light">
+
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Controle de Estoque", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav ">
-                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <a class="navbar-brand" href="@Url.Action("Index", "Home")">Controle de Estoque</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Alterna navegação">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+
+                    <li class="nav-item dropdown ml-4">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Cadastros
-                            <span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Grupos de Produtos", "GrupoProduto", "Cadastro")</li>
-                            <li>@Html.ActionLink("Marcas de Produtos", "MarcaProduto", "Cadastro")</li>
-                            <li>@Html.ActionLink("Locais de Armazenamento", "LocalProduto", "Cadastro")</li>
-                            <li>@Html.ActionLink("Unidades de Medida", "UnidadeMedida", "Cadastro")</li>
-                            <li>@Html.ActionLink("Produtos", "Produto", "Cadastro")</li>
-                            <li class="nav-divider"></li>
-                            <li>@Html.ActionLink("Países", "Pais", "Cadastro")</li>
-                            <li>@Html.ActionLink("Estados", "Estado", "Cadastro")</li>
-                            <li>@Html.ActionLink("Cidades", "Cidade", "Cadastro")</li>
-                            <li>@Html.ActionLink("Fornecedores", "Fornecedor", "Cadastro")</li>
-                            <li class="nav-divider"></li>
-                            <li>@Html.ActionLink("Perfis de Usuários", "PerfilUsuario", "Cadastro")</li>
-                            <li>@Html.ActionLink("Usuários", "Usuario", "Cadastro")</li>
+                        <div class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
+                            <p class="dropdown-item">@Html.ActionLink("Grupos de Produtos", "GrupoProduto", "Cadastro")</p>
+                            <p class="dropdown-item">@Html.ActionLink("Marcas de Produtos", "MarcaProduto", "Cadastro")</p>
+                            <p class="dropdown-item">@Html.ActionLink("Locais de Armazenamento", "LocalProduto", "Cadastro")</p>
+                            <p class="dropdown-item">@Html.ActionLink("Unidades de Medida", "UnidadeMedida", "Cadastro")</p>
+                            <p class="dropdown-item">@Html.ActionLink("Produtos", "Produto", "Cadastro")</p>
+                            <p class="dropdown-divider"></p>
+                            <p class="dropdown-item">@Html.ActionLink("Países", "Pais", "Cadastro")</p>
+                            <p class="dropdown-item">@Html.ActionLink("Estados", "Estado", "Cadastro") </ p >
+                            <p class="dropdown-item">@Html.ActionLink("Cidades", "Cidade", "Cadastro") </ p >
+                            <p class="dropdown-item">@Html.ActionLink("Fornecedores", "Fornecedor", "Cadastro") </ p >
+                            <p class="dropdown-divider"></p>
+                            <p class="dropdown-item">@Html.ActionLink("Perfis de Usuários", "PerfilUsuario", "Cadastro") </ p >
+                            <p class="dropdown-item">@Html.ActionLink("Usuários", "Usuario", "Cadastro") </ p >
 
-                        </ul>
-                    
-                    </li>
-                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+                        </div>
+
+                    <li class="nav-item dropdown ml-4">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Operações
-                            <span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Entrada de Produtos", "EntradaEstoque", "Operacao")</li>
-                            <li>@Html.ActionLink("Saída de Produtos", "SaidaEstoque", "Operacao")</li>
-                            <li>@Html.ActionLink("Lançamento de Perdas de Produtos", "LancPerdaProduto", "Operacao")</li>
-                            <li>@Html.ActionLink("Inventário de Estoque", "Inventario", "Operacao")</li>
-                        </ul>
-                    </li>
-                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <p class="dropdown-item">@Html.ActionLink("Entrada de Produtos", "EntradaEstoque", "Operacao")</p>
+                            <p class="dropdown-item">@Html.ActionLink("Saída de Produtos", "SaidaEstoque", "Operacao")</p>
+                            <p class="dropdown-item">@Html.ActionLink("Lançamento de Perdas de Produtos", "LancPerdaProduto", "Operacao")</p>
+                            <p class="dropdown-item">@Html.ActionLink("Inventário de Estoque", "Inventario", "Operacao")</p>
+
+
+
+                        </div>
+
+
+                    <li class="nav-item dropdown ml-4">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Relatórios
-                            <span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Posição do Estoque", "PosicaoEstoque", "Relatorio")</li>
-                            <li>@Html.ActionLink("Ressuprimento", "Ressuprimento", "Relatorio")</li>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <p class="dropdown-item">@Html.ActionLink("Posição do Estoque", "PosicaoEstoque", "Relatorio")</p>
+                            <p class="dropdown-item">@Html.ActionLink("Ressuprimento", "Ressuprimento", "Relatorio")</p>
 
+                        </div>
 
-                        </ul>
-                    </li>
-                    <li><a href="#"  class="dropdown-toggle" data-toggle="dropdown">
-                          
+                    <li class="nav-item dropdown ml-4">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Gráficos
-                            <span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Perda por mês", "PerdaMes", "Grafico")</li>
-                            <li>@Html.ActionLink("Entradas vs Saídas por mês", "EntradaSaidaMesa", "Grafico")</li>
-                        </ul>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <p class="dropdown-item">@Html.ActionLink("Perda por mês", "PerdaMes", "Grafico")</p>
+                            <p class="dropdown-item">@Html.ActionLink("Entradas vs Saídas por mês", "EntradaSaidaMesa", "Grafico")</p>
+
+                        </div>
+
+                    <li class="nav-item ml-5 ">
+                        <a class="nav-link" href="@Url.Action("Sobre", "Home")"  role="button"  aria-haspopup="true" aria-expanded="false">
+                            Sobre
+                        </a>
+                       
                     </li>
-         
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Sobre", "Sobre", "Home")</li>
+
+
 
                 </ul>
             </div>
         </div>
-    </div>
+    </nav>
+
+    <br /><br />
     <div class="container body-content">
         @RenderBody()
         <hr />
