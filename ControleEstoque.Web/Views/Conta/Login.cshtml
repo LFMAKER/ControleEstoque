@@ -4,9 +4,10 @@
 }
 
 
-<div class="container">
-    <div class="row">
-        <h5 class="titulo">Entrar no Sistema</h5>
+<div class="container col-md-6 offset-md-3">
+    <div class="row col-md-6 offset-md-3">
+        <br /><br />
+        <h5 class="titulo ">Entrar no Sistema</h5>
     </div>
 
     <section id="loginForm">
@@ -14,22 +15,24 @@
         {
 
             @Html.ValidationSummary(true, "", new { @class="text-danger"})
-            <div class="form-group">
+            <div class="form-group col-md-6 offset-md-3">
                 @Html.LabelFor(m => m.Usuario, new { @class = "control-label col-md-5" })
                 @Html.TextBoxFor(m => m.Usuario, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m=>m.Usuario, "", new { @class ="text-danger"})
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6 offset-md-3">
                 @Html.LabelFor(m => m.Senha, new { @class = "control-label col-md-5"})
                 @Html.PasswordFor(m => m.Senha, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
             </div>
-            <div class="form-check">
+            <div class="form-check col-md-6 offset-md-3">
                 @Html.CheckBoxFor(m => m.LembrarMe)
                 @Html.LabelFor(m => m.LembrarMe)
             </div>
             <br />
-            <input type="submit" class="btn btn-success" value="Entrar" />
+            <div class="col-md-6 offset-md-3">
+                <input type="submit" class="btn btn-success" value="Entrar" />
+            </div>
         }
     </section>
 
