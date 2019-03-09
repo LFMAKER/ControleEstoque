@@ -1,4 +1,8 @@
-# Controle Estoque e Estatísticas de Produtos
+# Inventory Control and Product Statistics(ENG)
+This is a project focused on developing a stock control.
+The creation of this project is focused only on learning.
 
+
+# Controle Estoque e Estatísticas de Produtos(PT-BR)
 Esse é um projeto com foco no desenvolvimento de um controle de estoque.
 A criação desse projeto é focada apenas no aprendizado.
