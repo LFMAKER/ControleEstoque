@@ -30,7 +30,7 @@ namespace ControleEstoque.Web.Controllers
             }
 
 
-            var achou = (login.Usuario == "leo" && login.Senha == "123");
+            var achou = UsuarioModel.ValidarUsuario(login.Usuario, login.Senha);
 
             if (achou)
             {
