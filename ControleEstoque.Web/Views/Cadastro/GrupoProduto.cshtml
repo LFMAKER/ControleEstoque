@@ -23,214 +23,227 @@
         margin-left: 1px;
     }
 </style>
-
-
 <div id="cadastro">
     <section id="cadastro_cabecalho">
-
         <h1>@ViewBag.Title</h1>
     </section>
-
-
     <section id="cadastro_conteudo">
+        <div id="cabecalho_grid" class="row">
+            <div class="col-md-12">
+                <a id="btn_incluir" class="btn btn-success" role="button"><i class="glyphicon glyphicon-plus"></i> Incluir</a>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="box">
-                    <div id="cabecalho_grid" class="row">
-                        <a id="btn_incluir" class="btn btn-success" role="button">Incluir</a>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <table id="grid_cadastro" class="table table-bordered table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Nome</th>
-                                        <th>Ativo</th>
-                                        <th>Ação</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr data-id="@item.Id">
-                                            <td>@item.Nome</td>
-                                            <td style="width:90px">
-                                                @if (@item.Ativo == true)
-                                                { <p>Sim</p> }
-                                                else
-                                                { <p>Não</p> }
-                                            </td>
-                                            <td style="width:180px" ;>
-                                                <a class="btn btn-primary btn_alterar"><octicon></octicon>Alterar</a>
-                                                <a class="btn btn-danger btn_excluir">Excluir</a>
-                                            </td>
-                                        </tr>
+                <table id="grid_cadastro" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Ativo</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr data-id="@item.Id">
+                                <td>@item.Nome</td>
+                                <td>@{var ativo = (item.Ativo ? "Sim" : "Não");}@ativo</td>
+                                <td>
+                                    <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                                    <a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                                </td>
+                            </tr>
                                     }
-                                </tbody>
-                            </table>
-                        </div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+@Html.Hidden("id_cadastro")
+<div id="modal_cadastro" class="form-horizontal invisivel" role="dialog">
+    <fieldset>
+        
+            <div class="form-group row">
+                @Html.Label("txt_nome", "Nome", new { @class = "col-md-3 control-label" })
+                <div class="col-sm-10">
+                    @Html.TextBox("txt_nome", null, new { @class = "form-control" })
+                    <small id="caixa-texto" class="form-text text-muted"></small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-auto my-1">
+                    <div class="custom-control custom-checkbox mb-3 ">
+                        @Html.CheckBox("cbx_ativo", new { @class = "custom-control-input " })
+                        @Html.Label("cbx_ativo", "Ativo", new { @class = " mb-2 custom-control-label" })
+                        <small id="caixa" class="form-text text-muted"></small>
+
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        
+ 
+                    <div class="modal-footer">
+                        <a id="btn_sair" class="btn btn-default" role="button" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Sair</a>
+                        <a id="btn_confirmar" class="btn btn-primary" role="button"><i class="glyphicon glyphicon-ok"></i> Salvar</a>
+                    </div>
 
-
+    </fieldset>
 </div>
-
-
-
-
-
-
-<div id="modal_cadastro" class="form-group container invisivel" role="dialog">
-
-    <div class="form-group row">
-        @Html.Label("txt_nome", "Nome", new { @class = "mb-2 col-form-label control-label", placeholder = "Nome" })
-        <div id="teste" class="col-sm-10">
-            @Html.TextBox("txt_nome", null, new { @class = "form-control absw", @id = "texto" })
-            <small id="caixa-texto" class="form-text text-muted"></small>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <div class="col-auto my-1">
-            <div class="custom-control custom-checkbox mb-3 ">
-                @Html.CheckBox("cbx_ativo", new { @class = "custom-control-input " })
-                @Html.Label("cbx_ativo", "Ativo", new { @class = " mb-2 custom-control-label" })
-                <small id="caixa" class="form-text text-muted"></small>
-
-            </div>
-        </div>
-    </div>
-
-
-    <div class="modal-footer">
-        <button id="btn_sair" type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
-        <button id="btn_confirmar" type="button" class="btn btn-primary">Salvar</button>
-    </div>
-
-</div>
-
-
-
-
 @section Scripts{
-    <script>
 
-
-        function abrir_form(dados) {
-            var modal_cadastro = $('#modal_cadastro');
-            $('#texto').val(dados.Nome);
+<script>
+    function abrir_form(dados) {
+        validationForms();
+            $('#id_cadastro').val(dados.Id);
+            $('#txt_nome').val(dados.Nome);
             $('#cbx_ativo').prop('checked', dados.Ativo);
-
-
-
+            var modal_cadastro = $('#modal_cadastro');
             bootbox.dialog({
                 title: '@ViewBag.Title',
                 message: modal_cadastro
             })
             .on('shown.bs.modal', function () {
-                modal_cadastro.show(validationForms());
+                modal_cadastro.show(0, function () {
+                    $('#txt_nome').focus();
+                    validationForms();
+                });
             })
-
             .on('hidden.bs.modal', function () {
-
                 modal_cadastro.hide().appendTo('body');
-                validationForms();
-
             });
         }
-
-
-
-        //INCLUIR
+        function criar_linha_grid(dados) {
+            var ret =
+                '<tr data-id=' + dados.Id + '>' +
+                '<td>' + dados.Nome + '</td>' +
+                '<td>' + (dados.Ativo ? 'Sim' : 'Não') + '</td>' +
+                '<td>' +
+                '<a class="btn btn-primary btn-alterar" role="button" style="margin-right: 3px"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>' +
+                '<a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>' +
+                '</td>' +
+                '</tr>';
+            return ret;
+        }
         $(document).on('click', '#btn_incluir', function () {
             abrir_form({ Id: 0, Nome: '', Ativo: true });
+            validationForms();
         })
-
-
-        .on('click', '.btn_alterar', function () {
+        .on('click', '.btn-alterar', function () {
             var btn = $(this),
                 id = btn.closest('tr').attr('data-id'),
                 url = '@Url.Action("RecuperarGrupoProduto", "Cadastro")',
                 param = { 'id': id };
-
             $.post(url, param, function (response) {
                 if (response) {
                     abrir_form(response);
                 }
             });
-
-
         })
-        .on('click', '.btn_excluir', function () {
-            alert('3');
-
-
-
-
-        })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //Função responsável por validações visuais
-        function validationForms() {
-
-            //Validação checkbox
-            $("input[name=cbx_ativo]").change(function () {
-                // verifica se foi selecionado
-                if ($(this).is(':checked')) {
-                    var caixaTexto = $("#caixa").text();
-                    var result = (caixaTexto.length == 0);
-                    if (result == false) {
-                        $('#caixa').empty();
-                        $("#caixa").append("O grupo de produtos está ativo!");
-                    } else {
-                        $("#caixa").append("O grupo de produtos está ativo!");
+        .on('click', '.btn-excluir', function () {
+            var btn = $(this),
+                tr = btn.closest('tr'),
+                id = tr.attr('data-id'),
+                url = '@Url.Action("ExcluirGrupoProduto", "Cadastro")',
+                param = { 'id': id };
+            bootbox.confirm({
+                message: "Realmente deseja excluir o grupo de produto?",
+                buttons: {
+                    confirm: {
+                        label: 'Sim',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'Não',
+                        className: 'btn-danger'
                     }
-                } else {
-                    var caixaTexto = $("#caixa").text();
-                    var result = (caixaTexto.length == 0);
-                    if (result == false) {
-                        $('#caixa').empty();
-                        $("#caixa").append("O grupo de produtos não está ativo!");
-                    } else {
-                        $("#caixa").append("O grupo de produtos não está ativo!");
+                },
+                callback: function (result) {
+                    if (result) {
+                        $.post(url, param, function (response) {
+                            if (response) {
+                                tr.remove();
+                            }
+                        });
                     }
-                };
-            });
-
-            //Validação Input Nome
-            $("input[name=txt_nome]").blur(function () {
-
-                var text_name = $("#texto").val();
-                if (text_name.length < 3) {
-                    $("#texto").addClass("form-control is-invalid");
-                    $('#caixa-texto').empty();
-                    $("#caixa-texto").append("O nome do grupo de produtos deve possuir no mínimo 3 caracteres!");
-                } else {
-                    var nomeClasse = $("#texto").hasClass();
-                    console.log(nomeClasse);
-                    $("#texto").removeClass("form-control is-invalid").addClass("form-control is-valid");
-                    $('#caixa-texto').empty();
                 }
             });
-        }
+        })
+        .on('click', '#btn_confirmar', function () {
+            var btn = $(this),
+                url = '@Url.Action("SalvarGrupoProduto", "Cadastro")',
+                param = {
+                    Id: $('#id_cadastro').val(),
+                    Nome: $('#txt_nome').val(),
+                    Ativo: $('#cbx_ativo').prop('checked')
+                };
+            $.post(url, param, function (response) {
+                if (response) {
+                    if (param.Id == 0) {
+                        var table = $('#grid_cadastro').find('tbody'),
+                            linha = criar_linha_grid(response);
+                        table.append(linha);
+                    }
+                    else {
+                        var linha = $('#grid_cadastro').find('tr[data-id=' + param.Id + ']').find('td');
+                        linha
+                            .eq(0).html(param.Nome).end()
+                            .eq(1).html(param.Ativo ? 'Sim' : 'Não');
+                    }
+                    $('#modal_cadastro').parents('.bootbox').modal('hide');
+                }
+            });
+        });
 
 
-    </script>
+    //Função responsável por validações visuais
+    function validationForms() {
+
+        //Validação checkbox
+        $("input[name=cbx_ativo]").change(function () {
+            // verifica se foi selecionado
+            if ($(this).is(':checked')) {
+                var caixaTexto = $("#caixa").text();
+                var result = (caixaTexto.length == 0);
+                if (result == false) {
+                    $('#caixa').empty();
+                    $("#caixa").append("O grupo de produtos está ativo!");
+                } else {
+                    $("#caixa").append("O grupo de produtos está ativo!");
+                }
+            } else {
+                var caixaTexto = $("#caixa").text();
+                var result = (caixaTexto.length == 0);
+                if (result == false) {
+                    $('#caixa').empty();
+                    $("#caixa").append("O grupo de produtos não está ativo!");
+                } else {
+                    $("#caixa").append("O grupo de produtos não está ativo!");
+                }
+            };
+        });
+
+        //Validação Input Nome
+        $("input[name=txt_nome]").blur(function () {
+
+            var text_name = $("#txt_nome").val();
+            if (text_name.length < 3) {
+                $("#txt_nome").addClass("form-control is-invalid");
+                $('#caixa-texto').empty();
+                $("#caixa-texto").append("O nome do grupo de produtos deve possuir no mínimo 3 caracteres!");
+            } else {
+                var nomeClasse = $("#txt_nome").hasClass();
+                console.log(nomeClasse);
+                $("#txt_nome").removeClass("form-control is-invalid").addClass("form-control is-valid");
+                $('#caixa-texto').empty();
+            }
+        });
+    }
+
+
+</script>
+
 
 
 }
