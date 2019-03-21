@@ -2,7 +2,7 @@
 This is a project focused on developing a stock control.
 The creation of this project is focused only on learning.
 
-#Technologies e Frameworks 
+# Technologies e Frameworks 
 - .NET Framework 4.5.2
 - C#
 - ASP.NET MVC 5
@@ -25,7 +25,7 @@ A criação desse projeto é focada apenas no aprendizado.
 
 
 
-#Tecnologias e Frameworks
+# Tecnologias e Frameworks
 - .NET Framework 4.5.2
 - C#
 - ASP.NET MVC 5
