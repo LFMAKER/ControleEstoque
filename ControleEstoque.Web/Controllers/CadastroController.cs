@@ -20,7 +20,7 @@ namespace ControleEstoque.Web.Controllers
         [Authorize]
         public ActionResult GrupoProduto()
         {
-            return View(_listaGrupoProduto);
+            return View(GrupoProdutoModel.RecuperarLista());
         }
 
 
@@ -28,23 +28,14 @@ namespace ControleEstoque.Web.Controllers
         [Authorize]
         public ActionResult RecuperarGrupoProduto(int id)
         {
-            return Json(_listaGrupoProduto.Find(x => x.Id == id));
+            return Json(GrupoProdutoModel.RecuperarPeloId(id));
         }
 
         [HttpPost]
         [Authorize]
         public ActionResult ExcluirGrupoProduto(int id)
         {
-            var ret = false;
-
-            var registroBD = _listaGrupoProduto.Find(x => x.Id == id);
-            if (registroBD != null)
-            {
-                _listaGrupoProduto.Remove(registroBD);
-                ret = true;
-            }
-
-            return Json(ret);
+            return Json(GrupoProdutoModel.ExcluirPeloId(id));
         }
 
         [HttpPost]
@@ -64,19 +55,16 @@ namespace ControleEstoque.Web.Controllers
             {
                 try
                 {
-                    var registroBD = _listaGrupoProduto.Find(x => x.Id == model.Id);
+                    var id = model.Salvar();
+                    if (id > 0)
+                    {
+                        idSalvo = id.ToString();
+                    }else
+                    {
+                        resultado = "ERRO";
+                    }
+                   
 
-                    if (registroBD == null)
-                    {
-                        registroBD = model;
-                        registroBD.Id = _listaGrupoProduto.Max(x => x.Id) + 1;
-                        _listaGrupoProduto.Add(registroBD);
-                    }
-                    else
-                    {
-                        registroBD.Nome = model.Nome;
-                        registroBD.Ativo = model.Ativo;
-                    }
                 }
                 catch (Exception ex)
                 {

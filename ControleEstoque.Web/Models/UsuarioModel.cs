@@ -29,6 +29,6 @@ namespace ControleEstoque.Web.Models
             return ret;
         }
 
-        
+      
     }
 }
