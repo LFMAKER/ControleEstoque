@@ -17,6 +17,8 @@ The creation of this project is focused only on learning.
 - Bootstrap 4
 
 
+ps: Many technologies and old techniques will be used in the projects, over time will be realized the implementation of new technologies and techniques to demonstrate improvement.
+
 # Controle Estoque e Estatísticas de Produtos(PT-BR)
 Esse é um projeto com foco no desenvolvimento de um controle de estoque.
 A criação desse projeto é focada apenas no aprendizado.
@@ -38,3 +40,5 @@ A criação desse projeto é focada apenas no aprendizado.
 - Crystal Reports
 - Google Graphs
 - Bootstrap 4
+
+obs: Muitas tecnologias e técnicas antigas serão usadas no projetos, com o tempo será realizado a implementação de novas tecnologias e técnicas para demonstrar a melhoria.
