@@ -6,16 +6,24 @@
     <title>@ViewBag.Title - Controle de Estoque</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <!-- You MUST include jQuery before Fomantic -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.4/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.4/dist/semantic.min.js"></script>
+    
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
+      
+
+        
         <div class="container ">
+
             <nav class="navbar navbar-light bg-light">
-                <a class="navbar-brand" href="@Url.Action("Index", "Home")">Controle de Estoque</a>
+                <a class="navbar-brand lead" href="@Url.Action("Index", "Home")">Inventory Analytics</a>
             </nav>
-
-
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Alterna navegação">
                 <span class="navbar-toggler-icon"></span>
@@ -88,31 +96,25 @@
 
                             </div>
                         </li>
-                        <li class="nav-item ml-4 lead hr">
-                            
-
-                        </li>
-                        
-                        <li class="nav-item ml-4 lead">
-                            <a class="nav-link" href="@Url.Action("Sobre", "Home")" role="button" aria-haspopup="true" aria-expanded="false">
-                                Sobre
+                        <li class="nav-item  ml-5">
+                            <a class="ui image label">
+                                <img src="~/Images/avatar.jpg">
+                                @User.Identity.Name
+                               
                             </a>
-
                         </li>
-                        <li class="nav-item ml-4 lead ">
-                            <p class="nav-link" style="text-transform:uppercase"><strong> @User.Identity.Name</strong></p>
-
-                        </li>
+                       
                         @using (Html.BeginForm("LogOff", "Conta", FormMethod.Post, new { id = "logoffForm" }))
                         {
 
-                            <li class="nav-item ml-4 my-2 my-lg-0 ">
-                                <p><a class="nav-link my-2 my-sm-0 lead" href="javascript:document.getElementById('logoffForm').submit()">Sair</a></p>
 
+                              
+                          
+                            <li class="nav-item ml-3">
+                                
+                                <a href="javascript:document.getElementById('logoffForm').submit()">Sair <i alt="Sair" class="sign out alternate icon"></i></a>
+                               
                             </li>
-
-
-
 
 
 
@@ -127,7 +129,7 @@
                 {
                     <ul class="navbar-nav">
                         <li class="nav-item ml-5">
-                            <a class="nav-link" href="@Url.Action("Login", "Conta")" role="button" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link " href="@Url.Action("Login", "Conta")" role="button" aria-haspopup="true" aria-expanded="false">
                                 Login
                             </a>
 
@@ -141,7 +143,9 @@
         </div>
     </nav>
 
-    <br /><br />
+
+
+    <br /><br /><br /><br />
     <div class="container body-content">
         @RenderBody()
         <hr />
