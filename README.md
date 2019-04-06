@@ -15,6 +15,7 @@ The creation of this project is focused only on learning.
 - Crystal Reports
 - Google Graphs
 - Bootstrap 4
+- Fomantic UI
 
 
 ps: Many technologies and old techniques will be used in the projects, over time will be realized the implementation of new technologies and techniques to demonstrate improvement.
@@ -40,5 +41,7 @@ A criação desse projeto é focada apenas no aprendizado.
 - Crystal Reports
 - Google Graphs
 - Bootstrap 4
+- Fomantic UI
+
 
 obs: Muitas tecnologias e técnicas antigas serão usadas no projetos, com o tempo será realizado a implementação de novas tecnologias e técnicas para demonstrar a melhoria.
