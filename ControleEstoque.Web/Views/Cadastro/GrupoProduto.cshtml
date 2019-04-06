@@ -30,7 +30,7 @@
     <section id="cadastro_conteudo">
         <div id="cabecalho_grid" class="row">
             <div class="col-md-12">
-                <a id="btn_incluir" class="btn btn-success" role="button"><i class="glyphicon glyphicon-plus"></i> Incluir</a>
+                <a id="btn_incluir" style="color: white" class="btn btn-success" role="button"><i class="glyphicon glyphicon-plus"></i> Incluir</a>
             </div>
         </div>
         <div class="row">
@@ -50,8 +50,8 @@
                                 <td>@item.Nome</td>
                                 <td>@{var ativo = (item.Ativo ? "Sim" : "Não");}@ativo</td>
                                 <td>
-                                    <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
-                                    <a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                                    <a class="btn btn-primary btn-alterar" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                                    <a class="btn btn-danger btn-excluir" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
                                 </td>
                             </tr>
                                     }
@@ -87,8 +87,8 @@
         
  
                     <div class="modal-footer">
-                        <a id="btn_sair" class="btn btn-default" role="button" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Sair</a>
-                        <a id="btn_confirmar" class="btn btn-primary" role="button"><i class="glyphicon glyphicon-ok"></i> Salvar</a>
+                        <a id="btn_sair" class="btn btn-danger" style="color: white" role="button" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Sair</a>
+                        <a id="btn_confirmar" class="btn btn-success" style="color: white" role="button"><i class="glyphicon glyphicon-ok"></i> Salvar</a>
                     </div>
         <br />
                     <div id="msg_aviso" class="alert alert-warning invisivel">Falta preencher os campos acima.</div>
@@ -166,11 +166,11 @@
             buttons: {
                 confirm: {
                     label: 'Sim',
-                    className: 'btn-success'
+                    className: 'btn-danger'
                 },
                 cancel: {
                     label: 'Não',
-                    className: 'btn-danger'
+                    className: 'btn-success'
                 }
             },
             callback: function (result) {
