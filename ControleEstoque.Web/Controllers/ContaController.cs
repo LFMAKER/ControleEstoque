@@ -40,7 +40,7 @@ namespace ControleEstoque.Web.Controllers
                     return Redirect(returnUrl);
                 }else
                 {
-                    RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
             }else
             {
