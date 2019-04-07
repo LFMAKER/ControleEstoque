@@ -154,6 +154,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\Cadastro\CadGrupoProdutoController.cs" />
     <Compile Include="Controllers\CadastroController.cs" />
     <Compile Include="Controllers\ContaController.cs" />
     <Compile Include="Controllers\GraficoController.cs" />
@@ -174,6 +175,8 @@
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
     <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap-select.css" />
+    <Content Include="Content\bootstrap-select.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -184,6 +187,8 @@
     <Content Include="Scripts\bootbox.all.min.js" />
     <Content Include="Scripts\bootbox.locales.min.js" />
     <Content Include="Scripts\bootbox.min.js" />
+    <Content Include="Scripts\bootstrap-select.js" />
+    <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -248,7 +253,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Sobre.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Cadastro\GrupoProduto.cshtml" />
+    <Content Include="Views\CadGrupoProduto\Index.cshtml" />
     <Content Include="Views\Cadastro\LocalProduto.cshtml" />
     <Content Include="Views\Cadastro\UnidadeMedida.cshtml" />
     <Content Include="Views\Cadastro\Produto.cshtml" />
