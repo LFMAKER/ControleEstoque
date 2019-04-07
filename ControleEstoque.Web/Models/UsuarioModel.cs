@@ -21,6 +21,7 @@ namespace ControleEstoque.Web.Models
         [Required(ErrorMessage = "Informe o Nome")]
         public string Nome { get; set; }
 
+
         public static UsuarioModel ValidarUsuario(string login, string senha)
         {
             UsuarioModel ret = null;
@@ -48,6 +49,8 @@ namespace ControleEstoque.Web.Models
                             Login = (string)reader["login"],
                             Senha = (string)reader["senha"],
                             Nome = (string)reader["nome"]
+                     
+            
                         };
                     }
                 }
@@ -57,7 +60,7 @@ namespace ControleEstoque.Web.Models
         }
 
 
-        public static List<UsuarioModel> RecuperarLista()
+        public static List<UsuarioModel> RecuperarLista(int pagina, int tamPagina)
         {
             var ret = new List<UsuarioModel>();
             using (var conexao = new SqlConnection())
@@ -67,8 +70,13 @@ namespace ControleEstoque.Web.Models
                 conexao.Open();
                 using (var comando = new SqlCommand())
                 {
+                    var pos = (pagina - 1) * tamPagina;
+
                     comando.Connection = conexao;
-                    comando.CommandText = "select * from usuario order by nome";
+                    comando.CommandText = string.Format("select * from usuario order by nome offset {0} rows fetch next {1} rows only", pos > 0 ? pos - 1 : 0, tamPagina);
+
+
+
                     var reader = comando.ExecuteReader();
                     while (reader.Read())
                     {
@@ -107,7 +115,8 @@ namespace ControleEstoque.Web.Models
                         {
                             Id = (int)reader["id"],
                             Nome = (string)reader["nome"],
-                            Login = (string)reader["login"]
+                            Login = (string)reader["login"],
+                            Senha = (string)reader["senha"]
                         };
                     }
                 }
@@ -200,7 +209,65 @@ namespace ControleEstoque.Web.Models
             return ret;
         }
 
+        public static int RecuperarQuantidade()
+        {
+            var ret = 0;
+            using (var conexao = new SqlConnection())
+            {
 
+                conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
+                conexao.Open();
+                using (var comando = new SqlCommand())
+                {
+
+                    comando.Connection = conexao;
+                    comando.CommandText = "select count(*) from usuario";
+                    ret = (int)comando.ExecuteScalar();
+
+
+                }
+            }
+
+            return ret;
+        }
+
+
+
+        public static UsuarioModel RecuperarIdLogado (string login)
+        {
+            UsuarioModel ret = null;
+            using (var conexao = new SqlConnection())
+            {
+
+                conexao.ConnectionString = @"Data Source=DESKTOP-3GOF1VJ\SQLEXPRESS2017;Initial Catalog=controle-estoque;User Id=sa;Password=123";
+                conexao.Open();
+                using (var comando = new SqlCommand())
+                {
+                    comando.Connection = conexao;
+                    /*
+                     O trecho abaixo evita SQL Injection e Criptografa a senha
+                     */
+                    comando.CommandText = "select * from usuario where login=@login";
+                    comando.Parameters.Add("@login", SqlDbType.VarChar).Value = login;
+
+                    var reader = comando.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        ret = new UsuarioModel
+                        {
+                            Id = (int)reader["id"],
+                            Login = (string)reader["login"],
+                            Senha = (string)reader["senha"],
+                            Nome = (string)reader["nome"]
+
+
+                        };
+                    }
+                }
+            }
+
+            return ret;
+        }
 
     }
 }

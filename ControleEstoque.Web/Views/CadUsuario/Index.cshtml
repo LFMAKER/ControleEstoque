@@ -1,23 +1,25 @@
 ﻿
-@model List<ControleEstoque.Web.Models.GrupoProdutoModel>
+@model List<ControleEstoque.Web.Models.UsuarioModel>
 
 @{
     Layout = "~/Views/Shared/_Cadastro.cshtml";
-    ViewBag.Title = "Grupo de Produtos";
+    ViewBag.Title = "Usuários";
 
 }
-
 
 @section Styles {
 
-    <link href="~/Content/Cadastro/GrupoProduto.css" rel="stylesheet" />
+    <link href="~/Content/Cadastro/Usuario.css" rel="stylesheet" />
 }
+
+
 
 @section TituloGrid {
     <th>Nome</th>
-    <th>Ativo</th>
+    <th>Login</th>
     <th>Ação</th>
 }
+
 
 @section LinhaGrid {
     @{
@@ -27,11 +29,11 @@
             linha++;
             if (linha <= ViewBag.QuantMaxLinhasPorPagina)
             {
-                var ativo = (item.Ativo ? "Sim" : "Não");
+
 
                 <tr data-id="@item.Id">
                     <td>@item.Nome</td>
-                    <td>@ativo</td>
+                    <td>@item.Login</td>
                     <td>
                         <a class="btn btn-primary btn-alterar" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
                         <a class="btn btn-danger btn-excluir" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
@@ -47,38 +49,47 @@
 
 }
 
+
 @section CamposCadastro{
 
     <div class="form-group row">
         @Html.Label("txt_nome", "Nome", new { @class = "col-md-3 control-label" })
         <div class="col-sm-10">
             @Html.TextBox("txt_nome", null, new { @class = "form-control" })
-            <small id="caixa-texto" class="form-text text-muted"></small>
+
         </div>
     </div>
     <div class="form-group row">
-        <div class="col-auto my-1">
-            <div class="custom-control custom-checkbox mb-3 ">
-                @Html.CheckBox("cbx_ativo", new { @class = "custom-control-input " })
-                @Html.Label("cbx_ativo", "Ativo", new { @class = " mb-2 custom-control-label" })
-                <small id="caixa" class="form-text text-muted"></small>
+        @Html.Label("txt_login", "Login", new { @class = "col-md-3 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBox("txt_login", null, new { @class = "form-control" })
 
-            </div>
         </div>
     </div>
+    <div class="form-group row">
+        @Html.Label("txt_senha", "Senha", new { @class = "col-md-3 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBox("txt_senha", null, new { @class = "form-control", type = "password" })
+
+        </div>
+    </div>
+
+
 }
 
+
+
 @section Scripts{
-    <script src="~/Scripts/Cadastro/GrupoProduto.js"></script>
+    <script src="~/Scripts/Cadastro/Usuario.js"></script>
     <script>
         //Passando todos valores do Razor para o JS GrupoProduto
         var titulo_pagina = '@ViewBag.Title';
-        var url_exclusao = '@Url.Action("ExcluirGrupoProduto", "CadGrupoProduto")';
-        var url_confirmar = '@Url.Action("SalvarGrupoProduto", "CadGrupoProduto")';
-        var url_page_click = '@Url.Action("GrupoProdutoPagina", "CadGrupoProduto")';
-        var url_alterar = '@Url.Action("RecuperarGrupoProduto", "CadGrupoProduto")';
-        var url_ddl_tam_pag = '@Url.Action("GrupoProdutoPagina", "CadGrupoProduto")';
-
+        var url_exclusao = '@Url.Action("ExcluirUsuario", "CadUsuario")';
+        var url_confirmar = '@Url.Action("SalvarUsuario", "CadUsuario")';
+        var url_page_click = '@Url.Action("UsuarioPagina", "CadUsuario")';
+        var url_alterar = '@Url.Action("RecuperarUsuario", "CadUsuario")';
+        var url_ddl_tam_pag = '@Url.Action("UsuarioPagina", "CadUsuario")';
+        var senha_padrao = '@ViewBag.SenhaPadrao';
 
     </script>
 

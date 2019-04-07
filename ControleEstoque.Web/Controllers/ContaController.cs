@@ -29,24 +29,25 @@ namespace ControleEstoque.Web.Controllers
                 return View(login);
             }
 
-
             var usuario = UsuarioModel.ValidarUsuario(login.Usuario, login.Senha);
 
             if (usuario != null)
             {
-                FormsAuthentication.SetAuthCookie(usuario.Nome, login.LembrarMe);
+       
+                FormsAuthentication.SetAuthCookie(login.Usuario, login.LembrarMe);
                 if (Url.IsLocalUrl(returnUrl))
                 {
                     return Redirect(returnUrl);
-                }else
+                }
+                else
                 {
                     return RedirectToAction("Index", "Home");
                 }
-            }else
-            {
-                ModelState.AddModelError("", "Login inválido");
             }
-
+            else
+            {
+                ModelState.AddModelError("", "Login inválido.");
+            }
 
             return View(login);
         }
@@ -58,7 +59,6 @@ namespace ControleEstoque.Web.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }
-
-
     }
+
 }

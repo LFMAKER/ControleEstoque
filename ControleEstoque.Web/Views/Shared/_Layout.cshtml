@@ -55,7 +55,7 @@
                                 <p class="dropdown-item">@Html.ActionLink("Fornecedores", "Fornecedor", "Cadastro") </p>
                                 <p class="dropdown-divider"></p>
                                 <p class="dropdown-item">@Html.ActionLink("Perfis de Usuários", "PerfilUsuario", "Cadastro") </p>
-                                <p class="dropdown-item">@Html.ActionLink("Usuários", "Usuario", "Cadastro") </p>
+                                <p class="dropdown-item">@Html.ActionLink("Usuários", "Index", "CadUsuario") </p>
 
 
                             </div>
@@ -96,11 +96,12 @@
 
                             </div>
                         </li>
+                        
+
                         <li class="nav-item  ml-5">
-                            <a class="ui image label">
-                                <img src="~/Images/avatar.jpg">
-                                @User.Identity.Name
-                               
+                            <a class="ui image label" href="@Url.Action("Index", "Profile")">
+                                <img src="~/Images/avatar.jpg" />
+                                     @User.Identity.Name
                             </a>
                         </li>
                        
@@ -108,8 +109,7 @@
                         {
 
 
-                              
-                          
+
                             <li class="nav-item ml-3">
                                 
                                 <a href="javascript:document.getElementById('logoffForm').submit()">Sair <i alt="Sair" class="sign out alternate icon"></i></a>
