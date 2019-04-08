@@ -3,10 +3,10 @@ This is a project focused on developing a stock control.
 The creation of this project is focused only on learning.
 
 # Technologies and Frameworks 
-- .NET Framework 4.5.2
-- C#
-- ASP.NET MVC 5
-- Entity Framework
+- .NET Framework 4.5.2 (https://docs.microsoft.com/en-us/dotnet/framework/)
+- C# (https://docs.microsoft.com/en-us/dotnet/csharp/)
+- ASP.NET MVC 5 (https://docs.microsoft.com/pt-br/aspnet/mvc/overview/getting-started/introduction/getting-started)
+- Entity Framework (https://docs.microsoft.com/pt-br/ef/)
 - SQL Server Express
 - Log4Net
 - Javascript (Jquery)
