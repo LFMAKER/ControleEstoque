@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -54,7 +55,7 @@
                                 <p class="dropdown-item">@Html.ActionLink("Cidades", "Cidade", "Cadastro") </p>
                                 <p class="dropdown-item">@Html.ActionLink("Fornecedores", "Fornecedor", "Cadastro") </p>
                                 <p class="dropdown-divider"></p>
-                                <p class="dropdown-item">@Html.ActionLink("Perfis de Usuários", "PerfilUsuario", "Cadastro") </p>
+                                <p class="dropdown-item">@Html.ActionLink("Perfis de Usuários", "Index", "CadPerfil") </p>
                                 <p class="dropdown-item">@Html.ActionLink("Usuários", "Index", "CadUsuario") </p>
 
 
@@ -99,11 +100,14 @@
                         
 
                         <li class="nav-item  ml-5">
-                            <a class="ui image label" href="@Url.Action("Index", "Profile")">
-                                <img src="~/Images/avatar.jpg" />
-                                     @User.Identity.Name
+                            <a class="ui blue image label" href="@Url.Action("Index", "Profile")">
+                                <img src="~/Images/avatar.jpg">                        
+                                @User.Identity.Name
+                               
+                                @*<div class="detail">FUNCAO</div>*@
                             </a>
                         </li>
+
                        
                         @using (Html.BeginForm("LogOff", "Conta", FormMethod.Post, new { id = "logoffForm" }))
                         {
@@ -157,5 +161,9 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+  
+
+    
+
 </body>
 </html>

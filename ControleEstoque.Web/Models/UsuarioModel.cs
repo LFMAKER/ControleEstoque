@@ -20,6 +20,8 @@ namespace ControleEstoque.Web.Models
         public string Senha { get; set; }
         [Required(ErrorMessage = "Informe o Nome")]
         public string Nome { get; set; }
+        [Required(ErrorMessage = "Informe o Perfil")]
+        public int IdPerfil { get; set; }
 
 
         public static UsuarioModel ValidarUsuario(string login, string senha)
@@ -48,9 +50,10 @@ namespace ControleEstoque.Web.Models
                             Id = (int)reader["id"],
                             Login = (string)reader["login"],
                             Senha = (string)reader["senha"],
-                            Nome = (string)reader["nome"]
-                     
-            
+                            Nome = (string)reader["nome"],
+                            IdPerfil = (int)reader["id_perfil"]
+
+
                         };
                     }
                 }
@@ -84,40 +87,9 @@ namespace ControleEstoque.Web.Models
                         {
                             Id = (int)reader["id"],
                             Nome = (string)reader["nome"],
-                            Login = (string)reader["login"]
-                        });
-                    }
-                }
-            }
-
-            return ret;
-        }
-
-        public static UsuarioModel RecuperarPeloId(int id)
-        {
-            UsuarioModel ret = null;
-            using (var conexao = new SqlConnection())
-            {
-
-                conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-                conexao.Open();
-                using (var comando = new SqlCommand())
-                {
-                    comando.Connection = conexao;
-                    comando.CommandText = "select * from usuario where (id = @id)";
-
-                    //Evitando SQL INJECTION
-                    comando.Parameters.Add("@id", SqlDbType.Int).Value = id;
-                    var reader = comando.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        ret = new UsuarioModel
-                        {
-                            Id = (int)reader["id"],
-                            Nome = (string)reader["nome"],
                             Login = (string)reader["login"],
-                            Senha = (string)reader["senha"]
-                        };
+                            IdPerfil = (int)reader["id_perfil"]
+                        });
                     }
                 }
             }
@@ -150,7 +122,38 @@ namespace ControleEstoque.Web.Models
             }
             return ret;
         }
+        public static UsuarioModel RecuperarPeloId(int id)
+        {
+            UsuarioModel ret = null;
+            using (var conexao = new SqlConnection())
+            {
 
+                conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
+                conexao.Open();
+                using (var comando = new SqlCommand())
+                {
+                    comando.Connection = conexao;
+                    comando.CommandText = "select * from usuario where (id = @id)";
+
+                    //Evitando SQL INJECTION
+                    comando.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                    var reader = comando.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        ret = new UsuarioModel
+                        {
+                            Id = (int)reader["id"],
+                            Nome = (string)reader["nome"],
+                            Login = (string)reader["login"],
+                            Senha = (string)reader["senha"],
+                            IdPerfil = (int)reader["id_perfil"]
+                        };
+                    }
+                }
+            }
+
+            return ret;
+        }
 
         public int Salvar()
         {
@@ -169,12 +172,14 @@ namespace ControleEstoque.Web.Models
                     if (model == null)
                     {
 
-                        comando.CommandText = "insert into usuario (nome, login, senha) values (@nome, @login, @senha); select convert(int, scope_identity())";
+                        comando.CommandText = "insert into usuario (nome, login, senha, id_perfil) values (@nome, @login, @senha, @id_perfil); select convert(int, scope_identity())";
 
                         //Evitando SQL INJECTION
                         comando.Parameters.Add("@login", SqlDbType.VarChar).Value = this.Login;
                         comando.Parameters.Add("@nome", SqlDbType.VarChar).Value = this.Nome;
                         comando.Parameters.Add("@senha", SqlDbType.VarChar).Value = CriptoHelper.HashMD5(this.Senha);
+                        comando.Parameters.Add("@id_perfil", SqlDbType.Int).Value = this.IdPerfil;
+
 
                         ret = ((int)comando.ExecuteScalar());
 
@@ -184,7 +189,7 @@ namespace ControleEstoque.Web.Models
                         //É preciso verificar se a senha veio vazia ou não, se veio não atualiza a senha,
                         //caso venha preenchida o campo senha será atualizado
                         comando.CommandText = 
-                            "update usuario set nome=@nome, login=@login" + 
+                            "update usuario set nome=@nome, login=@login, id_perfil=@id_perfil" + 
                            (!string.IsNullOrEmpty(this.Senha) ? ", senha=@senha" : "") +
                            " where id=@id";
 
@@ -192,6 +197,7 @@ namespace ControleEstoque.Web.Models
                         comando.Parameters.Add("@login", SqlDbType.VarChar).Value = this.Login;
                         comando.Parameters.Add("@nome", SqlDbType.VarChar).Value = this.Nome;
                         comando.Parameters.Add("@id", SqlDbType.Int).Value = this.Id;
+                        comando.Parameters.Add("@id_perfil", SqlDbType.Int).Value = this.IdPerfil;
 
                         if (!string.IsNullOrEmpty(this.Senha))
                         {
@@ -258,7 +264,9 @@ namespace ControleEstoque.Web.Models
                             Id = (int)reader["id"],
                             Login = (string)reader["login"],
                             Senha = (string)reader["senha"],
-                            Nome = (string)reader["nome"]
+                            Nome = (string)reader["nome"],
+                            IdPerfil = (int)reader["id_perfil"]
+
 
 
                         };

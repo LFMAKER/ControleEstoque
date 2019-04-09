@@ -23,11 +23,7 @@ namespace ControleEstoque.Web.Controllers
         {
             return View();
         }
-        [Authorize]
-        public ActionResult UnidadeMedida()
-        {
-            return View();
-        }
+       
         [Authorize]
         public ActionResult Produto()
         {
@@ -53,11 +49,7 @@ namespace ControleEstoque.Web.Controllers
         {
             return View();
         }
-        [Authorize]
-        public ActionResult PerfilUsuario()
-        {
-            return View();
-        }
+        
 
 
     }

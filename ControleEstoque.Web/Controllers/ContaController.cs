@@ -31,10 +31,18 @@ namespace ControleEstoque.Web.Controllers
 
             var usuario = UsuarioModel.ValidarUsuario(login.Usuario, login.Senha);
 
+
             if (usuario != null)
             {
-       
-                FormsAuthentication.SetAuthCookie(login.Usuario, login.LembrarMe);
+
+                //FormsAuthentication.SetAuthCookie(login.Usuario, login.LembrarMe);
+                var ticket = FormsAuthentication.Encrypt(new FormsAuthenticationTicket(
+                    1, login.Usuario, DateTime.Now, DateTime.Now.AddHours(12), login.LembrarMe, PerfilModel.RecuperarPeloId(usuario.Id).Nome));
+
+                var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, ticket);
+                Response.Cookies.Add(cookie);
+
+
                 if (Url.IsLocalUrl(returnUrl))
                 {
                     return Redirect(returnUrl);
