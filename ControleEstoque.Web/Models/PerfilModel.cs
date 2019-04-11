@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System;
 
-namespace ControleEstoque.Web
+namespace ControleEstoque.Web.Models
 {
     public class PerfilModel
     {
@@ -15,6 +16,13 @@ namespace ControleEstoque.Web
         public string Nome { get; set; }
 
         public bool Ativo { get; set; }
+
+        public List<UsuarioModel> Usuarios{ get; set; }
+
+        public PerfilModel()
+        {
+            this.Usuarios = new List<UsuarioModel>();
+        }
 
         public static int RecuperarQuantidade()
         {
@@ -66,6 +74,39 @@ namespace ControleEstoque.Web
 
             return ret;
         }
+
+        public void CarregarUsuarios()
+        {
+            this.Usuarios.Clear();
+
+            using (var conexao = new SqlConnection())
+            {
+                conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
+                conexao.Open();
+                using (var comando = new SqlCommand())
+                {
+                    comando.Connection = conexao;
+                    comando.CommandText =
+                        "select u.* " +
+                        "from perfil_usuario pu, usuario u " +
+                        "where (pu.id_perfil = @id_perfil) and (pu.id_usuario = u.id)";
+
+                    comando.Parameters.Add("@id_perfil", SqlDbType.Int).Value = this.Id;
+
+                    var reader = comando.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        this.Usuarios.Add(new UsuarioModel
+                        {
+                            Id = (int)reader["id"],
+                            Nome = (string)reader["nome"],
+                            Login = (string)reader["login"]
+                        });
+                    }
+                }
+            }
+        }
+
 
         public static List<PerfilModel> RecuperarListaAtivos()
         {
@@ -216,8 +257,7 @@ namespace ControleEstoque.Web
                             Id = (int)reader["id"],
                             Nome = (string)reader["nome"],
                             Login = (string)reader["login"],
-                            Senha = (string)reader["senha"],
-                            IdPerfil = (int)reader["id_perfil"]
+                            Senha = (string)reader["senha"]
                         };
                     }
                 }
@@ -225,6 +265,20 @@ namespace ControleEstoque.Web
 
             return ret;
         }
+
+
+
+   
+        public static string RecuperarTagRole(string id)
+        {
+            //UsuarioModel u = UsuarioModel.RecuperarIdLogado(id);
+            //PerfilModel p = PerfilModel.RecuperarPeloId(u.IdPerfil);
+            //string tag = p.Nome;
+            //return tag;
+            return null;
+        }
+
+
 
     }
 }

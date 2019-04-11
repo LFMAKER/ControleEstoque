@@ -12,14 +12,14 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.4/dist/semantic.min.css">
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.4/dist/semantic.min.js"></script>
-    
+
 </head>
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
-      
 
-        
+
+
         <div class="container ">
 
             <nav class="navbar navbar-light bg-light">
@@ -97,27 +97,25 @@
 
                             </div>
                         </li>
-                        
+
 
                         <li class="nav-item  ml-5">
-                            <a class="ui blue image label" href="@Url.Action("Index", "Profile")">
-                                <img src="~/Images/avatar.jpg">                        
+                            <a class="ui yellow image label" href="@Url.Action("Index", "Profile")">
+                                <img src="~/Images/avatar.jpg">
                                 @User.Identity.Name
-                               
-                                @*<div class="detail">FUNCAO</div>*@
                             </a>
                         </li>
 
-                       
+
                         @using (Html.BeginForm("LogOff", "Conta", FormMethod.Post, new { id = "logoffForm" }))
                         {
 
 
 
                             <li class="nav-item ml-3">
-                                
+
                                 <a href="javascript:document.getElementById('logoffForm').submit()">Sair <i alt="Sair" class="sign out alternate icon"></i></a>
-                               
+
                             </li>
 
 
@@ -161,9 +159,9 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-  
 
-    
+
+
 
 </body>
 </html>

@@ -15,12 +15,12 @@ namespace ControleEstoque.Web.Controllers
         public ActionResult Index()
         {
 
-            var login = User.Identity.Name;
-            var logado = UsuarioModel.RecuperarIdLogado(login);
-            ViewBag.UserIdLogado = logado.Id;
-            var IdPerfil = logado.IdPerfil;
-            var Perfil = PerfilModel.RecuperarPeloId(IdPerfil);
-            ViewBag.TagPerfil = Perfil.Nome;
+            //var login = User.Identity.Name;
+            //var logado = UsuarioModel.RecuperarIdLogado(login);
+            //ViewBag.UserIdLogado = logado.Id;
+            //var IdPerfil = logado.IdPerfil;
+            //var Perfil = PerfilModel.RecuperarPeloId(IdPerfil);
+            //ViewBag.TagPerfil = Perfil.Nome;
 
             return View();
         }

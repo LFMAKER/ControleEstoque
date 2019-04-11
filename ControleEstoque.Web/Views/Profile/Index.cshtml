@@ -1,5 +1,25 @@
 ﻿
 @Html.AntiForgeryToken()
+
+<!-- You MUST include jQuery before Fomantic -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.4/dist/semantic.min.css">
+<script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.4/dist/semantic.min.js"></script>
+
+<h2 class="ui header">
+    <i class="settings icon"></i>
+    <div class="content">
+        Configuração da Conta
+        <div class="sub header">Suas informações</div>
+    </div>
+</h2>
+
+<div class="ui checkbox">
+    <input type="checkbox" tabindex="0" class="hidden">
+    <label>Checkbox</label>
+</div>
+
+
 <fieldset disabled>
     <div class="form-group row">
         @Html.Label("txt_nome", "Nome", new { @class = "col-7 control-label" })
@@ -23,51 +43,53 @@
         </div>
     </div>
 </fieldset>
-    @section Scripts{
+@section Scripts{
 
-        <script>
+    <script>
 
-            function add_anti_forgery_token(data) {
-                data.__RequestVerificationToken = $('[name=__RequestVerificationToken]').val();
-                return data;
-            }
-
-
-            var url_alterar = '@Url.Action("RecuperarUsuarioComMd5", "CadUsuario")';
-            var idL = '@ViewBag.UserIdLogado';
-       
+        function add_anti_forgery_token(data) {
+            data.__RequestVerificationToken = $('[name=__RequestVerificationToken]').val();
+            return data;
+        }
 
 
-            $(document).ready(function () {
-                var btn = $(this),
-                    id = idL,
-                    url = url_alterar,
-                    param = { 'id': id };
-
-                $.post(url, add_anti_forgery_token(param), function (response) {
-                    if (response) {
-                        set_dados_form(response);
-                    }
-                });
-            })
-
-
-            function set_dados_form(dados) {
-
-                $('#txt_nome').val(dados.Nome);
-
-            }
+        var url_alterar = '@Url.Action("RecuperarUsuarioComMd5", "CadUsuario")';
+        var idL = '@ViewBag.UserIdLogado';
 
 
 
+        $(document).ready(function () {
+            var btn = $(this),
+                id = idL,
+                url = url_alterar,
+                param = { 'id': id };
+
+            $.post(url, add_anti_forgery_token(param), function (response) {
+                if (response) {
+                    set_dados_form(response);
+                }
+            });
+        })
 
 
-            function set_dados_form(dados) {
-                $('#txt_nome').val(dados.Nome);
-                $('#txt_login').val(dados.Login);
-                $('#txt_senha').val(dados.Senha);
-            }
+        function set_dados_form(dados) {
 
-        </script>
+            $('#txt_nome').val(dados.Nome);
 
-    }
+        }
+
+
+
+
+
+        function set_dados_form(dados) {
+            $('#txt_nome').val(dados.Nome);
+            $('#txt_login').val(dados.Login);
+            $('#txt_senha').val(dados.Senha);
+        }
+
+
+
+    </script>
+
+}

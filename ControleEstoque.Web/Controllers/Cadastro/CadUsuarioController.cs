@@ -6,18 +6,18 @@ using System.Web.Mvc;
 
 namespace ControleEstoque.Web.Controllers.Cadastro
 {
+    
     public class CadUsuarioController : Controller
     {
 
 
         private const string _senhaPadrao = "{$127;$188}";
         private const int _quantMaxLinhasPorPagina = 5;
-
-        [Authorize]
+        [Authorize(Roles = "Gerente, Desenvolvedor")]
         public ActionResult Index()
         {
 
-            ViewBag.ListaPerfil = PerfilModel.RecuperarListaAtivos();
+            
             ViewBag.SenhaPadrao = _senhaPadrao;
            
             ViewBag.ListaTamPag = new SelectList(new int[] { _quantMaxLinhasPorPagina, 10, 15, 20 }, _quantMaxLinhasPorPagina);
@@ -40,13 +40,13 @@ namespace ControleEstoque.Web.Controllers.Cadastro
 
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Gerente, Desenvolvedor")]
         [ValidateAntiForgeryToken]
         public ActionResult RecuperarUsuario(int id)
         {
             return Json(UsuarioModel.RecuperarPeloId(id));
         }
-
+        [Authorize(Roles = "Gerente, Desenvolvedor, Analista")]
         public ActionResult RecuperarUsuarioComMd5(int id)
         {
             return Json(UsuarioModel.RecuperarPeloId(id));
@@ -55,7 +55,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
 
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Gerente, Desenvolvedor")]
         [ValidateAntiForgeryToken]
         public ActionResult ExcluirUsuario(int id)
         {
@@ -63,7 +63,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Gerente, Desenvolvedor")]
         [ValidateAntiForgeryToken]
         public ActionResult SalvarUsuario(UsuarioModel model)
         {
@@ -111,7 +111,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
 
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Gerente, Desenvolvedor")]
         [ValidateAntiForgeryToken]
         public JsonResult UsuarioPagina(int pagina, int tamPag)
         {

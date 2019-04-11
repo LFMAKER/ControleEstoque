@@ -4,7 +4,7 @@ function set_dados_form(dados) {
     $('#txt_nome').val(dados.Nome);
     $('#txt_login').val(dados.Login);
     $('#txt_senha').val("{$127;$188}");
-    $('#ddl_perfil').val(dados.IdPerfil);
+
 }
 
 
@@ -20,8 +20,7 @@ function get_dados_inclusao() {
         Id: 0,
         Nome: '',
         Login: '',
-        Senha: '',
-        IdPerfil: 0
+        Senha: ''
 };
 }
 
@@ -30,9 +29,7 @@ function get_dados_form() {
         Id: $('#id_cadastro').val(),
         Nome: $('#txt_nome').val(),
         Login: $('#txt_login').val(),
-        Senha: $('#txt_senha').val(),
-        Senha: $('#txt_senha').val(),
-        IdPerfil: $('#ddl_perfil').val()
+        Senha: $('#txt_senha').val()
 
 };
 }
