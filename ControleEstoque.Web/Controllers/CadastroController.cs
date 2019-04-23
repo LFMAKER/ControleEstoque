@@ -12,18 +12,6 @@ namespace ControleEstoque.Web.Controllers
         private const int _quantMaxLinhasPorPagina = 5;
 
 
-       
-        [Authorize]
-        public ActionResult MarcaProduto()
-        {
-            return View();
-        }
-        [Authorize]
-        public ActionResult LocalProduto()
-        {
-            return View();
-        }
-       
         [Authorize]
         public ActionResult Produto()
         {

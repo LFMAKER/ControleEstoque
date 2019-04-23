@@ -4,7 +4,7 @@
 @{
     Layout = "~/Views/Shared/_Cadastro.cshtml";
     ViewBag.Title = "Unidade de Medida";
-
+    ViewBag.Lista = Model;
 }
 
 
@@ -83,7 +83,7 @@
         var url_page_click = '@Url.Action("UnidadeMedidaPagina", "CadUnidadeMedida")';
         var url_alterar = '@Url.Action("RecuperarUnidadeMedida", "CadUnidadeMedida")';
         var url_ddl_tam_pag = '@Url.Action("UnidadeMedidaPagina", "CadUnidadeMedida")';
-
+        var url_filtro_change = '@Url.Action("UnidadeMedidaPagina", "CadUnidadeMedida")';
 
     </script>
 

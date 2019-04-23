@@ -12,7 +12,7 @@ function set_focus_form() {
 function set_dados_grid(dados) {
     return '<td>' + dados.Nome + '</td>' +
            '<td>' + dados.Sigla + '</td>' +
-           '<td>' + (dados.Ativo ? 'SIM' : 'NÃO') + '</td>';
+           '<td>' + (dados.Ativo ? 'Sim' : 'Não') + '</td>';
 }
 
 function get_dados_inclusao() {
@@ -37,5 +37,5 @@ function preencher_linha_grid(param, linha) {
     linha
         .eq(0).html(param.Nome).end()
         .eq(1).html(param.Sigla).end()
-        .eq(2).html(param.Ativo ? 'SIM' : 'NÃO');
+        .eq(2).html(param.Ativo ? 'Sim' : 'Não');
 }

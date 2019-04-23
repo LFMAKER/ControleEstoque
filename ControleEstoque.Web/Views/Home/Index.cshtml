@@ -1,1 +1,25 @@
-﻿
+﻿@using System.Net;    
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Olá, @User.Identity.Name</h1>
+        @{ 
+            //Data
+            var culture = new System.Globalization.CultureInfo("pt-PT");
+            var day = culture.DateTimeFormat.GetDayName(DateTime.Today.DayOfWeek);
+            var year = culture.DateTimeFormat.GetMonthName(DateTime.Today.Month);
+
+            //PC NAME
+            string host = Dns.GetHostName();
+
+
+
+        }
+        <p class="lead">Hoje é @day - @DateTime.Now.Day de @year</p>
+        <p class="lead">Você logou com o @host</p>
+
+        
+
+
+    </div>
+</div>

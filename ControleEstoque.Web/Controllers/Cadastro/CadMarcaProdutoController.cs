@@ -1,25 +1,24 @@
-﻿using System;
+﻿using ControleEstoque.Web.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using ControleEstoque.Web.Models;
 
-namespace ControleEstoque.Web.Controllers.Cadastro
+namespace ControleEstoque.Web.Controllers
 {
-    public class CadUnidadeMedidaController : Controller
+    [Authorize(Roles = "Gerente,Administrativo,Operador")]
+    public class CadMarcaProdutoController : Controller
     {
         private const int _quantMaxLinhasPorPagina = 5;
 
-        [Authorize]
         public ActionResult Index()
         {
             ViewBag.ListaTamPag = new SelectList(new int[] { _quantMaxLinhasPorPagina, 10, 15, 20 }, _quantMaxLinhasPorPagina);
             ViewBag.QuantMaxLinhasPorPagina = _quantMaxLinhasPorPagina;
             ViewBag.PaginaAtual = 1;
 
-            var lista = UnidadeMedidaModel.RecuperarLista(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
-            var quant = UnidadeMedidaModel.RecuperarQuantidade();
+            var lista = MarcaProdutoModel.RecuperarLista(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
+            var quant = MarcaProdutoModel.RecuperarQuantidade();
 
             var difQuantPaginas = (quant % ViewBag.QuantMaxLinhasPorPagina) > 0 ? 1 : 0;
             ViewBag.QuantPaginas = (quant / ViewBag.QuantMaxLinhasPorPagina) + difQuantPaginas;
@@ -28,35 +27,33 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         }
 
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
-        public JsonResult UnidadeMedidaPagina(int pagina, int tamPag, string filtro)
+        public JsonResult MarcaProdutoPagina(int pagina, int tamPag, string filtro)
         {
-            var lista = UnidadeMedidaModel.RecuperarLista(pagina, tamPag, filtro);
+            var lista = MarcaProdutoModel.RecuperarLista(pagina, tamPag, filtro);
 
             return Json(lista);
         }
 
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
-        public JsonResult RecuperarUnidadeMedida(int id)
+        public JsonResult RecuperarMarcaProduto(int id)
         {
-            return Json(UnidadeMedidaModel.RecuperarPeloId(id));
+            //return Json(false);
+           return Json(MarcaProdutoModel.RecuperarPeloId(id));
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Gerente,Administrativo")]
         [ValidateAntiForgeryToken]
-        public JsonResult ExcluirUnidadeMedida(int id)
+        public JsonResult ExcluirMarcaProduto(int id)
         {
-            return Json(UnidadeMedidaModel.ExcluirPeloId(id));
+            return Json(MarcaProdutoModel.ExcluirPeloId(id));
         }
 
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
-        public JsonResult SalvarUnidadeMedida(UnidadeMedidaModel model)
+        public JsonResult SalvarMarcaProduto(MarcaProdutoModel model)
         {
             var resultado = "OK";
             var mensagens = new List<string>();

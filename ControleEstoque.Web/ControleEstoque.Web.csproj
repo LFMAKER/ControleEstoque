@@ -156,6 +156,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\Cadastro\CadGrupoProdutoController.cs" />
     <Compile Include="Controllers\CadastroController.cs" />
+    <Compile Include="Controllers\Cadastro\CadLocalArmazenamentoController.cs" />
+    <Compile Include="Controllers\Cadastro\CadMarcaProdutoController.cs" />
     <Compile Include="Controllers\Cadastro\CadPerfilController.cs" />
     <Compile Include="Controllers\Cadastro\CadUnidadeMedidaController.cs" />
     <Compile Include="Controllers\Cadastro\CadUsuarioController.cs" />
@@ -170,7 +172,9 @@
     </Compile>
     <Compile Include="Helpers\CriptoHelper.cs" />
     <Compile Include="Models\GrupoProdutoModel.cs" />
+    <Compile Include="Models\LocalArmazenamentoModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\MarcaProdutoModel.cs" />
     <Compile Include="Models\PerfilModel.cs" />
     <Compile Include="Models\UnidadeMedidaModel.cs" />
     <Compile Include="Models\UsuarioModel.cs" />
@@ -185,6 +189,10 @@
     <Content Include="Content\bootstrap-select.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bulma.css" />
+    <Content Include="Content\bulma.min.css" />
+    <Content Include="Content\Cadastro\LocalArmazenamento.css" />
+    <Content Include="Content\Cadastro\MarcaProduto.css" />
     <Content Include="Content\Cadastro\Perfil.css" />
     <Content Include="Content\Cadastro\UnidadeMedida.css" />
     <Content Include="Content\Cadastro\Usuario.css" />
@@ -208,6 +216,8 @@
     </Content>
     <Content Include="Scripts\Cadastro\CadBase.js" />
     <Content Include="Scripts\Cadastro\GrupoProduto.js" />
+    <Content Include="Scripts\Cadastro\LocalArmazenamento.js" />
+    <Content Include="Scripts\Cadastro\MarcaProduto.js" />
     <Content Include="Scripts\Cadastro\Perfil.js" />
     <Content Include="Scripts\Cadastro\UnidadeMedida.js" />
     <Content Include="Scripts\Cadastro\Usuario.js" />
@@ -300,6 +310,8 @@
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\CadUnidadeMedida\Index.cshtml" />
     <Content Include="Views\CadPerfil\Index.cshtml" />
+    <Content Include="Views\CadLocalArmazenamento\Index.cshtml" />
+    <Content Include="Views\CadMarcaProduto\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
