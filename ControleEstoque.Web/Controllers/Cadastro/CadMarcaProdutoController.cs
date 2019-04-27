@@ -1,4 +1,5 @@
-﻿using ControleEstoque.Web.Models;
+﻿using ControleEstoque.Web.Dal.Cadastro;
+using ControleEstoque.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,8 @@ namespace ControleEstoque.Web.Controllers
             ViewBag.QuantMaxLinhasPorPagina = _quantMaxLinhasPorPagina;
             ViewBag.PaginaAtual = 1;
 
-            var lista = MarcaProdutoModel.RecuperarLista(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
-            var quant = MarcaProdutoModel.RecuperarQuantidade();
+            var lista = MarcaProdutoDao.RecuperarLista(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
+            var quant = MarcaProdutoDao.RecuperarQuantidade();
 
             var difQuantPaginas = (quant % ViewBag.QuantMaxLinhasPorPagina) > 0 ? 1 : 0;
             ViewBag.QuantPaginas = (quant / ViewBag.QuantMaxLinhasPorPagina) + difQuantPaginas;
@@ -30,7 +31,7 @@ namespace ControleEstoque.Web.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult MarcaProdutoPagina(int pagina, int tamPag, string filtro)
         {
-            var lista = MarcaProdutoModel.RecuperarLista(pagina, tamPag, filtro);
+            var lista = MarcaProdutoDao.RecuperarLista(pagina, tamPag, filtro);
 
             return Json(lista);
         }
@@ -40,7 +41,7 @@ namespace ControleEstoque.Web.Controllers
         public JsonResult RecuperarMarcaProduto(int id)
         {
             //return Json(false);
-           return Json(MarcaProdutoModel.RecuperarPeloId(id));
+           return Json(MarcaProdutoDao.RecuperarPeloId(id));
         }
 
         [HttpPost]
@@ -48,7 +49,7 @@ namespace ControleEstoque.Web.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult ExcluirMarcaProduto(int id)
         {
-            return Json(MarcaProdutoModel.ExcluirPeloId(id));
+            return Json(MarcaProdutoDao.ExcluirPeloId(id));
         }
 
         [HttpPost]
@@ -68,7 +69,7 @@ namespace ControleEstoque.Web.Controllers
             {
                 try
                 {
-                    var id = model.Salvar();
+                    var id = MarcaProdutoDao.Salvar(model);
                     if (id > 0)
                     {
                         idSalvo = id.ToString();

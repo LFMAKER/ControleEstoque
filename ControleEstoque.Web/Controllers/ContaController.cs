@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ControleEstoque.Web.Models;
 using System.Web.Security;
+using ControleEstoque.Web.Dal.Cadastro;
 
 namespace ControleEstoque.Web.Controllers
 {
@@ -29,7 +30,10 @@ namespace ControleEstoque.Web.Controllers
                 return View(login);
             }
 
-            var usuario = UsuarioModel.ValidarUsuario(login.Usuario, login.Senha);
+            var usuario = UsuarioDao.ValidarUsuario(login.Usuario, login.Senha);
+            var userString = UsuarioDao.RecuperarStringNomePerfis(usuario);
+
+
 
 
             if (usuario != null)
@@ -37,7 +41,7 @@ namespace ControleEstoque.Web.Controllers
 
                 //FormsAuthentication.SetAuthCookie(login.Usuario, login.LembrarMe);
                 var ticket = FormsAuthentication.Encrypt(new FormsAuthenticationTicket(
-                    1, login.Usuario, DateTime.Now, DateTime.Now.AddHours(12), login.LembrarMe, usuario.RecuperarStringNomePerfis()));
+                    1, login.Usuario, DateTime.Now, DateTime.Now.AddHours(12), login.LembrarMe, userString));
 
                 var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, ticket);
                 Response.Cookies.Add(cookie);

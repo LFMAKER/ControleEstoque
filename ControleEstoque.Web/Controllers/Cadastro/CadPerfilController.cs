@@ -1,4 +1,5 @@
-﻿using ControleEstoque.Web.Models;
+﻿using ControleEstoque.Web.Dal.Cadastro;
+using ControleEstoque.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,15 +17,15 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         public ActionResult Index()
         {
 
-            ViewBag.ListaUsuario = UsuarioModel.RecuperarLista();
+            ViewBag.ListaUsuario = UsuarioDao.RecuperarLista();
 
             ViewBag.ListaTamPag = new SelectList(new int[] { _quantMaxLinhasPorPagina, 10, 15, 20 }, _quantMaxLinhasPorPagina);
             ViewBag.QuantMaxLinhasPorPagina = _quantMaxLinhasPorPagina;
             ViewBag.PaginaAtual = 1;
 
-            var lista = PerfilModel.RecuperarLista(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
+            var lista = PerfilDao.RecuperarLista(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
 
-            var quant = PerfilModel.RecuperarQuantidade();
+            var quant = PerfilDao.RecuperarQuantidade();
             var difQuantPaginas = (quant % ViewBag.QuantMaxLinhasPorPagina) > 0 ? 1 : 0;
 
             ViewBag.QuantPaginas = (quant / ViewBag.QuantMaxLinhasPorPagina) + difQuantPaginas;
@@ -36,7 +37,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         [ValidateAntiForgeryToken]
         public JsonResult PerfilPagina(int pagina, int tamPag, string filtro)
         {
-            var lista = PerfilModel.RecuperarLista(pagina, tamPag, filtro);
+            var lista = PerfilDao.RecuperarLista(pagina, tamPag, filtro);
             return Json(lista);
         }
 
@@ -44,9 +45,10 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         [ValidateAntiForgeryToken]
         public JsonResult RecuperarPerfil(int id)
         {
-
-            var ret = PerfilModel.RecuperarPeloId(id);
-            ret.CarregarUsuarios();
+            
+            var ret = PerfilDao.RecuperarPeloId(id);
+            //PerfilModel usuarios = new PerfilModel();
+            ret.CarregarUsuarios(ret);
 
             return Json(ret);
         }
@@ -55,12 +57,12 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         [ValidateAntiForgeryToken]
         public JsonResult ExcluirPerfil(int id)
         {
-            return Json(PerfilModel.ExcluirPeloId(id));
+            return Json(PerfilDao.ExcluirPeloId(id));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult SalvarPerfil(PerfilModel model)
+        public JsonResult SalvarPerfil(PerfilModel model, List<int> idUsuarios)
         {
             var resultado = "OK";
             var mensagens = new List<string>();
@@ -73,9 +75,22 @@ namespace ControleEstoque.Web.Controllers.Cadastro
             }
             else
             {
+                model.Usuarios = new List<UsuarioModel>();
+                if (idUsuarios == null || idUsuarios.Count == 0)
+                {
+                    model.Usuarios.Add(new UsuarioModel() { Id = -1 });
+                }
+                else
+                {
+                    foreach (var id in idUsuarios)
+                    {
+                        model.Usuarios.Add(new UsuarioModel() { Id = id });
+                    }
+                }
+
                 try
                 {
-                    var id = model.Salvar();
+                    var id = PerfilDao.Salvar(model);
                     if (id > 0)
                     {
                         idSalvo = id.ToString();

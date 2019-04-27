@@ -1,4 +1,5 @@
-﻿using ControleEstoque.Web.Models;
+﻿using ControleEstoque.Web.Dal.Cadastro;
+using ControleEstoque.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,9 @@ namespace ControleEstoque.Web.Controllers
             ViewBag.QuantMaxLinhasPorPagina = _quantMaxLinhasPorPagina;
             ViewBag.PaginaAtual = 1;
 
-            var lista = GrupoProdutoModel.RecuperarLista(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
+            var lista = GrupoProdutoDao.RecuperarLista(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
 
-            var quant = GrupoProdutoModel.RecuperarQuantidade();
+            var quant = GrupoProdutoDao.RecuperarQuantidade();
             var difQuantPaginas = (quant % ViewBag.QuantMaxLinhasPorPagina) > 0 ? 1 : 0;
 
             ViewBag.QuantPaginas = (quant / ViewBag.QuantMaxLinhasPorPagina) + difQuantPaginas;
@@ -35,7 +36,7 @@ namespace ControleEstoque.Web.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult GrupoProdutoPagina(int pagina, int tamPag, string filtro)
         {
-            var lista = GrupoProdutoModel.RecuperarLista(pagina, tamPag, filtro);
+            var lista = GrupoProdutoDao.RecuperarLista(pagina, tamPag, filtro);
             return Json(lista);
         }
 
@@ -43,14 +44,14 @@ namespace ControleEstoque.Web.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult RecuperarGrupoProduto(int id)
         {
-            return Json(GrupoProdutoModel.RecuperarPeloId(id));
+            return Json(GrupoProdutoDao.RecuperarPeloId(id));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public JsonResult ExcluirGrupoProduto(int id)
         {
-            return Json(GrupoProdutoModel.ExcluirPeloId(id));
+            return Json(GrupoProdutoDao.ExcluirPeloId(id));
         }
 
         [HttpPost]
@@ -70,7 +71,7 @@ namespace ControleEstoque.Web.Controllers
             {
                 try
                 {
-                    var id = model.Salvar();
+                    var id = GrupoProdutoDao.Salvar(model);
                     if (id > 0)
                     {
                         idSalvo = id.ToString();

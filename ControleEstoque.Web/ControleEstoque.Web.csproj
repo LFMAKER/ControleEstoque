@@ -167,6 +167,12 @@
     <Compile Include="Controllers\OperacaoController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RelatorioController.cs" />
+    <Compile Include="Dal\Cadastro\GrupoProdutoDao.cs" />
+    <Compile Include="Dal\Cadastro\LocalArmazenamentoDao.cs" />
+    <Compile Include="Dal\Cadastro\MarcaProdutoDao.cs" />
+    <Compile Include="Dal\Cadastro\PerfilDao.cs" />
+    <Compile Include="Dal\Cadastro\UnidadeMedidaDao.cs" />
+    <Compile Include="Dal\Cadastro\UsuarioDao.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -197,6 +203,7 @@
     <Content Include="Content\Cadastro\UnidadeMedida.css" />
     <Content Include="Content\Cadastro\Usuario.css" />
     <Content Include="Content\Cadastro\GrupoProduto.css" />
+    <Content Include="Content\sweetalert2.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -261,6 +268,7 @@
     <Content Include="Scripts\Profile\Profile.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\sweetalert2.min.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />

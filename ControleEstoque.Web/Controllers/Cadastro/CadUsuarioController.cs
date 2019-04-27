@@ -1,4 +1,5 @@
-﻿using ControleEstoque.Web.Models;
+﻿using ControleEstoque.Web.Dal.Cadastro;
+using ControleEstoque.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,9 @@ namespace ControleEstoque.Web.Controllers.Cadastro
             ViewBag.QuantMaxLinhasPorPagina = _quantMaxLinhasPorPagina;
             ViewBag.PaginaAtual = 1;
 
-            var lista = UsuarioModel.RecuperarLista(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
+            var lista = UsuarioDao.RecuperarLista(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
 
-            var quant = UsuarioModel.RecuperarQuantidade();
+            var quant = UsuarioDao.RecuperarQuantidade();
             var difQuantPaginas = (quant % ViewBag.QuantMaxLinhasPorPagina) > 0 ? 1 : 0;
 
             ViewBag.QuantPaginas = (quant / ViewBag.QuantMaxLinhasPorPagina) + difQuantPaginas;
@@ -44,12 +45,12 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         [ValidateAntiForgeryToken]
         public ActionResult RecuperarUsuario(int id)
         {
-            return Json(UsuarioModel.RecuperarPeloId(id));
+            return Json(UsuarioDao.RecuperarPeloId(id));
         }
         [Authorize(Roles = "Gerente, Desenvolvedor, Analista")]
         public ActionResult RecuperarUsuarioComMd5(int id)
         {
-            return Json(UsuarioModel.RecuperarPeloId(id));
+            return Json(UsuarioDao.RecuperarPeloId(id));
         }
 
 
@@ -59,7 +60,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         [ValidateAntiForgeryToken]
         public ActionResult ExcluirUsuario(int id)
         {
-            return Json(UsuarioModel.ExcluirPeloId(id));
+            return Json(UsuarioDao.ExcluirPeloId(id));
         }
 
         [HttpPost]
@@ -87,7 +88,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
                     }
 
 
-                    var id = model.Salvar();
+                    var id = UsuarioDao.Salvar(model);
                     if (id > 0)
                     {
                         idSalvo = id.ToString();
@@ -115,7 +116,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         [ValidateAntiForgeryToken]
         public JsonResult UsuarioPagina(int pagina, int tamPag, string filtro)
         {
-            var lista = UsuarioModel.RecuperarLista(pagina, tamPag, filtro);
+            var lista = UsuarioDao.RecuperarLista(pagina, tamPag, filtro);
             return Json(lista);
         }
 
