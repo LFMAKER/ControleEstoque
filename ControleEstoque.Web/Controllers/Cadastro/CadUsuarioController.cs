@@ -114,9 +114,9 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         [HttpPost]
         [Authorize(Roles = "Gerente, Desenvolvedor")]
         [ValidateAntiForgeryToken]
-        public JsonResult UsuarioPagina(int pagina, int tamPag, string filtro)
+        public JsonResult UsuarioPagina(int pagina, int tamPag, string filtro, string ordem)
         {
-            var lista = UsuarioDao.RecuperarLista(pagina, tamPag, filtro);
+            var lista = UsuarioDao.RecuperarLista(pagina, tamPag, filtro, ordem: ordem);
             return Json(lista);
         }
 

@@ -38,7 +38,7 @@ function abrir_form(dados) {
     .on('shown.bs.modal', function () {
         modal_cadastro.show(0, function () {
             set_focus_form();
-           
+
         });
     })
     .on('hidden.bs.modal', function () {
@@ -63,7 +63,7 @@ function criar_linha_grid(dados) {
 
 
 $(document).on('click', '#btn_incluir', function () {
-    abrir_form(get_dados_inclusao()); 
+    abrir_form(get_dados_inclusao());
 })
 .on('click', '.btn-alterar', function () {
     var btn = $(this),
@@ -74,14 +74,14 @@ $(document).on('click', '#btn_incluir', function () {
         if (response) {
             abrir_form(response);
         }
-      
+
     })
      .fail(function () {
          swal('Aviso', 'Não foi possível recuperar as informações. Tente novamente em instantes.', 'warning');
      });
 })
 .on('click', '.btn-excluir', function () {
-    
+
     //o que será enviado no post
     var btn = $(this),
     tr = btn.closest('tr'),
@@ -96,7 +96,7 @@ $(document).on('click', '#btn_incluir', function () {
             cancelButton: 'btn btn-danger'
         },
         buttonsStyling: true,
-       
+
     })
     swalWithBootstrapButtons.fire({
         title: 'Você tem certeza?',
@@ -118,7 +118,7 @@ $(document).on('click', '#btn_incluir', function () {
                         $('#mensagem_grid').removeClass('invisivel');
                     }
 
-              
+
                 }
             }).fail(function () {
                 swal('Aviso', 'Não foi possível excluir as informações. Tente novamente em instantes.', 'warning');
@@ -128,8 +128,8 @@ $(document).on('click', '#btn_incluir', function () {
              titulo_pagina + ' foi deletado com sucesso.',
              'success'
              )
-            
-         
+
+
         } else if (
             // Read more about handling dismissals
           result.dismiss === Swal.DismissReason.cancel
@@ -172,7 +172,7 @@ $(document).on('click', '#btn_incluir', function () {
                 preencher_linha_grid(param, linha);
                 Swal.fire({
                     type: 'success',
-                    title: titulo_pagina +' foi alterado(a) com sucesso!',
+                    title: titulo_pagina + ' foi alterado(a) com sucesso!',
                     showConfirmButton: false,
                     timer: 1500
                 })
@@ -304,4 +304,3 @@ $(document).on('click', '#btn_incluir', function () {
         swal('Aviso', 'Não foi possível recuperar as informações. Tente novamente em instantes.', 'warning');
     });
 });
-

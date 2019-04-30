@@ -27,12 +27,12 @@
                 </div>
                 <div class="mb-2 col-md-'">
                     @Html.DropDownList("ddl_tam_pag", (SelectList)ViewBag.ListaTamPag, new { @class = "form-control" })
-                   
-                 </div>
-                <div class="mb-2 col" >
-                   @Html.TextBox("txt_filtro", null, new { @class = "form-control col-10", @size="80"})
+
                 </div>
-                
+                <div class="mb-2 col">
+                    @Html.TextBox("txt_filtro", null, new { @class = "form-control col-10", @size = "80" })
+                </div>
+
             </div>
         </div>
         <div class="row">
@@ -48,7 +48,7 @@
                     </tbody>
                 </table>
                 <div id="mensagem_grid" class="alert alert-danger  @Html.Raw(lista != null && lista.Count > 0 ? "invisivel" : "")">
-                <h1>Nenhum registro em @titulo</h1>
+                    <h1>Nenhum registro em @titulo</h1>
 
                 </div>
             </div>
@@ -56,23 +56,23 @@
 
         @if (ViewBag.QuantPaginas > 1)
         {
-        <div class="row">
-            <div class="col-md-12">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
 
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        @for (int i = 2; i <= ViewBag.QuantPaginas; i++)
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            @for (int i = 2; i <= ViewBag.QuantPaginas; i++)
                             {
-                            <li class="page-item"><a class="page-link" href="#">@i</a></li>
+                                <li class="page-item"><a class="page-link" href="#">@i</a></li>
                             }
 
 
-                    </ul>
-                </nav>
+                        </ul>
+                    </nav>
 
+                </div>
             </div>
-        </div>
         }
     </section>
 </div>

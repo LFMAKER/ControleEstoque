@@ -31,9 +31,9 @@ namespace ControleEstoque.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult FornecedorPagina(int pagina, int tamPag)
+        public JsonResult FornecedorPagina(int pagina, int tamPag, string filtro)
         {
-            var lista = FornecedorDao.RecuperarLista(pagina, tamPag);
+            var lista = FornecedorDao.RecuperarLista(pagina, tamPag, filtro);
 
             return Json(lista);
         }

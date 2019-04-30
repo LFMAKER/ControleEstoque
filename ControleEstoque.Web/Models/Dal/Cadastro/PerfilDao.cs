@@ -32,7 +32,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
             return ret;
         }
 
-        public static List<PerfilModel> RecuperarLista(int pagina, int tamPagina, string filtro = "")
+        public static List<PerfilModel> RecuperarLista(int pagina, int tamPagina, string filtro = "", string ordem = "")
         {
             var ret = new List<PerfilModel>();
 
@@ -57,7 +57,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                         "select *" +
                         " from perfil" +
                         filtroWhere +
-                        " order by nome" +
+                         " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
                         " offset {0} rows fetch next {1} rows only",
                         pos > 0 ? pos - 1 : 0, tamPagina);
                     var reader = comando.ExecuteReader();

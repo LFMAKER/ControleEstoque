@@ -29,7 +29,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
             return ret;
         }
 
-        public static List<FornecedorModel> RecuperarLista(int pagina = 0, int tamPagina = 0, string filtro = "")
+        public static List<FornecedorModel> RecuperarLista(int pagina = 0, int tamPagina = 0, string filtro = "", string ordem = "")
         {
             var ret = new List<FornecedorModel>();
 

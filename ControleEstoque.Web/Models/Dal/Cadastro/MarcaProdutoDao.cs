@@ -30,7 +30,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
             return ret;
         }
 
-        public static List<MarcaProdutoModel> RecuperarLista(int pagina, int tamPagina, string filtro = "")
+        public static List<MarcaProdutoModel> RecuperarLista(int pagina, int tamPagina, string filtro = "", string ordem = "")
         {
             var ret = new List<MarcaProdutoModel>();
 
@@ -54,7 +54,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                        "select *" +
                         " from marca_produto" +
                         filtroWhere +
-                        " order by nome" +
+                        " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
                         " offset {0} rows fetch next {1} rows only",
                         pos > 0 ? pos - 1 : 0, tamPagina);
                     var reader = comando.ExecuteReader();

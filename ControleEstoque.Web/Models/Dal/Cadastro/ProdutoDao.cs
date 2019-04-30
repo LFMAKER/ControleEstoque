@@ -1,5 +1,4 @@
-﻿using ControleEstoque.Web.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -7,9 +6,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace ControleEstoque.Web.Dal.Cadastro
+namespace ControleEstoque.Web.Models.Dal.Cadastro
 {
-    public class PaisDao
+    public class ProdutoDao
     {
 
         public static int RecuperarQuantidade()
@@ -23,7 +22,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                 using (var comando = new SqlCommand())
                 {
                     comando.Connection = conexao;
-                    comando.CommandText = "select count(*) from pais";
+                    comando.CommandText = "select count(*) from produto";
                     ret = (int)comando.ExecuteScalar();
                 }
             }
@@ -31,9 +30,9 @@ namespace ControleEstoque.Web.Dal.Cadastro
             return ret;
         }
 
-        public static List<PaisModel> RecuperarLista(int pagina = 0, int tamPagina = 0, string filtro = "", string ordem = "")
+        public static List<ProdutoModel> RecuperarLista(int pagina = 0, int tamPagina = 0, string filtro = "", string ordem = "")
         {
-            var ret = new List<PaisModel>();
+            var ret = new List<ProdutoModel>();
 
             using (var conexao = new SqlConnection())
             {
@@ -46,7 +45,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                     var filtroWhere = "";
                     if (!string.IsNullOrEmpty(filtro))
                     {
-                        filtroWhere = string.Format(" where lower(nome) like '%{0}%'", filtro.ToLower());
+                        filtroWhere = string.Format(" where (lower(nome) like '%{0}%')", filtro.ToLower());
                     }
 
                     var paginacao = "";
@@ -59,7 +58,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                     comando.Connection = conexao;
                     comando.CommandText =
                         "select *" +
-                        " from pais" +
+                        " from produto" +
                         filtroWhere +
                         " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
                         paginacao;
@@ -67,13 +66,19 @@ namespace ControleEstoque.Web.Dal.Cadastro
                     var reader = comando.ExecuteReader();
                     while (reader.Read())
                     {
-                        ret.Add(new PaisModel
+                        ret.Add(new ProdutoModel
                         {
                             Id = (int)reader["id"],
+                            Codigo = (string)reader["codigo"],
                             Nome = (string)reader["nome"],
-                            NomePt = (string)reader["nome_pt"],
-                            Sigla = (string)reader["sigla"],
-                            Bacen = (string)reader["bacen"],
+                            PrecoCusto = (decimal)reader["preco_custo"],
+                            PrecoVenda = (decimal)reader["preco_venda"],
+                            QuantEstoque = (int)reader["quant_estoque"],
+                            IdUnidadeMedida = (int)reader["id_unidade_medida"],
+                            IdGrupo = (int)reader["id_grupo"],
+                            IdMarca = (int)reader["id_marca"],
+                            IdFornecedor = (int)reader["id_fornecedor"],
+                            IdLocalArmazenamento = (int)reader["id_local_armazenamento"],
                             Ativo = (bool)reader["ativo"]
                         });
                     }
@@ -83,9 +88,9 @@ namespace ControleEstoque.Web.Dal.Cadastro
             return ret;
         }
 
-        public static PaisModel RecuperarPeloId(int id)
+        public static ProdutoModel RecuperarPeloId(int id)
         {
-            PaisModel ret = null;
+            ProdutoModel ret = null;
 
             using (var conexao = new SqlConnection())
             {
@@ -94,20 +99,26 @@ namespace ControleEstoque.Web.Dal.Cadastro
                 using (var comando = new SqlCommand())
                 {
                     comando.Connection = conexao;
-                    comando.CommandText = "select * from pais where (id = @id)";
+                    comando.CommandText = "select * from produto where (id = @id)";
 
                     comando.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
                     var reader = comando.ExecuteReader();
                     if (reader.Read())
                     {
-                        ret = new PaisModel
+                        ret = new ProdutoModel
                         {
                             Id = (int)reader["id"],
+                            Codigo = (string)reader["codigo"],
                             Nome = (string)reader["nome"],
-                            NomePt = (string)reader["nome_pt"],
-                            Sigla = (string)reader["sigla"],
-                            Bacen = (string)reader["bacen"],
+                            PrecoCusto = (decimal)reader["preco_custo"],
+                            PrecoVenda = (decimal)reader["preco_venda"],
+                            QuantEstoque = (int)reader["quant_estoque"],
+                            IdUnidadeMedida = (int)reader["id_unidade_medida"],
+                            IdGrupo = (int)reader["id_grupo"],
+                            IdMarca = (int)reader["id_marca"],
+                            IdFornecedor = (int)reader["id_fornecedor"],
+                            IdLocalArmazenamento = (int)reader["id_local_armazenamento"],
                             Ativo = (bool)reader["ativo"]
                         };
                     }
@@ -130,7 +141,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                     using (var comando = new SqlCommand())
                     {
                         comando.Connection = conexao;
-                        comando.CommandText = "delete from pais where (id = @id)";
+                        comando.CommandText = "delete from produto where (id = @id)";
 
                         comando.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
@@ -142,7 +153,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
             return ret;
         }
 
-        public static int Salvar(PaisModel pm)
+        public static int Salvar(ProdutoModel pm)
         {
             var ret = 0;
 
@@ -158,26 +169,46 @@ namespace ControleEstoque.Web.Dal.Cadastro
 
                     if (model == null)
                     {
-                        comando.CommandText = "insert into pais (nome, nome_pt, sigla, bacen, ativo) VALUES(@nome, @nome_pt, @sigla, @bacen, @ativo); select convert(int, scope_identity())";
+                        comando.CommandText =
+                            "insert into produto " +
+                            "(codigo, nome, preco_custo, preco_venda, quant_estoque, id_unidade_medida, id_grupo, id_marca, " +
+                            "id_fornecedor, id_local_armazenamento, ativo) values " +
+                            "(@codigo, @nome, @preco_custo, @preco_venda, @quant_estoque, @id_unidade_medida, @id_grupo, @id_marca, " +
+                            "@id_fornecedor, @id_local_armazenamento, @ativo); select convert(int, scope_identity())";
 
-
+                        comando.Parameters.Add("@codigo", SqlDbType.VarChar).Value = pm.Codigo;
                         comando.Parameters.Add("@nome", SqlDbType.VarChar).Value = pm.Nome;
-                        comando.Parameters.Add("@nome_pt", SqlDbType.VarChar).Value = pm.NomePt;
-                        comando.Parameters.Add("@sigla", SqlDbType.VarChar).Value = pm.Sigla;
-                        comando.Parameters.Add("@bacen", SqlDbType.VarChar).Value = pm.Bacen;
+                        comando.Parameters.Add("@preco_custo", SqlDbType.Decimal).Value = pm.PrecoCusto;
+                        comando.Parameters.Add("@preco_venda", SqlDbType.Decimal).Value = pm.PrecoVenda;
+                        comando.Parameters.Add("@quant_estoque", SqlDbType.Int).Value = pm.QuantEstoque;
+                        comando.Parameters.Add("@id_unidade_medida", SqlDbType.Int).Value = pm.IdUnidadeMedida;
+                        comando.Parameters.Add("@id_grupo", SqlDbType.Int).Value = pm.IdGrupo;
+                        comando.Parameters.Add("@id_marca", SqlDbType.Int).Value = pm.IdMarca;
+                        comando.Parameters.Add("@id_fornecedor", SqlDbType.Int).Value = pm.IdFornecedor;
+                        comando.Parameters.Add("@id_local_armazenamento", SqlDbType.Int).Value = pm.IdLocalArmazenamento;
                         comando.Parameters.Add("@ativo", SqlDbType.VarChar).Value = (pm.Ativo ? 1 : 0);
 
                         ret = (int)comando.ExecuteScalar();
                     }
                     else
                     {
-                        comando.CommandText = "update pais set nome=@nome, nome_pt=@nome_pt, sigla=@sigla, bacen=@bacen, ativo=@ativo where id = @id";
+                        comando.CommandText =
+                            "update produto set codigo=@codigo, nome=@nome, preco_custo=@preco_custo, " +
+                            "preco_venda=@preco_venda, quant_estoque=@quant_estoque, id_unidade_medida=@id_unidade_medida, " +
+                            "id_grupo=@id_grupo, id_marca=@id_marca, id_fornecedor=@id_fornecedor, " +
+                            "id_local_armazenamento=@id_local_armazenamento, ativo=@ativo where id = @id";
 
                         comando.Parameters.Add("@id", SqlDbType.Int).Value = pm.Id;
+                        comando.Parameters.Add("@codigo", SqlDbType.VarChar).Value = pm.Codigo;
                         comando.Parameters.Add("@nome", SqlDbType.VarChar).Value = pm.Nome;
-                        comando.Parameters.Add("@nome_pt", SqlDbType.VarChar).Value = pm.NomePt;
-                        comando.Parameters.Add("@sigla", SqlDbType.VarChar).Value = pm.Sigla;
-                        comando.Parameters.Add("@bacen", SqlDbType.VarChar).Value = pm.Bacen;
+                        comando.Parameters.Add("@preco_custo", SqlDbType.Decimal).Value = pm.PrecoCusto;
+                        comando.Parameters.Add("@preco_venda", SqlDbType.Decimal).Value = pm.PrecoVenda;
+                        comando.Parameters.Add("@quant_estoque", SqlDbType.Int).Value = pm.QuantEstoque;
+                        comando.Parameters.Add("@id_unidade_medida", SqlDbType.Int).Value = pm.IdUnidadeMedida;
+                        comando.Parameters.Add("@id_grupo", SqlDbType.Int).Value = pm.IdGrupo;
+                        comando.Parameters.Add("@id_marca", SqlDbType.Int).Value = pm.IdMarca;
+                        comando.Parameters.Add("@id_fornecedor", SqlDbType.Int).Value = pm.IdFornecedor;
+                        comando.Parameters.Add("@id_local_armazenamento", SqlDbType.Int).Value = pm.IdLocalArmazenamento;
                         comando.Parameters.Add("@ativo", SqlDbType.VarChar).Value = (pm.Ativo ? 1 : 0);
 
                         if (comando.ExecuteNonQuery() > 0)
@@ -191,4 +222,4 @@ namespace ControleEstoque.Web.Dal.Cadastro
             return ret;
         }
     }
-}
+} 

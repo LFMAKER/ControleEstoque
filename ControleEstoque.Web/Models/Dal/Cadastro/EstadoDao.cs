@@ -31,7 +31,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
             return ret;
         }
 
-        public static List<EstadoModel> RecuperarLista(int pagina = 0, int tamPagina = 0, string filtro = "", int idPais = 0)
+        public static List<EstadoModel> RecuperarLista(int pagina = 0, int tamPagina = 0, string filtro = "", int idPais = 0, string ordem = "")
         {
             var ret = new List<EstadoModel>();
 
@@ -68,7 +68,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                         "select *" +
                         " from estado" +
                         filtroWhere +
-                        " order by nome" +
+                        " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
                         paginacao;
 
                     var reader = comando.ExecuteReader();

@@ -29,9 +29,9 @@ namespace ControleEstoque.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult PaisPagina(int pagina, int tamPag, string filtro)
+        public JsonResult PaisPagina(int pagina, int tamPag, string filtro, string ordem)
         {
-            var lista = PaisDao.RecuperarLista(pagina, tamPag, filtro);
+            var lista = PaisDao.RecuperarLista(pagina, tamPag, filtro, ordem: ordem);
 
             return Json(lista);
         }

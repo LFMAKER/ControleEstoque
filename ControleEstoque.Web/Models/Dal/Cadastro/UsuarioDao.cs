@@ -50,7 +50,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
         }
 
 
-        public static List<UsuarioModel> RecuperarLista(int pagina = -1, int tamPagina = -1, string filtro = "")
+        public static List<UsuarioModel> RecuperarLista(int pagina = -1, int tamPagina = -1, string filtro = "", string ordem = "")
         {
             var ret = new List<UsuarioModel>();
             using (var conexao = new SqlConnection())
@@ -75,8 +75,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                     if (pagina == -1 || tamPagina == -1)
                     {
 
-                        comando.CommandText = "select * from usuario " + filtroWhere + " order by nome";
-
+                        comando.CommandText = "select * from usuario " + filtroWhere + " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome");
                     }
                     else
                     {
@@ -86,7 +85,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                              "select *" +
                             " from usuario" +
                             filtroWhere +
-                            " order by nome" +
+                             " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
                             " offset {0} rows fetch next {1} rows only",
                             pos > 0 ? pos - 1 : 0, tamPagina);
 

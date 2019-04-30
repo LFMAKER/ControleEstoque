@@ -46,6 +46,30 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.Apis, Version=1.38.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.38.2\lib\net45\Google.Apis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.38.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.38.2\lib\net45\Google.Apis.Auth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.38.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.38.2\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.38.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.38.2\lib\net45\Google.Apis.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.38.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.38.2\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Sheets.v4, Version=1.38.2.1565, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Sheets.v4.1.38.2.1565\lib\net45\Google.Apis.Sheets.v4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -79,6 +103,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Node, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Node.1.0.0.0\lib\net45\Node.dll</HintPath>
       <Private>True</Private>
@@ -146,11 +174,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -159,16 +182,17 @@
     <Compile Include="Controllers\Cadastro\CadFornecedorController.cs" />
     <Compile Include="Controllers\Cadastro\CadPaisController.cs" />
     <Compile Include="Controllers\Cadastro\CadGrupoProdutoController.cs" />
-    <Compile Include="Controllers\CadastroController.cs" />
     <Compile Include="Controllers\Cadastro\CadLocalArmazenamentoController.cs" />
     <Compile Include="Controllers\Cadastro\CadMarcaProdutoController.cs" />
     <Compile Include="Controllers\Cadastro\CadPerfilController.cs" />
+    <Compile Include="Controllers\Cadastro\CadProdutoController.cs" />
     <Compile Include="Controllers\Cadastro\CadUnidadeMedidaController.cs" />
     <Compile Include="Controllers\Cadastro\CadUsuarioController.cs" />
     <Compile Include="Controllers\ContaController.cs" />
     <Compile Include="Controllers\GraficoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OperacaoController.cs" />
+    <Compile Include="Controllers\Operacao\OperEntradaProdutoController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RelatorioController.cs" />
     <Compile Include="Models\Dal\Cadastro\CidadeDao.cs" />
@@ -179,6 +203,7 @@
     <Compile Include="Models\Dal\Cadastro\MarcaProdutoDao.cs" />
     <Compile Include="Models\Dal\Cadastro\PaisDao.cs" />
     <Compile Include="Models\Dal\Cadastro\PerfilDao.cs" />
+    <Compile Include="Models\Dal\Cadastro\ProdutoDao.cs" />
     <Compile Include="Models\Dal\Cadastro\UnidadeMedidaDao.cs" />
     <Compile Include="Models\Dal\Cadastro\UsuarioDao.cs" />
     <Compile Include="Global.asax.cs">
@@ -194,6 +219,7 @@
     <Compile Include="Models\Domain\MarcaProdutoModel.cs" />
     <Compile Include="Models\Domain\PaisModel.cs" />
     <Compile Include="Models\Domain\PerfilModel.cs" />
+    <Compile Include="Models\Domain\ProdutoModel.cs" />
     <Compile Include="Models\Domain\Tipos.cs" />
     <Compile Include="Models\Domain\UnidadeMedidaModel.cs" />
     <Compile Include="Models\Domain\UsuarioModel.cs" />
@@ -217,6 +243,7 @@
     <Content Include="Content\Cadastro\MarcaProduto.css" />
     <Content Include="Content\Cadastro\Pais.css" />
     <Content Include="Content\Cadastro\Perfil.css" />
+    <Content Include="Content\Cadastro\Produto.css" />
     <Content Include="Content\Cadastro\UnidadeMedida.css" />
     <Content Include="Content\Cadastro\Usuario.css" />
     <Content Include="Content\Cadastro\GrupoProduto.css" />
@@ -247,6 +274,7 @@
     <Content Include="Scripts\Cadastro\MarcaProduto.js" />
     <Content Include="Scripts\Cadastro\Pais.js" />
     <Content Include="Scripts\Cadastro\Perfil.js" />
+    <Content Include="Scripts\Cadastro\Produto.js" />
     <Content Include="Scripts\Cadastro\UnidadeMedida.js" />
     <Content Include="Scripts\Cadastro\Usuario.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
@@ -268,6 +296,7 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <None Include=".bin\node.cmd" />
+    <Content Include="InventoryAnalytics-f0c3e627bfd6.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -311,15 +340,12 @@
     <Content Include="Views\Home\Sobre.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\CadGrupoProduto\Index.cshtml" />
-    <Content Include="Views\Cadastro\Produto.cshtml" />
     <Content Include="Views\CadUsuario\Index.cshtml" />
     <Content Include="Views\CadPais\Index.cshtml" />
-    <Content Include="Views\Cadastro\Fornecedor.cshtml" />
     <Content Include="Views\CadEstado\Index.cshtml" />
     <Content Include="Views\CadCidade\Index.cshtml" />
     <Content Include="Views\Grafico\PerdaMes.cshtml" />
     <Content Include="Views\Grafico\EntradaSaidaMesa.cshtml" />
-    <Content Include="Views\Operacao\EntradaEstoque.cshtml" />
     <Content Include="Views\Operacao\LancPerdaProduto.cshtml" />
     <Content Include="Views\Operacao\SaidaEstoque.cshtml" />
     <Content Include="Views\Operacao\Inventario.cshtml" />
@@ -342,8 +368,11 @@
     <Content Include="Views\CadLocalArmazenamento\Index.cshtml" />
     <Content Include="Views\CadMarcaProduto\Index.cshtml" />
     <Content Include="Views\CadFornecedor\Index.cshtml" />
+    <Content Include="Views\CadProduto\Index.cshtml" />
+    <Content Include="Views\OperEntradaProduto\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="API\" />
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
   </ItemGroup>
