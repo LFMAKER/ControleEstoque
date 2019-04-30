@@ -1,4 +1,12 @@
-﻿function set_dados_form(dados) {
+﻿/*
+Developed by Leonardo Oliveira
+Função: Responsável por implementar os dados do CRUD PAIS no CadBase.JS
+Data de criação: 30/04/2019
+*/
+
+
+
+function set_dados_form(dados) {
     $('#id_cadastro').val(dados.Id);
     $('#txt_nome').val(dados.Nome);
     $('#cbx_ativo').prop('checked', dados.Ativo);
@@ -23,7 +31,7 @@ function set_focus_form() {
 
 function set_dados_grid(dados) {
     return '<td>' + dados.Nome + '</td>' +
-           '<td>' + (dados.Ativo ? 'SIM' : 'NÃO') + '</td>';
+           '<td>' + (dados.Ativo ? 'Sim' : 'Não') + '</td>';
 }
 
 function get_dados_inclusao() {

@@ -313,16 +313,6 @@ namespace ControleEstoque.Web.Dal.Cadastro
 
 
 
-        public static string RecuperarTagRole(string id)
-        {
-            //UsuarioModel u = UsuarioModel.RecuperarIdLogado(id);
-            //PerfilModel p = PerfilModel.RecuperarPeloId(u.IdPerfil);
-            //string tag = p.Nome;
-            //return tag;
-            return null;
-        }
-
-
 
 
 

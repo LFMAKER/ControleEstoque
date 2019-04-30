@@ -1,18 +1,19 @@
-﻿@model List<ControleEstoque.Web.Models.MarcaProdutoModel>
+﻿@model List<ControleEstoque.Web.Models.EstadoModel>
 @{
     Layout = "~/Views/Shared/_Cadastro.cshtml";
-    ViewBag.Title = "Marca de Produtos";
+    ViewBag.Title = "Estados";
     ViewBag.Lista = Model;
-
+    ViewBag.Lista = Model;
 }
 
 @section Styles {
     <link href="~/Content/bootstrap-select.css" rel="stylesheet" />
-    <link href="~/Content/Cadastro/MarcaProduto.css" rel="stylesheet" />
+    <link href="~/Content/Cadastro/Estado.css" rel="stylesheet" />
 }
 
 @section TituloGrid {
     <th>Nome</th>
+    <th>UF</th>
     <th>Ativo</th>
     <th>Ação</th>
 }
@@ -29,6 +30,7 @@
 
                 <tr data-id="@item.Id">
                     <td>@item.Nome</td>
+                    <td>@item.UF</td>
                     <td>@ativo</td>
                     <td>
                         <a class="btn btn-primary btn-alterar" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
@@ -48,13 +50,25 @@
     <div class="row">
         <div class="form-group">
             @Html.Label("txt_nome", "Nome", new { @class = "col-md-3 control-label" })
-            <div class="col-md-12">
+            <div class="col-md-9">
                 @Html.TextBox("txt_nome", null, new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
+            @Html.Label("txt_uf", "UF", new { @class = "col-md-3 control-label" })
+            <div class="col-md-9">
+                @Html.TextBox("txt_uf", null, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("ddl_pais", "País", new { @class = "col-md-3 control-label" })
+            <div class="col-md-9">
+                @Html.DropDownList("ddl_pais", new SelectList(ViewBag.Paises, "Id", "Nome"), new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
             @Html.Label("cbx_ativo", "Ativo", new { @class = "col-md-3 control-label" })
-            <div class="col-md-12">
+            <div class="col-md-9">
                 @Html.CheckBox("cbx_ativo")
             </div>
         </div>
@@ -66,14 +80,14 @@
     <script>
 
         var titulo_pagina = '@ViewBag.Title';
-        var url_exclusao = '@Url.Action("ExcluirMarcaProduto", "CadMarcaProduto")';
-        var url_confirmar = '@Url.Action("SalvarMarcaProduto", "CadMarcaProduto")';
-        var url_page_click = '@Url.Action("MarcaProdutoPagina", "CadMarcaProduto")';
-        var url_alterar = '@Url.Action("RecuperarMarcaProduto", "CadMarcaProduto")';
-        var url_ddl_tam_pag = '@Url.Action("MarcaProdutoPagina", "CadMarcaProduto")';
-        var url_filtro_change = '@Url.Action("MarcaProdutoPagina", "CadMarcaProduto")';
+        var url_exclusao = '@Url.Action("ExcluirEstado", "CadEstado")';
+        var url_confirmar = '@Url.Action("SalvarEstado", "CadEstado")';
+        var url_page_click = '@Url.Action("EstadoPagina", "CadEstado")';
+        var url_alterar = '@Url.Action("RecuperarEstado", "CadEstado")';
+        var url_ddl_tam_pag = '@Url.Action("EstadoPagina", "CadEstado")';
+        var url_filtro_change = '@Url.Action("EstadoPagina", "CadEstado")';
 
 
     </script>
-    <script src="~/Scripts/Cadastro/MarcaProduto.js"></script>
+    <script src="~/Scripts/Cadastro/Estado.js"></script>
 } 

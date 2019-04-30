@@ -24,14 +24,14 @@
             linha++;
             if (linha <= ViewBag.QuantMaxLinhasPorPagina)
             {
-                var ativo = (item.Ativo ? "SIM" : "NÃO");
+                var ativo = (item.Ativo ? "Sim" : "Não");
 
                 <tr data-id="@item.Id">
                     <td>@item.Nome</td>
                     <td>@ativo</td>
                     <td>
-                        <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
-                        <a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                        <a class="btn btn-primary btn-alterar" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                        <a class="btn btn-danger btn-excluir" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
                     </td>
                 </tr>
             }

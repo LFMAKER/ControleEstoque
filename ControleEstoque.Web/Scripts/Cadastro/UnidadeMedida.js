@@ -1,4 +1,12 @@
-﻿function set_dados_form(dados) {
+﻿/*
+Developed by Leonardo Oliveira
+Função: Responsável por implementar os dados do CRUD UNIDADEMEDIDA no CadBase.JS
+Data de criação: 30/04/2019
+*/
+
+
+
+function set_dados_form(dados) {
     $('#id_cadastro').val(dados.Id);
     $('#txt_nome').val(dados.Nome);
     $('#txt_sigla').val(dados.Sigla);

@@ -1,10 +1,17 @@
-﻿//anti_forgery_token
+﻿/*
+Developed by Leonardo Oliveira
+Função: Servir de template para realizar todas calls dos cruds.
+Data de criação: 30/04/2019
+*/
+
+
+//anti_forgery_token
 function add_anti_forgery_token(data) {
     data.__RequestVerificationToken = $('[name=__RequestVerificationToken]').val();
     return data;
 }
 
-
+//Formanta a mensagem e avisos
 function formatar_mensagem_aviso(mensagens) {
     var ret = '';
     for (var i = 0; i < mensagens.length; i++) {
@@ -14,7 +21,7 @@ function formatar_mensagem_aviso(mensagens) {
 }
 
 
-
+//Função responsável por abrir o form do crud
 function abrir_form(dados) {
     set_dados_form(dados);
 
@@ -39,7 +46,7 @@ function abrir_form(dados) {
 }
 
 
-
+//Função responsável por criar linha na tabela
 function criar_linha_grid(dados) {
     var result = set_dados_grid(dados);
     var ret =
@@ -55,7 +62,7 @@ function criar_linha_grid(dados) {
 
 
 $(document).on('click', '#btn_incluir', function () {
-    abrir_form(get_dados_inclusao());
+    abrir_form(get_dados_inclusao()); 
 })
 .on('click', '.btn-alterar', function () {
     var btn = $(this),
@@ -73,6 +80,7 @@ $(document).on('click', '#btn_incluir', function () {
      });
 })
 .on('click', '.btn-excluir', function () {
+    
     var btn = $(this),
         tr = btn.closest('tr'),
         id = tr.attr('data-id'),

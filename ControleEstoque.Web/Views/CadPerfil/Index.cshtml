@@ -229,14 +229,14 @@
             linha++;
             if (linha <= ViewBag.QuantMaxLinhasPorPagina)
             {
-                var ativo = (item.Ativo ? "SIM" : "NÃO");
+                var ativo = (item.Ativo ? "Sim" : "Não");
 
                 <tr data-id="@item.Id">
                     <td>@item.Nome</td>
                     <td>@ativo</td>
                     <td>
-                        <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
-                        <a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                        <a class="btn btn-primary btn-alterar" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                        <a class="btn btn-danger btn-excluir" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
                     </td>
                 </tr>
             }
@@ -265,6 +265,9 @@
 
         </div>
     </div>
+</div>
+<div class="alert alert-warning" role="alert">
+    ATENÇÃO: NENHUM USUÁRIO DEVE SER SELECIONADO QUANDO ESTIVER CADASTRANDO O PERFIL! DEFINA OS USUÁRIOS COM A OPÇÃO EDITAR
 </div>
 <div class="form-group row" style="margin: 0 10px 0 2px">
     <div class="col-auto my-1">
