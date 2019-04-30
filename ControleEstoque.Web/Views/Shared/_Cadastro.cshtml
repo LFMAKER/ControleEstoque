@@ -7,7 +7,7 @@
 
 @{
     var lista = ViewBag.Lista;
-    ViewBag.Title = "Cadastro de " + ViewBag.Title;
+    ViewBag.Title = "Gerenciamento de " + ViewBag.Title;
     var titulo = ViewBag.Title;
 }
 
@@ -77,7 +77,7 @@
     </section>
 </div>
 @Html.Hidden("id_cadastro")
-<div id="modal_cadastro" class="form-horizontal invisivel" role="dialog">
+<div id="modal_cadastro" class="invisivel" role="dialog">
     <div id="msg_mensagem_aviso" class="text-dark invisivel"></div>
     <fieldset>
         @Html.AntiForgeryToken()
@@ -96,6 +96,8 @@
 @section Scripts{
     @RenderSection("Scripts", true)
     <script src="~/Scripts/Cadastro/CadBase.js"></script>
+    <script src="~/Scripts/jquery.mask.min.js"></script>
+    <script src="~/Scripts/jquery.mask.js"></script>
 
 
 }

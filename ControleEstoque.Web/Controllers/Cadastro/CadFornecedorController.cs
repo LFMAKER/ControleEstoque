@@ -1,5 +1,6 @@
 ﻿using ControleEstoque.Web.Dal.Cadastro;
 using ControleEstoque.Web.Models;
+using ControleEstoque.Web.Models.Dal.Cadastro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Web.Mvc;
 namespace ControleEstoque.Web.Controllers
 {
     [Authorize(Roles = "Gerente,Administrativo,Operador")]
-    public class CadEstadoController : Controller
+    public class CadFornecedorController : Controller
     {
         private const int _quantMaxLinhasPorPagina = 5;
 
@@ -18,8 +19,8 @@ namespace ControleEstoque.Web.Controllers
             ViewBag.QuantMaxLinhasPorPagina = _quantMaxLinhasPorPagina;
             ViewBag.PaginaAtual = 1;
 
-            var lista = EstadoDao.RecuperarLista(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
-            var quant = EstadoDao.RecuperarQuantidade();
+            var lista = FornecedorDao.RecuperarLista(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
+            var quant = FornecedorDao.RecuperarQuantidade();
 
             var difQuantPaginas = (quant % ViewBag.QuantMaxLinhasPorPagina) > 0 ? 1 : 0;
             ViewBag.QuantPaginas = (quant / ViewBag.QuantMaxLinhasPorPagina) + difQuantPaginas;
@@ -30,41 +31,31 @@ namespace ControleEstoque.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult EstadoPagina(int pagina, int tamPag, string filtro)
+        public JsonResult FornecedorPagina(int pagina, int tamPag)
         {
-            var lista = EstadoDao.RecuperarLista(pagina, tamPag, filtro);
+            var lista = FornecedorDao.RecuperarLista(pagina, tamPag);
 
             return Json(lista);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult RecuperarEstadosDoPais(int idPais)
+        public JsonResult RecuperarFornecedor(int id)
         {
-            var lista = EstadoDao.RecuperarLista(idPais: idPais);
-
-            return Json(lista);
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public JsonResult RecuperarEstado(int id)
-        {
-            return Json(EstadoDao.RecuperarPeloId(id));
+            return Json(FornecedorDao.RecuperarPeloId(id));
         }
 
         [HttpPost]
         [Authorize(Roles = "Gerente,Administrativo")]
         [ValidateAntiForgeryToken]
-        public JsonResult ExcluirEstado(int id)
+        public JsonResult ExcluirFornecedor(int id)
         {
-            return Json(EstadoDao.ExcluirPeloId(id));
+            return Json(FornecedorDao.ExcluirPeloId(id));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult SalvarEstado(EstadoModel model)
+        public JsonResult SalvarFornecedor(FornecedorModel model)
         {
             var resultado = "OK";
             var mensagens = new List<string>();
@@ -79,7 +70,7 @@ namespace ControleEstoque.Web.Controllers
             {
                 try
                 {
-                    var id = EstadoDao.Salvar(model);
+                    var id = FornecedorDao.Salvar(model);
                     if (id > 0)
                     {
                         idSalvo = id.ToString();

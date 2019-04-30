@@ -54,6 +54,17 @@ namespace ControleEstoque.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public JsonResult RecuperarCidadesDoEstado(int idEstado)
+        {
+            var lista = CidadeDao.RecuperarLista(idEstado: idEstado);
+
+            return Json(lista);
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult SalvarCidade(CidadeModel model)
         {
             var resultado = "OK";

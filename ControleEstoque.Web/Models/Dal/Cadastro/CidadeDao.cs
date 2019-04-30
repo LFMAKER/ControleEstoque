@@ -31,7 +31,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
             return ret;
         }
 
-        public static List<CidadeModel> RecuperarLista(int pagina = 0, int tamPagina = 0, string filtro = "")
+        public static List<CidadeModel> RecuperarLista(int pagina = 0, int tamPagina = 0, string filtro = "", int idEstado = 0)
         {
             var ret = new List<CidadeModel>();
 
@@ -47,6 +47,11 @@ namespace ControleEstoque.Web.Dal.Cadastro
                     if (!string.IsNullOrEmpty(filtro))
                     {
                         filtroWhere = string.Format(" (lower(c.nome) like '%{0}%') and", filtro.ToLower());
+                    }
+
+                    if (idEstado > 0)
+                    {
+                        filtroWhere += string.Format(" (id_estado = {0}) and", idEstado);
                     }
 
                     var paginacao = "";

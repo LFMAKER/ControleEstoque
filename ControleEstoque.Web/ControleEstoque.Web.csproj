@@ -156,6 +156,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\Cadastro\CadCidadeController.cs" />
     <Compile Include="Controllers\Cadastro\CadEstadoController.cs" />
+    <Compile Include="Controllers\Cadastro\CadFornecedorController.cs" />
     <Compile Include="Controllers\Cadastro\CadPaisController.cs" />
     <Compile Include="Controllers\Cadastro\CadGrupoProdutoController.cs" />
     <Compile Include="Controllers\CadastroController.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="Controllers\RelatorioController.cs" />
     <Compile Include="Models\Dal\Cadastro\CidadeDao.cs" />
     <Compile Include="Models\Dal\Cadastro\EstadoDao.cs" />
+    <Compile Include="Models\Dal\Cadastro\FornecedorDao.cs" />
     <Compile Include="Models\Dal\Cadastro\GrupoProdutoDao.cs" />
     <Compile Include="Models\Dal\Cadastro\LocalArmazenamentoDao.cs" />
     <Compile Include="Models\Dal\Cadastro\MarcaProdutoDao.cs" />
@@ -185,12 +187,14 @@
     <Compile Include="Helpers\CriptoHelper.cs" />
     <Compile Include="Models\Domain\CidadeModel.cs" />
     <Compile Include="Models\Domain\EstadoModel.cs" />
+    <Compile Include="Models\Domain\FornecedorModel.cs" />
     <Compile Include="Models\Domain\GrupoProdutoModel.cs" />
     <Compile Include="Models\Domain\LocalArmazenamentoModel.cs" />
     <Compile Include="Models\Domain\LoginViewModel.cs" />
     <Compile Include="Models\Domain\MarcaProdutoModel.cs" />
     <Compile Include="Models\Domain\PaisModel.cs" />
     <Compile Include="Models\Domain\PerfilModel.cs" />
+    <Compile Include="Models\Domain\Tipos.cs" />
     <Compile Include="Models\Domain\UnidadeMedidaModel.cs" />
     <Compile Include="Models\Domain\UsuarioModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -208,6 +212,7 @@
     <Content Include="Content\bulma.min.css" />
     <Content Include="Content\Cadastro\Cidade.css" />
     <Content Include="Content\Cadastro\Estado.css" />
+    <Content Include="Content\Cadastro\Fornecedor.css" />
     <Content Include="Content\Cadastro\LocalArmazenamento.css" />
     <Content Include="Content\Cadastro\MarcaProduto.css" />
     <Content Include="Content\Cadastro\Pais.css" />
@@ -236,6 +241,7 @@
     <Content Include="Scripts\Cadastro\CadBase.js" />
     <Content Include="Scripts\Cadastro\Cidade.js" />
     <Content Include="Scripts\Cadastro\Estado.js" />
+    <Content Include="Scripts\Cadastro\Fornecedor.js" />
     <Content Include="Scripts\Cadastro\GrupoProduto.js" />
     <Content Include="Scripts\Cadastro\LocalArmazenamento.js" />
     <Content Include="Scripts\Cadastro\MarcaProduto.js" />
@@ -271,6 +277,8 @@
     <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.0.0.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.mask.js" />
+    <Content Include="Scripts\jquery.mask.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -333,6 +341,7 @@
     <Content Include="Views\CadPerfil\Index.cshtml" />
     <Content Include="Views\CadLocalArmazenamento\Index.cshtml" />
     <Content Include="Views\CadMarcaProduto\Index.cshtml" />
+    <Content Include="Views\CadFornecedor\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

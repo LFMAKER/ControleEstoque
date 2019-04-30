@@ -32,7 +32,8 @@ function abrir_form(dados) {
     $('#msg_erro').hide();
     bootbox.dialog({
         title: 'Cadastro de ' + titulo_pagina,
-        message: modal_cadastro
+        message: modal_cadastro,
+        className: 'dialogo',
     })
     .on('shown.bs.modal', function () {
         modal_cadastro.show(0, function () {
@@ -81,49 +82,65 @@ $(document).on('click', '#btn_incluir', function () {
 })
 .on('click', '.btn-excluir', function () {
     
+    //o que será enviado no post
     var btn = $(this),
-        tr = btn.closest('tr'),
-        id = tr.attr('data-id'),
-        url = url_exclusao,
-        param = { 'id': id };
-    bootbox.confirm({
-        message: "Realmente deseja excluir o " + titulo_pagina + "?",
-        buttons: {
-            confirm: {
-                label: 'Sim',
-                className: 'btn-danger'
-            },
-            cancel: {
-                label: 'Não',
-                className: 'btn-success'
-            }
-        },
-        callback: function (result) {
-            if (result) {
-                $.post(url, add_anti_forgery_token(param), function (response) {
-                    if (response) {
-                        tr.remove();
-                        var quant = $('#grid_cadastro > tbody > tr').length;
-                        if(quant == 0){
-                            $('#grid_cadastro').addClass('invisivel');
-                            $('#mensagem_grid').removeClass('invisivel');
-                            
-                        }
+    tr = btn.closest('tr'),
+    id = tr.attr('data-id'),
+    url = url_exclusao,
+    param = { 'id': id };
 
-                        Swal.fire({
-                            type: 'success',
-                            title: titulo_pagina + ' foi excluído(a) com sucesso!',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                       
+    //Dialog
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: true,
+       
+    })
+    swalWithBootstrapButtons.fire({
+        title: 'Você tem certeza?',
+        text: "Você não poderá desfazer isso!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Excluir',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.value) {
+            //Realizar POST 
+            $.post(url, add_anti_forgery_token(param), function (response) {
+                if (response) {
+                    tr.remove();
+                    var quant = $('#grid_cadastro > tbody > tr').length;
+                    if (quant == 0) {
+                        $('#grid_cadastro').addClass('invisivel');
+                        $('#mensagem_grid').removeClass('invisivel');
                     }
-                }).fail(function () {
-                    swal('Aviso', 'Não foi possível excluir as informações. Tente novamente em instantes.', 'warning');
-                });
-            }
+
+              
+                }
+            }).fail(function () {
+                swal('Aviso', 'Não foi possível excluir as informações. Tente novamente em instantes.', 'warning');
+            })
+            swalWithBootstrapButtons.fire(
+             'Deletado!',
+             titulo_pagina + ' foi deletado com sucesso.',
+             'success'
+             )
+            
+         
+        } else if (
+            // Read more about handling dismissals
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+              'Cancelado',
+              titulo_pagina + ' está seguro :)',
+              'error'
+            )
         }
-    });
+    })
 })
 
 
