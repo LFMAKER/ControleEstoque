@@ -1,11 +1,10 @@
 ﻿using ControleEstoque.Web.Models;
-using System;
+using Dapper;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Configuration;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 
 namespace ControleEstoque.Web.Dal.Cadastro
 {
@@ -21,18 +20,13 @@ namespace ControleEstoque.Web.Dal.Cadastro
             {
                 conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
                 conexao.Open();
-                using (var comando = new SqlCommand())
-                {
-                    comando.Connection = conexao;
-                    comando.CommandText = "select count(*) from perfil";
-                    ret = (int)comando.ExecuteScalar();
-                }
+                ret = conexao.ExecuteScalar<int>("select count(*) from perfil");
             }
 
             return ret;
         }
 
-        public static List<PerfilModel> RecuperarLista(int pagina, int tamPagina, string filtro = "", string ordem = "")
+        public static List<PerfilModel> RecuperarLista(int pagina, int tamPagina, string ordem = "")
         {
             var ret = new List<PerfilModel>();
 
@@ -40,37 +34,17 @@ namespace ControleEstoque.Web.Dal.Cadastro
             {
                 conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
                 conexao.Open();
-                using (var comando = new SqlCommand())
-                {
-                    var pos = (pagina - 1) * tamPagina;
 
-                    var filtroWhere = "";
-                    if (!string.IsNullOrEmpty(filtro))
-                    {
-                        filtroWhere = string.Format(" where lower(nome) like '%{0}%'", filtro.ToLower());
-                    }
+                var pos = (pagina - 1) * tamPagina;
 
+                var sql = string.Format(
+                    "select *" +
+                    " from perfil" +
+                    " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
+                    " offset {0} rows fetch next {1} rows only",
+                    pos > 0 ? pos - 1 : 0, tamPagina);
 
-
-                    comando.Connection = conexao;
-                    comando.CommandText = string.Format(
-                        "select *" +
-                        " from perfil" +
-                        filtroWhere +
-                         " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
-                        " offset {0} rows fetch next {1} rows only",
-                        pos > 0 ? pos - 1 : 0, tamPagina);
-                    var reader = comando.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        ret.Add(new PerfilModel
-                        {
-                            Id = (int)reader["id"],
-                            Nome = (string)reader["nome"],
-                            Ativo = (bool)reader["ativo"]
-                        });
-                    }
-                }
+                ret = conexao.Query<PerfilModel>(sql).ToList();
             }
 
             return ret;
@@ -83,30 +57,15 @@ namespace ControleEstoque.Web.Dal.Cadastro
             {
                 conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
                 conexao.Open();
-                using (var comando = new SqlCommand())
-                {
-                    comando.Connection = conexao;
-                    comando.CommandText =
-                        "select u.* " +
-                        "from perfil_usuario pu, usuario u " +
-                        "where (pu.id_perfil = @id_perfil) and (pu.id_usuario = u.id)";
 
-                    comando.Parameters.Add("@id_perfil", SqlDbType.Int).Value = pm.Id;
-
-                    var reader = comando.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        pm.Usuarios.Add(new UsuarioModel
-                        {
-                            Id = (int)reader["id"],
-                            Nome = (string)reader["nome"],
-                            Login = (string)reader["login"]
-                        });
-                    }
-                }
+                var sql =
+                    "select u.* " +
+                    "from perfil_usuario pu, usuario u " +
+                    "where (pu.id_perfil = @id_perfil) and (pu.id_usuario = u.id)";
+                var parametros = new { id_perfil = pm.Id };
+                pm.Usuarios = conexao.Query<UsuarioModel>(sql, parametros).ToList();
             }
         }
-
 
         public static List<PerfilModel> RecuperarListaAtivos()
         {
@@ -116,21 +75,9 @@ namespace ControleEstoque.Web.Dal.Cadastro
             {
                 conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
                 conexao.Open();
-                using (var comando = new SqlCommand())
-                {
-                    comando.Connection = conexao;
-                    comando.CommandText = string.Format("select * from perfil where ativo=1 order by nome");
-                    var reader = comando.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        ret.Add(new PerfilModel
-                        {
-                            Id = (int)reader["id"],
-                            Nome = (string)reader["nome"],
-                            Ativo = (bool)reader["ativo"]
-                        });
-                    }
-                }
+
+                var sql = "select * from perfil where ativo=1 order by nome";
+                ret = conexao.Query<PerfilModel>(sql).ToList();
             }
 
             return ret;
@@ -144,24 +91,10 @@ namespace ControleEstoque.Web.Dal.Cadastro
             {
                 conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
                 conexao.Open();
-                using (var comando = new SqlCommand())
-                {
-                    comando.Connection = conexao;
-                    comando.CommandText = "select * from perfil where (id = @id)";
 
-                    comando.Parameters.Add("@id", SqlDbType.Int).Value = id;
-
-                    var reader = comando.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        ret = new PerfilModel
-                        {
-                            Id = (int)reader["id"],
-                            Nome = (string)reader["nome"],
-                            Ativo = (bool)reader["ativo"]
-                        };
-                    }
-                }
+                var sql = "select * from perfil where (id = @id)";
+                var parametros = new { id };
+                ret = conexao.Query<PerfilModel>(sql, parametros).SingleOrDefault();
             }
 
             return ret;
@@ -170,6 +103,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
         public static bool ExcluirPeloId(int id)
         {
             var ret = false;
+            
 
             if (RecuperarPeloId(id) != null)
             {
@@ -177,15 +111,20 @@ namespace ControleEstoque.Web.Dal.Cadastro
                 {
                     conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
                     conexao.Open();
-                    using (var comando = new SqlCommand())
-                    {
-                        comando.Connection = conexao;
-                        comando.CommandText = "delete from perfil where (id = @id)";
 
-                        comando.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                    //Removendo o vinculo com o perfil_usuario para poder apagar o perfil
+                    var sql = "delete from perfil_usuario where (id_perfil = @id)";
+                    var parametros = new { id };
+                    conexao.Execute(sql, parametros);
 
-                        ret = (comando.ExecuteNonQuery() > 0);
-                    }
+
+                    sql = "delete from perfil where (id = @id)";
+                    parametros = new { id };
+                    ret = (conexao.Execute(sql, parametros) > 0);
+
+                  
+
+
                 }
             }
 
@@ -205,114 +144,46 @@ namespace ControleEstoque.Web.Dal.Cadastro
 
                 using (var transacao = conexao.BeginTransaction())
                 {
-                    using (var comando = new SqlCommand())
+                    if (model == null)
                     {
-                        comando.Connection = conexao;
-                        comando.Transaction = transacao;
-
-                        if (model == null)
+                        var sql = "insert into perfil (nome, ativo) values (@nome, @ativo); select convert(int, scope_identity())";
+                        var parametros = new { nome = pm.Nome, ativo = (pm.Ativo ? 1 : 0) };
+                        ret = conexao.ExecuteScalar<int>(sql, parametros, transacao);
+                        pm.Id = ret;
+                    }
+                    else
+                    {
+                        var sql = "update perfil set nome=@nome, ativo=@ativo where id = @id";
+                        var parametros = new { id = pm.Id, nome = pm.Nome, ativo = (pm.Ativo ? 1 : 0) };
+                        if (conexao.Execute(sql, parametros, transacao) > 0)
                         {
-                            comando.CommandText = "insert into perfil (nome, ativo) values (@nome, @ativo); select convert(int, scope_identity())";
-
-                            comando.Parameters.Add("@nome", SqlDbType.VarChar).Value = pm.Nome;
-                            comando.Parameters.Add("@ativo", SqlDbType.VarChar).Value = (pm.Ativo ? 1 : 0);
-
-                            ret = (int)comando.ExecuteScalar();
-                        }
-                        else
-                        {
-                            comando.CommandText = "update perfil set nome=@nome, ativo=@ativo where id = @id";
-
-                            comando.Parameters.Add("@nome", SqlDbType.VarChar).Value = pm.Nome;
-                            comando.Parameters.Add("@ativo", SqlDbType.VarChar).Value = (pm.Ativo ? 1 : 0);
-                            comando.Parameters.Add("@id", SqlDbType.Int).Value = pm.Id;
-
-                            if (comando.ExecuteNonQuery() > 0)
-                            {
-                                ret = pm.Id;
-                            }
+                            ret = pm.Id;
                         }
                     }
+
                     if (pm.Usuarios != null && pm.Usuarios.Count > 0)
                     {
+                        var sql = "delete from perfil_usuario where (id_perfil = @id_perfil)";
+                        var parametros = new { id_perfil = pm.Id };
+                        conexao.Execute(sql, parametros, transacao);
 
-                        using (var comandoExclusaoPerfilUsuario = new SqlCommand())
-                        {
-                            comandoExclusaoPerfilUsuario.Connection = conexao;
-                            comandoExclusaoPerfilUsuario.Transaction = transacao;
-
-
-                            comandoExclusaoPerfilUsuario.CommandText = "delete from perfil_usuario where (id_perfil = @id_perfil)";
-
-                            comandoExclusaoPerfilUsuario.Parameters.Add("@id_perfil", SqlDbType.Int).Value = pm.Id;
-
-                            comandoExclusaoPerfilUsuario.ExecuteScalar();
-
-                        }
                         if (pm.Usuarios[0].Id != -1)
                         {
                             foreach (var usuario in pm.Usuarios)
                             {
-                                using (var comandoInclusaoPerfilUsuario = new SqlCommand())
-                                {
-                                    comandoInclusaoPerfilUsuario.Connection = conexao;
-                                    comandoInclusaoPerfilUsuario.Transaction = transacao;
-
-
-                                    comandoInclusaoPerfilUsuario.CommandText = "insert into perfil_usuario (id_perfil, id_usuario) values (@id_perfil, @id_usuario)";
-
-                                    comandoInclusaoPerfilUsuario.Parameters.Add("@id_perfil", SqlDbType.Int).Value = pm.Id;
-                                    comandoInclusaoPerfilUsuario.Parameters.Add("@id_usuario", SqlDbType.Int).Value = usuario.Id;
-
-                                    comandoInclusaoPerfilUsuario.ExecuteScalar();
-
-                                }
+                                sql = "insert into perfil_usuario (id_perfil, id_usuario) values (@id_perfil, @id_usuario)";
+                                var parametrosUsuario = new { id_perfil = pm.Id, id_usuario = usuario.Id };
+                                conexao.Execute(sql, parametrosUsuario, transacao);
                             }
                         }
                     }
+
                     transacao.Commit();
                 }
-
             }
 
             return ret;
         }
-
-        public static UsuarioModel tagLayout(string login)
-        {
-            UsuarioModel ret = null;
-            using (var conexao = new SqlConnection())
-            {
-
-                conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-                conexao.Open();
-                using (var comando = new SqlCommand())
-                {
-                    comando.Connection = conexao;
-                    comando.CommandText = "select * from usuario where (login = @login)";
-
-                    //Evitando SQL INJECTION
-                    comando.Parameters.Add("@login", SqlDbType.VarChar).Value = login;
-                    var reader = comando.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        ret = new UsuarioModel
-                        {
-                            Id = (int)reader["id"],
-                            Nome = (string)reader["nome"],
-                            Login = (string)reader["login"],
-                            Senha = (string)reader["senha"]
-                        };
-                    }
-                }
-            }
-
-            return ret;
-        }
-
-
-
-
 
 
 

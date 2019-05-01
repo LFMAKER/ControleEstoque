@@ -31,7 +31,7 @@ namespace ControleEstoque.Web.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult LocalArmazenamentoPagina(int pagina, int tamPag, string filtro, string ordem)
         {
-            var lista = LocalArmazenamentoDao.RecuperarLista(pagina, tamPag, filtro, ordem: ordem);
+            var lista = LocalArmazenamentoDao.RecuperarLista(pagina, tamPag, filtro);
 
             return Json(lista);
         }

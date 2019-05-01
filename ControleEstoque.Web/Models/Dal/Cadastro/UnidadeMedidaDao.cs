@@ -1,17 +1,15 @@
 ﻿using ControleEstoque.Web.Models;
-using System;
+using Dapper;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Configuration;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 
 namespace ControleEstoque.Web.Dal.Cadastro
 {
     public class UnidadeMedidaDao
     {
-
 
         public static int RecuperarQuantidade()
         {
@@ -21,18 +19,14 @@ namespace ControleEstoque.Web.Dal.Cadastro
             {
                 conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
                 conexao.Open();
-                using (var comando = new SqlCommand())
-                {
-                    comando.Connection = conexao;
-                    comando.CommandText = "select count(*) from unidade_medida";
-                    ret = (int)comando.ExecuteScalar();
-                }
+
+                ret = conexao.ExecuteScalar<int>("select count(*) from unidade_medida");
             }
 
             return ret;
         }
 
-        public static List<UnidadeMedidaModel> RecuperarLista(int pagina, int tamPagina, string filtro = "", string ordem = "")
+        public static List<UnidadeMedidaModel> RecuperarLista(int pagina, int tamPagina, string ordem = "")
         {
             var ret = new List<UnidadeMedidaModel>();
 
@@ -40,36 +34,17 @@ namespace ControleEstoque.Web.Dal.Cadastro
             {
                 conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
                 conexao.Open();
-                using (var comando = new SqlCommand())
-                {
-                    var pos = (pagina - 1) * tamPagina;
 
-                    var filtroWhere = "";
-                    if (!string.IsNullOrEmpty(filtro))
-                    {
-                        filtroWhere = string.Format(" where lower(nome) like '%{0}%'", filtro.ToLower());
-                    }
+                var pos = (pagina - 1) * tamPagina;
 
-                    comando.Connection = conexao;
-                    comando.CommandText = string.Format(
-                        "select *" +
-                        " from unidade_medida" +
-                        filtroWhere +
-                        " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
-                        " offset {0} rows fetch next {1} rows only",
-                        pos > 0 ? pos - 1 : 0, tamPagina);
-                    var reader = comando.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        ret.Add(new UnidadeMedidaModel
-                        {
-                            Id = (int)reader["id"],
-                            Nome = (string)reader["nome"],
-                            Sigla = (string)reader["sigla"],
-                            Ativo = (bool)reader["ativo"]
-                        });
-                    }
-                }
+                var sql = string.Format(
+                    "select *" +
+                    " from unidade_medida" +
+                    " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
+                    " offset {0} rows fetch next {1} rows only",
+                    pos > 0 ? pos - 1 : 0, tamPagina);
+
+                ret = conexao.Query<UnidadeMedidaModel>(sql).ToList();
             }
 
             return ret;
@@ -83,25 +58,10 @@ namespace ControleEstoque.Web.Dal.Cadastro
             {
                 conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
                 conexao.Open();
-                using (var comando = new SqlCommand())
-                {
-                    comando.Connection = conexao;
-                    comando.CommandText = "select * from unidade_medida where (id = @id)";
 
-                    comando.Parameters.Add("@id", SqlDbType.Int).Value = id;
-
-                    var reader = comando.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        ret = new UnidadeMedidaModel
-                        {
-                            Id = (int)reader["id"],
-                            Nome = (string)reader["nome"],
-                            Sigla = (string)reader["sigla"],
-                            Ativo = (bool)reader["ativo"]
-                        };
-                    }
-                }
+                var sql = "select * from unidade_medida where (id = @id)";
+                var parametros = new { id };
+                ret = conexao.Query<UnidadeMedidaModel>(sql, parametros).SingleOrDefault();
             }
 
             return ret;
@@ -117,58 +77,40 @@ namespace ControleEstoque.Web.Dal.Cadastro
                 {
                     conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
                     conexao.Open();
-                    using (var comando = new SqlCommand())
-                    {
-                        comando.Connection = conexao;
-                        comando.CommandText = "delete from unidade_medida where (id = @id)";
 
-                        comando.Parameters.Add("@id", SqlDbType.Int).Value = id;
-
-                        ret = (comando.ExecuteNonQuery() > 0);
-                    }
+                    var sql = "delete from unidade_medida where (id = @id)";
+                    var parametros = new { id };
+                    ret = (conexao.Execute(sql, parametros) > 0);
                 }
             }
 
             return ret;
         }
 
-        public static int Salvar(UnidadeMedidaModel umm)
+        public static int Salvar(UnidadeMedidaModel um)
         {
             var ret = 0;
 
-            var model = RecuperarPeloId(umm.Id);
+            var model = RecuperarPeloId(um.Id);
 
             using (var conexao = new SqlConnection())
             {
                 conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
                 conexao.Open();
-                using (var comando = new SqlCommand())
+
+                if (model == null)
                 {
-                    comando.Connection = conexao;
-
-                    if (model == null)
+                    var sql = "insert into unidade_medida (nome, sigla, ativo) values (@nome, @sigla, @ativo); select convert(int, scope_identity())";
+                    var parametros = new { nome = um.Nome, sigla = um.Sigla, ativo = (um.Ativo ? 1 : 0) };
+                    ret = conexao.ExecuteScalar<int>(sql, parametros);
+                }
+                else
+                {
+                    var sql = "update unidade_medida set nome=@nome, sigla=@sigla, ativo=@ativo where id = @id";
+                    var parametros = new { id = um.Id, nome = um.Nome, sigla = um.Sigla, ativo = (um.Ativo ? 1 : 0) };
+                    if (conexao.Execute(sql, parametros) > 0)
                     {
-                        comando.CommandText = "insert into unidade_medida (nome, sigla, ativo) values (@nome, @sigla, @ativo); select convert(int, scope_identity())";
-
-                        comando.Parameters.Add("@nome", SqlDbType.VarChar).Value = umm.Nome;
-                        comando.Parameters.Add("@sigla", SqlDbType.VarChar).Value = umm.Sigla;
-                        comando.Parameters.Add("@ativo", SqlDbType.VarChar).Value = (umm.Ativo ? 1 : 0);
-
-                        ret = (int)comando.ExecuteScalar();
-                    }
-                    else
-                    {
-                        comando.CommandText = "update unidade_medida set nome=@nome, sigla=@sigla, ativo=@ativo where id = @id";
-
-                        comando.Parameters.Add("@nome", SqlDbType.VarChar).Value = umm.Nome;
-                        comando.Parameters.Add("@sigla", SqlDbType.VarChar).Value = umm.Sigla;
-                        comando.Parameters.Add("@ativo", SqlDbType.VarChar).Value = (umm.Ativo ? 1 : 0);
-                        comando.Parameters.Add("@id", SqlDbType.Int).Value = umm.Id;
-
-                        if (comando.ExecuteNonQuery() > 0)
-                        {
-                            ret = umm.Id;
-                        }
+                        ret = um.Id;
                     }
                 }
             }

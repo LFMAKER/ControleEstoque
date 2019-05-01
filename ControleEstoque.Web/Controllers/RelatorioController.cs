@@ -11,7 +11,11 @@ namespace ControleEstoque.Web.Controllers
         [Authorize]
         public ActionResult PosicaoEstoque()
         {
+
+
+
             return View();
+           
         }
         [Authorize]
         public ActionResult Ressuprimento()

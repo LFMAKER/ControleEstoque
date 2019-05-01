@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Entrada de produtos";
+    ViewBag.Title = "Saída de produtos";
 }
 
 <style>
@@ -7,11 +7,11 @@
         width: 150px;
     }
 
-    #entrada_produtos .row {
+    #saida_produtos .row {
         margin: 15px 0;
     }
 
-    #entrada_produtos{
+    #saida_produtos{
         margin: auto;
         padding-top: 40px;
     }
@@ -19,7 +19,7 @@
 
 <div class="row">
     <div style="margin: 15px" class="col-md-12">
-        <div id="entrada_produtos" class="col-md-6 col-md-offset-3">
+        <div id="saida_produtos" class="col-md-6 col-md-offset-3">
             <h3 class="text-center">@ViewBag.Title</h3>
             <hr />
             <div id="msg_mensagem_aviso" class="text-danger invisivel"></div>
@@ -76,14 +76,11 @@
     <script>
 
 
-
         //anti_forgery_token
         function add_anti_forgery_token(data) {
             data.__RequestVerificationToken = $('[name=__RequestVerificationToken]').val();
             return data;
         }
-
-
 
 
         var sequencia = 1;
@@ -101,7 +98,7 @@
             $('#grid tbody').empty();
             incluir_linha_produto();
         }
-        function obter_lista_entradas() {
+        function obter_lista_saidas() {
             var ret = [];
             $('#grid tbody tr').each(function (index, item) {
                 var txt_quantidade = $(this).find('input'),
@@ -124,33 +121,35 @@
         })
         .on('click', '#btn_salvar', function () {
             var btn = $(this);
-            var lista_entradas = obter_lista_entradas();
-            if (lista_entradas.length == 0) {
+            var lista_saidas = obter_lista_saidas();
+            if (lista_saidas.length == 0) {
                 swal.fire('Aviso', 'Para salvar, você deve informar produtos com quantidades.', 'warning');
             }
             else {
-                var url = '@Url.Action("Salvar", "OperEntradaProduto")',
+                var url = '@Url.Action("Salvar", "OperSaidaProduto")',
                     dados = {
                         data: $('#txt_data').val(),
-                        produtos: JSON.stringify(lista_entradas)
+                        produtos: JSON.stringify(lista_saidas)
                     };
                 $.post(url, add_anti_forgery_token(dados), function (response) {
                     if (response.OK) {
                         $('#txt_numero').val(response.Numero);
-                        swal.fire('Sucesso', 'Entrada de produtos salva com sucesso.', 'info');
+                        swal.fire('Sucesso', 'Saída de produtos salva com sucesso.', 'info');
                     }
                 })
                 .fail(function () {
-                    swal.fire('Aviso', 'Não foi possível salvar a entrada de produtos.', 'warning');
+                    swal.fire('Aviso', 'Não foi possível salvar a saída de produtos.', 'warning');
                 });
             }
         })
         .on('click', '#btn_cancelar', function () {
-            var lista_entradas = obter_lista_entradas();
-            if (lista_entradas.length == 0 || $('#txt_numero').val() != '') {
+            var lista_saidas = obter_lista_saidas();
+            if (lista_saidas.length == 0 || $('#txt_numero').val() != '') {
                 limpar_tela();
             }
             else {
+
+
                 const swalWithBootstrapButtons = Swal.mixin({
                     customClass: {
                         confirmButton: 'btn btn-success',
@@ -161,7 +160,7 @@
 
                 swalWithBootstrapButtons.fire({
                     title: 'Você tem Certeza?',
-                    text: "Você perderá sua entrada.",
+                    text: "Você perderá sua saída.",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonText: 'Cancelar!',
@@ -172,7 +171,7 @@
                         limpar_tela();
                         swalWithBootstrapButtons.fire(
                           'Cancelado',
-                          'Sua entrada foi cancelada.',
+                          'Sua saída foi cancelada.',
                           'success'
                         )
                     } else if (
@@ -181,7 +180,7 @@
                     ) {
                         swalWithBootstrapButtons.fire(
                           'Não Cancelar',
-                          'Sua entrada foi mantida:)',
+                          'Sua saída foi mantida:)',
                           'error'
                         )
                     }

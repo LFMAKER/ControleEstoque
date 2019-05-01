@@ -31,7 +31,7 @@ namespace ControleEstoque.Web.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult MarcaProdutoPagina(int pagina, int tamPag, string filtro, string ordem)
         {
-            var lista = MarcaProdutoDao.RecuperarLista(pagina, tamPag, filtro, ordem: ordem);
+            var lista = MarcaProdutoDao.RecuperarLista(pagina, tamPag, filtro);
 
             return Json(lista);
         }

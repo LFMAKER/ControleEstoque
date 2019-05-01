@@ -1,11 +1,10 @@
 ﻿using ControleEstoque.Web.Models;
-using System;
+using Dapper;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Configuration;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 
 namespace ControleEstoque.Web.Dal.Cadastro
 {
@@ -19,18 +18,13 @@ namespace ControleEstoque.Web.Dal.Cadastro
             {
                 conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
                 conexao.Open();
-                using (var comando = new SqlCommand())
-                {
-                    comando.Connection = conexao;
-                    comando.CommandText = "select count(*) from marca_produto";
-                    ret = (int)comando.ExecuteScalar();
-                }
+                ret = conexao.ExecuteScalar<int>("select count(*) from marca_produto");
             }
 
             return ret;
         }
 
-        public static List<MarcaProdutoModel> RecuperarLista(int pagina, int tamPagina, string filtro = "", string ordem = "")
+        public static List<MarcaProdutoModel> RecuperarLista(int pagina, int tamPagina, string ordem = "")
         {
             var ret = new List<MarcaProdutoModel>();
 
@@ -38,36 +32,17 @@ namespace ControleEstoque.Web.Dal.Cadastro
             {
                 conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
                 conexao.Open();
-                using (var comando = new SqlCommand())
-                {
-                    var pos = (pagina - 1) * tamPagina;
 
-                    var filtroWhere = "";
-                    if (!string.IsNullOrEmpty(filtro))
-                    {
-                        filtroWhere = string.Format(" where lower(nome) like '%{0}%'", filtro.ToLower());
-                    }
+                var pos = (pagina - 1) * tamPagina;
 
+                var sql = string.Format(
+                    "select *" +
+                    " from marca_produto" +
+                    " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
+                    " offset {0} rows fetch next {1} rows only",
+                    pos > 0 ? pos - 1 : 0, tamPagina);
 
-                    comando.Connection = conexao;
-                    comando.CommandText = string.Format(
-                       "select *" +
-                        " from marca_produto" +
-                        filtroWhere +
-                        " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
-                        " offset {0} rows fetch next {1} rows only",
-                        pos > 0 ? pos - 1 : 0, tamPagina);
-                    var reader = comando.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        ret.Add(new MarcaProdutoModel
-                        {
-                            Id = (int)reader["id"],
-                            Nome = (string)reader["nome"],
-                            Ativo = (bool)reader["ativo"]
-                        });
-                    }
-                }
+                ret = conexao.Query<MarcaProdutoModel>(sql).ToList();
             }
 
             return ret;
@@ -81,24 +56,10 @@ namespace ControleEstoque.Web.Dal.Cadastro
             {
                 conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
                 conexao.Open();
-                using (var comando = new SqlCommand())
-                {
-                    comando.Connection = conexao;
-                    comando.CommandText = "select * from marca_produto where (id = @id)";
 
-                    comando.Parameters.Add("@id", SqlDbType.Int).Value = id;
-
-                    var reader = comando.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        ret = new MarcaProdutoModel
-                        {
-                            Id = (int)reader["id"],
-                            Nome = (string)reader["nome"],
-                            Ativo = (bool)reader["ativo"]
-                        };
-                    }
-                }
+                var sql = "select * from marca_produto where (id = @id)";
+                var parametros = new { id };
+                ret = conexao.Query<MarcaProdutoModel>(sql, parametros).SingleOrDefault();
             }
 
             return ret;
@@ -114,15 +75,10 @@ namespace ControleEstoque.Web.Dal.Cadastro
                 {
                     conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
                     conexao.Open();
-                    using (var comando = new SqlCommand())
-                    {
-                        comando.Connection = conexao;
-                        comando.CommandText = "delete from marca_produto where (id = @id)";
 
-                        comando.Parameters.Add("@id", SqlDbType.Int).Value = id;
-
-                        ret = (comando.ExecuteNonQuery() > 0);
-                    }
+                    var sql = "delete from marca_produto where (id = @id)";
+                    var parametros = new { id };
+                    ret = (conexao.Execute(sql, parametros) > 0);
                 }
             }
 
@@ -139,31 +95,20 @@ namespace ControleEstoque.Web.Dal.Cadastro
             {
                 conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
                 conexao.Open();
-                using (var comando = new SqlCommand())
+
+                if (model == null)
                 {
-                    comando.Connection = conexao;
-
-                    if (model == null)
+                    var sql = "insert into marca_produto (nome, ativo) values (@nome, @ativo); select convert(int, scope_identity())";
+                    var parametros = new { nome = mp.Nome, ativo = (mp.Ativo ? 1 : 0) };
+                    ret = conexao.ExecuteScalar<int>(sql, parametros);
+                }
+                else
+                {
+                    var sql = "update marca_produto set nome=@nome, ativo=@ativo where id = @id";
+                    var parametros = new { id = mp.Id, nome = mp.Nome, ativo = (mp.Ativo ? 1 : 0) };
+                    if (conexao.Execute(sql, parametros) > 0)
                     {
-                        comando.CommandText = "insert into marca_produto (nome, ativo) values (@nome, @ativo); select convert(int, scope_identity())";
-
-                        comando.Parameters.Add("@nome", SqlDbType.VarChar).Value = mp.Nome;
-                        comando.Parameters.Add("@ativo", SqlDbType.VarChar).Value = (mp.Ativo ? 1 : 0);
-
-                        ret = (int)comando.ExecuteScalar();
-                    }
-                    else
-                    {
-                        comando.CommandText = "update marca_produto set nome=@nome, ativo=@ativo where id = @id";
-
-                        comando.Parameters.Add("@nome", SqlDbType.VarChar).Value = mp.Nome;
-                        comando.Parameters.Add("@ativo", SqlDbType.VarChar).Value = (mp.Ativo ? 1 : 0);
-                        comando.Parameters.Add("@id", SqlDbType.Int).Value = mp.Id;
-
-                        if (comando.ExecuteNonQuery() > 0)
-                        {
-                            ret = mp.Id;
-                        }
+                        ret = mp.Id;
                     }
                 }
             }

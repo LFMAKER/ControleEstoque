@@ -37,7 +37,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         [ValidateAntiForgeryToken]
         public JsonResult PerfilPagina(int pagina, int tamPag, string filtro, string ordem)
         {
-            var lista = PerfilDao.RecuperarLista(pagina, tamPag, filtro, ordem: ordem);
+            var lista = PerfilDao.RecuperarLista(pagina, tamPag, filtro);
             return Json(lista);
         }
 

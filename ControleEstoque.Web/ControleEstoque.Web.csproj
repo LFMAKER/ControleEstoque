@@ -46,6 +46,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.60.6\lib\net451\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Google.Apis, Version=1.38.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Apis.1.38.2\lib\net45\Google.Apis.dll</HintPath>
       <Private>True</Private>
@@ -193,8 +197,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OperacaoController.cs" />
     <Compile Include="Controllers\Operacao\OperEntradaProdutoController.cs" />
+    <Compile Include="Controllers\Operacao\OperEntradaSaidaProdutoController.cs" />
+    <Compile Include="Controllers\Operacao\OperSaidaProdutoController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RelatorioController.cs" />
+    <Compile Include="Models\Binders\EntradaSaidaProdutoViewModelModelBinder.cs" />
     <Compile Include="Models\Dal\Cadastro\CidadeDao.cs" />
     <Compile Include="Models\Dal\Cadastro\EstadoDao.cs" />
     <Compile Include="Models\Dal\Cadastro\FornecedorDao.cs" />
@@ -210,19 +217,20 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CriptoHelper.cs" />
-    <Compile Include="Models\Domain\CidadeModel.cs" />
-    <Compile Include="Models\Domain\EstadoModel.cs" />
-    <Compile Include="Models\Domain\FornecedorModel.cs" />
-    <Compile Include="Models\Domain\GrupoProdutoModel.cs" />
-    <Compile Include="Models\Domain\LocalArmazenamentoModel.cs" />
-    <Compile Include="Models\Domain\LoginViewModel.cs" />
-    <Compile Include="Models\Domain\MarcaProdutoModel.cs" />
-    <Compile Include="Models\Domain\PaisModel.cs" />
-    <Compile Include="Models\Domain\PerfilModel.cs" />
-    <Compile Include="Models\Domain\ProdutoModel.cs" />
-    <Compile Include="Models\Domain\Tipos.cs" />
-    <Compile Include="Models\Domain\UnidadeMedidaModel.cs" />
-    <Compile Include="Models\Domain\UsuarioModel.cs" />
+    <Compile Include="Models\CidadeModel.cs" />
+    <Compile Include="Models\EntradaSaidaProdutoViewModel.cs" />
+    <Compile Include="Models\EstadoModel.cs" />
+    <Compile Include="Models\FornecedorModel.cs" />
+    <Compile Include="Models\GrupoProdutoModel.cs" />
+    <Compile Include="Models\LocalArmazenamentoModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\MarcaProdutoModel.cs" />
+    <Compile Include="Models\PaisModel.cs" />
+    <Compile Include="Models\PerfilModel.cs" />
+    <Compile Include="Models\ProdutoModel.cs" />
+    <Compile Include="Models\Tipos.cs" />
+    <Compile Include="Models\UnidadeMedidaModel.cs" />
+    <Compile Include="Models\UsuarioModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -296,7 +304,9 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <None Include=".bin\node.cmd" />
-    <Content Include="InventoryAnalytics-f0c3e627bfd6.json" />
+    <Content Include="credentials.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -313,6 +323,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\mustache.min.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -370,9 +381,9 @@
     <Content Include="Views\CadFornecedor\Index.cshtml" />
     <Content Include="Views\CadProduto\Index.cshtml" />
     <Content Include="Views\OperEntradaProduto\Index.cshtml" />
+    <Content Include="Views\OperSaidaProduto\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="API\" />
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
   </ItemGroup>

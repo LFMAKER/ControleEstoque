@@ -16,6 +16,8 @@ namespace ControleEstoque.Web.Controllers
         
         public ActionResult Index()
         {
+
+
             ViewBag.ListaTamPag = new SelectList(new int[] { _quantMaxLinhasPorPagina, 10, 15, 20 }, _quantMaxLinhasPorPagina);
 
 
