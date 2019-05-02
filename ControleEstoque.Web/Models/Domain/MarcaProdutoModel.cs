@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Dapper;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
-using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace ControleEstoque.Web.Models
 {
-    public class LocalArmazenamentoModel
+    public class MarcaProdutoModel
     {
         public int Id { get; set; }
 
@@ -15,6 +16,6 @@ namespace ControleEstoque.Web.Models
 
         public bool Ativo { get; set; }
 
-       
+      
     }
 }

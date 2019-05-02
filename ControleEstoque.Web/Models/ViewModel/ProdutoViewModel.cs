@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ControleEstoque.Web.Models
 {
-    public class ProdutoModel
+    public class ProdutoViewModel
     {
         public int Id { get; set; }
 
@@ -43,7 +39,6 @@ namespace ControleEstoque.Web.Models
         public int IdLocalArmazenamento { get; set; }
 
         public bool Ativo { get; set; }
-
 
     }
 }

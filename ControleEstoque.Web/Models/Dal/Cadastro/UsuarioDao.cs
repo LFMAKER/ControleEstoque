@@ -15,14 +15,13 @@ namespace ControleEstoque.Web.Dal.Cadastro
         {
             UsuarioModel ret = null;
 
-            using (var conexao = new SqlConnection())
+            using (var db = new Context())
             {
-                conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-                conexao.Open();
+                
 
                 var sql = "select * from usuario where login=@login and senha=@senha";
                 var parametros = new { login, senha = CriptoHelper.HashMD5(senha) };
-                ret = conexao.Query<UsuarioModel>(sql, parametros).SingleOrDefault();
+                ret = db.Database.Connection.Query<UsuarioModel>(sql, parametros).SingleOrDefault();
             }
 
             return ret;
@@ -187,6 +186,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                         "select p.nome " +
                         "from perfil_usuario pu, perfil p " +
                         "where (pu.id_usuario = @id_usuario) and (pu.id_perfil = p.id) and (p.ativo = 1)";
+                
                 var parametros = new { id_usuario = um.Id };
                 var matriculas = conexao.Query<string>(sql, parametros).ToList();
                 if (matriculas.Count > 0)

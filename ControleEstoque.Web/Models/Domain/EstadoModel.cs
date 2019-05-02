@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Dapper;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 
 namespace ControleEstoque.Web.Models
 {
-	public class EstadoModel
-	{
+    public class EstadoModel
+    {
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Preencha o nome.")]
@@ -23,6 +24,7 @@ namespace ControleEstoque.Web.Models
         [Required(ErrorMessage = "Selecione o país.")]
         public int IdPais { get; set; }
 
+        public virtual PaisModel Pais { get; set; }
 
     }
 }

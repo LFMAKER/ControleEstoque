@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ControleEstoque.Web.Models
 {
-    public class UnidadeMedidaModel
+    public class UnidadeMedidaViewModel
     {
         public int Id { get; set; }
 
@@ -20,6 +13,5 @@ namespace ControleEstoque.Web.Models
         public string Sigla { get; set; }
 
         public bool Ativo { get; set; }
-
     }
 }

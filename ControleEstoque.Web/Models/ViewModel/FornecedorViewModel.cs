@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Dapper;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
-using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace ControleEstoque.Web.Models
 {
-    public class FornecedorModel
+    public class FornecedorViewModel
     {
         public int Id { get; set; }
 
@@ -53,7 +54,5 @@ namespace ControleEstoque.Web.Models
         public int IdCidade { get; set; }
 
         public bool Ativo { get; set; }
-
-      
     }
 }

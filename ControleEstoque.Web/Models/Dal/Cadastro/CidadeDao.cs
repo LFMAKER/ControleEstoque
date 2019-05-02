@@ -5,23 +5,25 @@ using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using VendasOsorioA.DAL;
+using System.Data.Entity;
 
 namespace ControleEstoque.Web.Dal.Cadastro
 {
     public class CidadeDao
     {
+        
 
         public static int RecuperarQuantidade()
         {
             var ret = 0;
-
-            using (var conexao = new SqlConnection())
+            using (var ctx = new Context())
             {
-                conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-                conexao.Open();
-                ret = conexao.ExecuteScalar<int>("select count(*) from cidade");
-            }
 
+                
+                ret = ctx.Cidades.Count();
+                
+            }
             return ret;
         }
 
@@ -29,10 +31,10 @@ namespace ControleEstoque.Web.Dal.Cadastro
         {
             var ret = new List<CidadeModel>();
 
-            using (var conexao = new SqlConnection())
+            //Por se tratar de uma query complexa, será utilizado o Dapper em conjunto 
+            //com o Entity Framework
+            using (var db = new Context())
             {
-                conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-                conexao.Open();
 
                 var pos = (pagina - 1) * tamPagina;
 
@@ -55,7 +57,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                 }
 
                 var sql =
-                    "select c.*, e.id_pais" +
+                    "select c.id, c.nome, c.ativo, c.id_estado as idEstado, e.id_pais as idPais" +
                     " from cidade c, estado e" +
                     " where" +
                     filtroWhere +
@@ -63,7 +65,8 @@ namespace ControleEstoque.Web.Dal.Cadastro
                     " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "c.nome") +
                     paginacao;
 
-                ret = conexao.Query<CidadeModel>(sql).ToList();
+
+                ret = db.Database.Connection.Query<CidadeModel>(sql).ToList();
             }
 
             return ret;
@@ -72,36 +75,27 @@ namespace ControleEstoque.Web.Dal.Cadastro
         public static CidadeModel RecuperarPeloId(int id)
         {
             CidadeModel ret = null;
-
-            using (var conexao = new SqlConnection())
+            using (var ctx = new Context())
             {
-                conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-                conexao.Open();
-                var sql = "select c.id, c.nome, c.ativo, c.id_estado as IdEstado, e.id_pais as IdPais from cidade c, estado e where (c.id = @id) and (c.id_estado = e.id)";
-                var parametros = new { id };
-                ret = conexao.Query<CidadeModel>(sql, parametros).SingleOrDefault();
+                ret = ctx.Cidades
+                .Include(x => x.Estado)
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
             }
-
             return ret;
         }
 
         public static bool ExcluirPeloId(int id)
         {
             var ret = false;
-
-            if (RecuperarPeloId(id) != null)
+            var cidade = new CidadeModel { Id = id };
+            using (var ctx = new Context())
             {
-                using (var conexao = new SqlConnection())
-                {
-                    conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-                    conexao.Open();
-
-                    var sql = "delete from cidade where (id = @id)";
-                    var parametros = new { id };
-                    ret = (conexao.Execute(sql, parametros) > 0);
-                }
+                ctx.Cidades.Attach(cidade);
+                ctx.Entry(cidade).State = EntityState.Deleted;
+                ctx.SaveChanges();
+                ret = true;
             }
-
             return ret;
         }
 
@@ -111,27 +105,30 @@ namespace ControleEstoque.Web.Dal.Cadastro
 
             var model = RecuperarPeloId(cm.Id);
 
-            using (var conexao = new SqlConnection())
+            using (var ctx = new Context())
             {
-                conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-                conexao.Open();
                 if (model == null)
                 {
-                    var sql = "insert into cidade (nome, id_estado, ativo) values (@nome, @id_estado, @ativo); select convert(int, scope_identity())";
-                    var parametros = new { nome = cm.Nome, id_estado = cm.IdEstado, ativo = (cm.Ativo ? 1 : 0) };
-                    ret = conexao.ExecuteScalar<int>(sql, parametros);
+                    ctx.Cidades.Add(cm);
                 }
                 else
                 {
-                    var sql = "update cidade set nome=@nome, id_estado=@id_estado, ativo=@ativo where id = @id";
-                    var parametros = new { id = cm.Id, nome = cm.Nome, id_estado = cm.IdEstado, ativo = (cm.Ativo ? 1 : 0) };
-                    if (conexao.Execute(sql, parametros) > 0)
-                    {
-                        ret = cm.Id;
-                    }
+
+                    ctx.Cidades.Attach(cm);
+                    ctx.Entry(cm).State = EntityState.Modified;
+
+
+
                 }
+
+
+                ctx.SaveChanges();
+                ret = cm.Id;
+
+
             }
 
+           
             return ret;
         }
 

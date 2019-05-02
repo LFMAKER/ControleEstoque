@@ -1,11 +1,10 @@
-﻿using ControleEstoque.Web.Models;
+﻿using ControleEstoque.Web.Dal.Cadastro;
+using Dapper;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
-using System.Data;
 using System.Data.SqlClient;
-using System;
-using ControleEstoque.Web.Dal.Cadastro;
+using System.Linq;
 
 namespace ControleEstoque.Web.Models
 {
@@ -18,7 +17,7 @@ namespace ControleEstoque.Web.Models
 
         public bool Ativo { get; set; }
 
-        public List<UsuarioModel> Usuarios { get; set; }
+        public virtual List<UsuarioModel> Usuarios { get; set; }
 
         public PerfilModel()
         {
@@ -33,5 +32,6 @@ namespace ControleEstoque.Web.Models
 
 
         }
+
     }
 }
