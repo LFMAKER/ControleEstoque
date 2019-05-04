@@ -49,6 +49,24 @@ namespace ControleEstoque.Web.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult ExcluirCidade(int id)
         {
+
+            //Criando a Log
+            List<IList<Object>> objNewRecords = new List<IList<Object>>();
+
+            IList<Object> obj = new List<Object>();
+
+
+            obj.Add(User.Identity.Name.ToString());
+            obj.Add("Remover Cidade");
+            obj.Add((string)Log.IpUsuario());
+            obj.Add((string)Log.MacAddressUsuario());
+            obj.Add("ALTA");
+            obj.Add((string)DateTime.Now.ToString("dd/MM/yyyy"));
+
+            objNewRecords.Add(obj);
+            Apis.GoogleSheets.GoogleSheetsAPI.RequestLogsGravar(objNewRecords);
+            
+
             return Json(CidadeDao.ExcluirPeloId(id));
         }
 

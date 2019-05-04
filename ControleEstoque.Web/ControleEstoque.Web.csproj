@@ -58,28 +58,28 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Google.Apis, Version=1.38.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.1.38.2\lib\net45\Google.Apis.dll</HintPath>
+    <Reference Include="Google.Apis, Version=1.39.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.39.0\lib\net45\Google.Apis.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Google.Apis.Auth, Version=1.38.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Auth.1.38.2\lib\net45\Google.Apis.Auth.dll</HintPath>
+    <Reference Include="Google.Apis.Auth, Version=1.39.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.39.0\lib\net45\Google.Apis.Auth.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.38.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Auth.1.38.2\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.39.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.39.0\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Google.Apis.Core, Version=1.38.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Core.1.38.2\lib\net45\Google.Apis.Core.dll</HintPath>
+    <Reference Include="Google.Apis.Core, Version=1.39.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.39.0\lib\net45\Google.Apis.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Google.Apis.PlatformServices, Version=1.38.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.1.38.2\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.39.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.39.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Google.Apis.Sheets.v4, Version=1.38.2.1565, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Sheets.v4.1.38.2.1565\lib\net45\Google.Apis.Sheets.v4.dll</HintPath>
+    <Reference Include="Google.Apis.Sheets.v4, Version=1.39.0.1565, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Sheets.v4.1.39.0.1565\lib\net45\Google.Apis.Sheets.v4.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -115,6 +115,18 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -126,6 +138,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -186,6 +199,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apis\GoogleSheets\GoogleSheetsAPI.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -209,29 +223,30 @@
     <Compile Include="Controllers\Operacao\OperSaidaProdutoController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RelatorioController.cs" />
-    <Compile Include="Migrations\201905020417123_Inicial.cs" />
-    <Compile Include="Migrations\201905020417123_Inicial.Designer.cs">
-      <DependentUpon>201905020417123_Inicial.cs</DependentUpon>
+    <Compile Include="Controllers\Relatorio\LogController.cs" />
+    <Compile Include="Migrations\201905040518507_Inicial.cs" />
+    <Compile Include="Migrations\201905040518507_Inicial.Designer.cs">
+      <DependentUpon>201905040518507_Inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Binders\EntradaSaidaProdutoViewModelModelBinder.cs" />
-    <Compile Include="Models\Dal\Cadastro\CidadeDao.cs" />
-    <Compile Include="Models\Dal\Cadastro\EstadoDao.cs" />
-    <Compile Include="Models\Dal\Cadastro\FornecedorDao.cs" />
-    <Compile Include="Models\Dal\Cadastro\GrupoProdutoDao.cs" />
-    <Compile Include="Models\Dal\Cadastro\LocalArmazenamentoDao.cs" />
-    <Compile Include="Models\Dal\Cadastro\MarcaProdutoDao.cs" />
-    <Compile Include="Models\Dal\Cadastro\PaisDao.cs" />
-    <Compile Include="Models\Dal\Cadastro\PerfilDao.cs" />
-    <Compile Include="Models\Dal\Cadastro\ProdutoDao.cs" />
-    <Compile Include="Models\Dal\Cadastro\UnidadeMedidaDao.cs" />
-    <Compile Include="Models\Dal\Cadastro\UsuarioDao.cs" />
+    <Compile Include="Dal\Cadastro\CidadeDao.cs" />
+    <Compile Include="Dal\Cadastro\EstadoDao.cs" />
+    <Compile Include="Dal\Cadastro\FornecedorDao.cs" />
+    <Compile Include="Dal\Cadastro\GrupoProdutoDao.cs" />
+    <Compile Include="Dal\Cadastro\LocalArmazenamentoDao.cs" />
+    <Compile Include="Dal\Cadastro\MarcaProdutoDao.cs" />
+    <Compile Include="Dal\Cadastro\PaisDao.cs" />
+    <Compile Include="Dal\Cadastro\PerfilDao.cs" />
+    <Compile Include="Dal\Cadastro\ProdutoDao.cs" />
+    <Compile Include="Dal\Cadastro\UnidadeMedidaDao.cs" />
+    <Compile Include="Dal\Cadastro\UsuarioDao.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CriptoHelper.cs" />
     <Compile Include="Models\Context.cs" />
-    <Compile Include="Models\Dal\SingletonContext.cs" />
+    <Compile Include="Dal\SingletonContext.cs" />
     <Compile Include="Models\Domain\CidadeModel.cs" />
     <Compile Include="Models\Domain\EntradaProdutoModel.cs" />
     <Compile Include="Models\Domain\EstadoModel.cs" />
@@ -242,6 +257,7 @@
     <Compile Include="Models\Domain\PaisModel.cs" />
     <Compile Include="Models\Domain\PerfilModel.cs" />
     <Compile Include="Models\Domain\ProdutoModel.cs" />
+    <Compile Include="Models\Domain\Log.cs" />
     <Compile Include="Models\Domain\SaidaProdutoModel.cs" />
     <Compile Include="Models\Domain\Tipos.cs" />
     <Compile Include="Models\Domain\UnidadeMedidaModel.cs" />
@@ -420,6 +436,7 @@
     <Content Include="Views\CadProduto\Index.cshtml" />
     <Content Include="Views\OperEntradaProduto\Index.cshtml" />
     <Content Include="Views\OperSaidaProduto\Index.cshtml" />
+    <Content Include="Views\Log\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -438,8 +455,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201905020417123_Inicial.resx">
-      <DependentUpon>201905020417123_Inicial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201905040518507_Inicial.resx">
+      <DependentUpon>201905040518507_Inicial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

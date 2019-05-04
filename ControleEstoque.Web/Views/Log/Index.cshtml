@@ -1,0 +1,43 @@
+﻿@model List<ControleEstoque.Web.Models.Log>
+@{
+    ViewBag.Title = "Logs";
+}
+
+<div class="container">
+    @if (Model!=null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Data</th>
+                    <th scope="col">Usuário</th>
+                    <th scope="col">Operação</th>
+                    <th scope="col">IP</th>
+                    <th scope="col">MAC Address</th>
+                    <th scope="col">Criticidade</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tbody>
+                    <tr>
+                        <th scope="row">@item.DataOperacao</th>
+                        <td>@item.Uuario</td>
+                        <td>@item.Operacao</td>
+                        <td>@item.Ip</td>
+                        <td>@item.MacAddress</td>
+                        <td>@item.Criticidade</td>
+
+                    </tr>
+
+                </tbody>
+            }
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            Não existe nenhum LOG no sistema.
+        </div>
+    }
+</div>
