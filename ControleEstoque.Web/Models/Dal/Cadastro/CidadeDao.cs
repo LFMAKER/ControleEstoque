@@ -33,7 +33,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
 
             //Por se tratar de uma query complexa, será utilizado o Dapper em conjunto 
             //com o Entity Framework
-            using (var db = new Context())
+            using (var ctx = new Context())
             {
 
                 var pos = (pagina - 1) * tamPagina;
@@ -66,7 +66,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                     paginacao;
 
 
-                ret = db.Database.Connection.Query<CidadeModel>(sql).ToList();
+                ret = ctx.Database.Connection.Query<CidadeModel>(sql).ToList();
             }
 
             return ret;

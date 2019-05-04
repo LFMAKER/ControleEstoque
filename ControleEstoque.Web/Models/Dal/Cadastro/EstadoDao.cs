@@ -14,12 +14,10 @@ namespace ControleEstoque.Web.Dal.Cadastro
         {
             var ret = 0;
 
-            using (var conexao = new SqlConnection())
+            using (var ctx = new Context())
             {
-                conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-                conexao.Open();
+                ret = ctx.Estados.Count();
 
-                ret = conexao.ExecuteScalar<int>("select count(*) from estado");
             }
 
             return ret;
@@ -27,12 +25,13 @@ namespace ControleEstoque.Web.Dal.Cadastro
 
         public static List<EstadoModel> RecuperarLista(int pagina = 0, int tamPagina = 0, string filtro = "", int idPais = 0, string ordem = "")
         {
+            //Por se tratar de uma consulta complexa
+            //Será utilizado o Dapper em con
             var ret = new List<EstadoModel>();
 
-            using (var conexao = new SqlConnection())
+            using (var ctx = new Context())
             {
-                conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-                conexao.Open();
+                
 
                 var filtroWhere = "";
                 if (!string.IsNullOrEmpty(filtro))
@@ -62,7 +61,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                     " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
                     paginacao;
 
-                ret = conexao.Query<EstadoModel>(sql).ToList();
+                ret = ctx.Database.Connection.Query<EstadoModel>(sql).ToList();
             }
 
             return ret;
