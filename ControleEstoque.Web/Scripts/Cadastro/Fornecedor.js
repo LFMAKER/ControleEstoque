@@ -49,14 +49,16 @@
 
                 }
                 $('#ddl_estado').prop('disabled', false);
+                
             }
         })
+        
     }
-
+    setTimeout(function () {  
   
     //Req Estado
     var ddl_estado = $('#ddl_estado'),
-       id_estado = dados.IdEstado,
+       id_estado = parseInt(ddl_estado.val()),
        ddl_cidade = $('#ddl_cidade');
 
     console.log(id_estado);
@@ -83,7 +85,7 @@
             swal('Aviso', 'Não foi possível recuperar as informações. Tente novamente em instantes.', 'warning');
         });
     }
-
+    }, 1000);
 
 
 }
@@ -187,6 +189,7 @@ $(document)
     var ddl_estado = $(this),
         id_estado = parseInt(ddl_estado.val()),
         ddl_cidade = $('#ddl_cidade');
+    console.log("OPA");
 
     if (id_estado > 0) {
         var url = url_listar_cidades,
@@ -207,7 +210,6 @@ $(document)
 });
 
 
-
 $('#txt_cep').on('blur', function () {
 
     if ($.trim($("#txt_cep").val()) != "") {
@@ -223,4 +225,6 @@ $('#txt_cep').on('blur', function () {
         });
     }
 });
+
+
 

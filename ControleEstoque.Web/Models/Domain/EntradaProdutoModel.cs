@@ -10,5 +10,6 @@ namespace ControleEstoque.Web.Models
         public int Quantidade { get; set; }
         public int IdProduto { get; set; }
         public virtual ProdutoModel Produto { get; set; }
+
     }
 }

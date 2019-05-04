@@ -14,8 +14,8 @@ namespace ControleEstoque.Web.Models
         public string Ip { get; set; }
         public string MacAddress { get; set; }
         public string DataOperacao { get; set; }
-        public string Criticidade{ get; set; }
-        public string Dado { get; set; }
+        public string Criticidade{ get; set; }   
+
 
 
 

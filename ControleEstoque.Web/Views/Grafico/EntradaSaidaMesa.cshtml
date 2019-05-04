@@ -1,3 +1,98 @@
-﻿
-<h2>EntradaSaidaMesa</h2>
+﻿<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
+    <script>
+        var dadosEntradas;
+        var url_entradas = '@Url.Action("GetDadosEntradas", "Grafico")';
+        $.post(url_entradas, function (response) {
+            if (response && response.length > 0) {
+                dadosEntrada = response;
+            }
+        })
+
+
+        var dadosSaidas;
+        var url_saidas = '@Url.Action("GetDadosSaidas", "Grafico")';
+        $.post(url_saidas, function (response) {
+            if (response && response.length > 0) {
+                dadosSaidas = response;
+            }
+        })
+
+
+
+
+    </script>
+
+
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Mes/Ano');
+            data.addColumn('number', 'Entradas (Compras) R$');
+            data.addColumn('number', 'Saidas (Vendas) R$');
+
+            for (var i in dadosEntrada) {
+                for (var j in dadosSaidas) {
+
+                    var entradaValor = dadosEntrada[i]["total"];
+                    var saidaValor = dadosSaidas[j]["total"];
+
+                    var dataConvertEntrada = parseJsonDate(dadosEntrada[i]["Data"]);
+                    var dataConvertSaida = parseJsonDate(dadosSaidas[j]["Data"]);
+
+                   
+                    if(dataConvertEntrada == dataConvertSaida){
+
+                    
+                        data.addRows([
+                          [dataConvertEntrada, entradaValor, saidaValor],
+
+                        ]);
+                    }
+
+                    
+
+
+                    
+                }
+            }
+
+          
+
+
+            function parseJsonDate(jsonDate) {
+                var offset = new Date().getTimezoneOffset() * 60000;
+                var parts = /\/Date\((-?\d+)([+-]\d{2})?(\d{2})?.*/.exec(jsonDate);
+                if (parts[2] == undefined) parts[2] = 0;
+                if (parts[3] == undefined) parts[3] = 0;
+                d = new Date(+parts[1] + offset + parts[2] * 3600000 + parts[3] * 60000);
+                date = d.getDate() + 1;
+                date = date < 10 ? "0" + date : date;
+                mon = d.getMonth() + 1;
+                mon = mon < 10 ? "0" + mon : mon;
+                year = d.getFullYear();
+                return (mon + "/" + year);
+            };
+
+            var options = {
+                title: 'Entradas (Compras) e Saídas (Vendas)',
+                curveType: 'function',
+                legend: { position: 'bottom' }
+            };
+
+
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+    <div id="curve_chart" style="width: 900px; height: 500px"></div>
+</body>
+</html>
