@@ -63,7 +63,7 @@ namespace ControleEstoque.Web.Apis.GoogleSheets
 
             // Define request parameters.
             String spreadsheetId = "1GpvsT6-nEdueW-uFnWI6h7Gt38Bh4fjbcrVaDkqnUWs";
-            String range = "Class Data!A2:F";
+            String range = "Class Data!A2:G";
             SpreadsheetsResource.ValuesResource.GetRequest request =
                     service.Spreadsheets.Values.Get(spreadsheetId, range);
 
@@ -82,7 +82,8 @@ namespace ControleEstoque.Web.Apis.GoogleSheets
                         Ip = (string)row[2],
                         MacAddress = (string)row[3],
                         Criticidade = (string)row[4],
-                        DataOperacao = (string)row[5]
+                        DataOperacao = (string)row[5],
+                        Dado = (string)row[6]
 
                     };
                     LogsFounded.Add(r);//Adicionando os resultado na Lista
@@ -128,7 +129,7 @@ namespace ControleEstoque.Web.Apis.GoogleSheets
 
             // Define request parameters.
             string spreadsheetId = "1GpvsT6-nEdueW-uFnWI6h7Gt38Bh4fjbcrVaDkqnUWs";
-            string range = "Class Data!A2:F";
+            string range = "Class Data!A2:G";
             
             //Montando ValueRange
             var dataValueRange = new ValueRange();

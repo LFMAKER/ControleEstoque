@@ -50,22 +50,20 @@ namespace ControleEstoque.Web.Controllers
         public JsonResult ExcluirCidade(int id)
         {
 
-            //Criando a Log
+            /*-----GERANDO LOG-------*/
             List<IList<Object>> objNewRecords = new List<IList<Object>>();
-
             IList<Object> obj = new List<Object>();
-
-
             obj.Add(User.Identity.Name.ToString());
             obj.Add("Remover Cidade");
             obj.Add((string)Log.IpUsuario());
             obj.Add((string)Log.MacAddressUsuario());
             obj.Add("ALTA");
-            obj.Add((string)DateTime.Now.ToString("dd/MM/yyyy"));
-
+            obj.Add((string)DateTime.Now.ToString());
+            string dados = "Id: " + id;
+            obj.Add(dados);
             objNewRecords.Add(obj);
             Apis.GoogleSheets.GoogleSheetsAPI.RequestLogsGravar(objNewRecords);
-            
+            /*---- LOG GERADA -----*/
 
             return Json(CidadeDao.ExcluirPeloId(id));
         }
@@ -98,6 +96,22 @@ namespace ControleEstoque.Web.Controllers
             {
                 try
                 {
+
+                    /*-----GERANDO LOG-------*/
+                    List<IList<Object>> objNewRecords = new List<IList<Object>>();
+                    IList<Object> obj = new List<Object>();
+                    obj.Add(User.Identity.Name.ToString());
+                    obj.Add("Adicionar Cidade");
+                    obj.Add((string)Log.IpUsuario());
+                    obj.Add((string)Log.MacAddressUsuario());
+                    obj.Add("ALTA");
+                    obj.Add((string)DateTime.Now.ToString());
+                    string dados = "Id: " + model.Id + " | Nome: " + model.Nome + " | IdEstado: " + model.IdEstado + " | IdPais: " + model.IdPais + " | Status: " + model.Ativo;
+                    obj.Add(dados);
+                    objNewRecords.Add(obj);
+                    Apis.GoogleSheets.GoogleSheetsAPI.RequestLogsGravar(objNewRecords);
+                    /*---- LOG GERADA -----*/
+
                     var id = CidadeDao.Salvar(model);
                     if (id > 0)
                     {
