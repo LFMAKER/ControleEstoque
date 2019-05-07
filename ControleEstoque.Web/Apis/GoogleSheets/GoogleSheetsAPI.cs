@@ -67,7 +67,7 @@ namespace ControleEstoque.Web.Apis.GoogleSheets
             SpreadsheetsResource.ValuesResource.GetRequest request =
                     service.Spreadsheets.Values.Get(spreadsheetId, range);
 
-            ValueRange response = request.Execute();
+                ValueRange response = request.Execute();
             IList<IList<Object>> values = response.Values;
             if (values != null && values.Count > 0)
             {

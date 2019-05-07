@@ -215,7 +215,7 @@
     <Compile Include="Controllers\Cadastro\CadUnidadeMedidaController.cs" />
     <Compile Include="Controllers\Cadastro\CadUsuarioController.cs" />
     <Compile Include="Controllers\ContaController.cs" />
-    <Compile Include="Controllers\GraficoController.cs" />
+    <Compile Include="Controllers\Grafico\GraficoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OperacaoController.cs" />
     <Compile Include="Controllers\Operacao\OperEntradaProdutoController.cs" />

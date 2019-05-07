@@ -186,12 +186,15 @@ namespace ControleEstoque.Web.Dal.Cadastro
                         "select p.nome " +
                         "from perfil_usuario pu, perfil p " +
                         "where (pu.id_usuario = @id_usuario) and (pu.id_perfil = p.id) and (p.ativo = 1)";
-                
-                var parametros = new { id_usuario = um.Id };
-                var matriculas = conexao.Query<string>(sql, parametros).ToList();
-                if (matriculas.Count > 0)
+
+                if (um != null)
                 {
-                    ret = string.Join(";", matriculas);
+                    var parametros = new { id_usuario = um.Id };
+                    var matriculas = conexao.Query<string>(sql, parametros).ToList();
+                    if (matriculas.Count > 0)
+                    {
+                        ret = string.Join(";", matriculas);
+                    }
                 }
             }
 
