@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using ControleEstoque.Web.Models;
+using Dapper;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
@@ -7,7 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using VendasOsorioA.DAL;
 
-namespace ControleEstoque.Web.Models.Dal.Cadastro
+namespace ControleEstoque.Web.Dal.Cadastro
 {
     public class FornecedorDao
     {
@@ -29,16 +30,24 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
 
             using (var ctx = new Context())
             {
-
-                var pos = (pagina - 1) * tamPagina;
-                if (!string.IsNullOrEmpty(filtro))
+                if (tamPagina != 0 && pagina != 0)
                 {
-                    
-                    ret = ctx.Fornecedores.OrderBy(x => x.Nome).Where(x => x.Nome.ToLower().Contains(filtro.ToLower())).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
-                }else{
+                    var pos = (pagina - 1) * tamPagina;
+                    if (!string.IsNullOrEmpty(filtro))
+                    {
 
-                    ret = ctx.Fornecedores.OrderBy(x => x.Nome).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
-                } 
+                        ret = ctx.Fornecedores.OrderBy(x => x.Nome).Where(x => x.Nome.ToLower().Contains(filtro.ToLower())).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
+                    }
+                    else
+                    {
+
+                        ret = ctx.Fornecedores.OrderBy(x => x.Nome).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
+                    }
+                }
+                else
+                {
+                    ret = ctx.Fornecedores.OrderBy(x => x.Nome).ToList();
+                }
             }
 
             return ret;

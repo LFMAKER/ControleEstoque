@@ -57,17 +57,23 @@ namespace ControleEstoque.Web.Dal.Cadastro
 
             using (var ctx = new Context())
             {
-
-                var pos = (pagina - 1) * tamPagina;
-                if (!string.IsNullOrEmpty(filtro))
+                if (tamPagina != 0 && pagina != 0)
                 {
+                    var pos = (pagina - 1) * tamPagina;
+                    if (!string.IsNullOrEmpty(filtro))
+                    {
 
-                    ret = ctx.GruposProdutos.OrderBy(x => x.Nome).Where(x => x.Nome.ToLower().Contains(filtro.ToLower())).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
+                        ret = ctx.GruposProdutos.OrderBy(x => x.Nome).Where(x => x.Nome.ToLower().Contains(filtro.ToLower())).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
+                    }
+                    else
+                    {
+
+                        ret = ctx.GruposProdutos.OrderBy(x => x.Nome).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
+                    }
                 }
                 else
                 {
-
-                    ret = ctx.GruposProdutos.OrderBy(x => x.Nome).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
+                    ret = ctx.GruposProdutos.OrderBy(x => x.Nome).ToList();
                 }
             }
 
