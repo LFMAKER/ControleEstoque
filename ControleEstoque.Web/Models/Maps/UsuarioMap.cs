@@ -3,7 +3,7 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace ControleEstoque.Web.Models
 {
-    public class UsuarioMap : EntityTypeConfiguration<UsuarioModel>
+    public class UsuarioMap : EntityTypeConfiguration<Usuario>
     {
         public UsuarioMap()
         {
@@ -19,7 +19,9 @@ namespace ControleEstoque.Web.Models
             Property(x => x.Senha).HasColumnName("senha").HasMaxLength(32).IsRequired();
             //Definindo nome da coluna, tamanho e obrigatório
             Property(x => x.Nome).HasColumnName("nome").HasMaxLength(100).IsRequired();
-           
+
+
+
         }
     }
 }

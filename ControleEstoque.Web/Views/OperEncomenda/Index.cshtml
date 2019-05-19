@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Encomendas";
+}
+
+<h2>Index</h2>
+<form>
+    <div class="col-md-4">
+        @Html.Label("txt_codigo", "Código Rastreio", new { @class = "control-label" })
+        @Html.TextBox("txt_codigo", "83312045", new { @class = "form-control", @id = "txt_codigo"})
+    </div>
+
+    <button type="submit" id="pesquisar" class="btn btn-success">Submit</button>
+
+</form>
+
+
+<script>
+
+
+    var resultado;
+    var url_encomenda = '@Url.Action("RastreioEncomenda", "OperEncomenda")';
+    console.log("PASSO - 1");
+
+
+        $.post(url_encomenda, function (response) {
+            if (response) {
+                resultado = response;
+               
+            }
+           
+           
+
+        })
+    
+
+
+
+</script>

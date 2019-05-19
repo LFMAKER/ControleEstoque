@@ -24,7 +24,7 @@ namespace ControleEstoque.Web.Controllers
 
             var difQuantPaginas = (quant % ViewBag.QuantMaxLinhasPorPagina) > 0 ? 1 : 0;
             ViewBag.QuantPaginas = (quant / ViewBag.QuantMaxLinhasPorPagina) + difQuantPaginas;
-            ViewBag.Paises = PaisDao.RecuperarLista();
+            
 
             return View(lista);
         }
@@ -55,7 +55,7 @@ namespace ControleEstoque.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult SalvarFornecedor(FornecedorModel model)
+        public JsonResult SalvarFornecedor(Fornecedor model)
         {
             var resultado = "OK";
             var mensagens = new List<string>();
@@ -81,7 +81,7 @@ namespace ControleEstoque.Web.Controllers
                     }
                 }
                 catch (Exception ex)
-                {
+                    {
                     resultado = "ERRO";
                 }
             }

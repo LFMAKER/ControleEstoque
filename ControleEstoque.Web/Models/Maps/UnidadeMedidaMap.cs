@@ -3,7 +3,7 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace ControleEstoque.Web.Models
 {
-    public class UnidadeMedidaMap : EntityTypeConfiguration<UnidadeMedidaModel>
+    public class UnidadeMedidaMap : EntityTypeConfiguration<UnidadeMedida>
     {
         public UnidadeMedidaMap()
         {

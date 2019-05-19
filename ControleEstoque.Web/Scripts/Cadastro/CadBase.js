@@ -149,6 +149,7 @@ $(document).on('click', '#btn_incluir', function () {
     var btn = $(this),
         url = url_confirmar,
         param = get_dados_form();
+    console.log(param);
     $.post(url, add_anti_forgery_token(param), function (response) {
         if (response.Resultado == "OK") {
             if (param.Id == 0) {

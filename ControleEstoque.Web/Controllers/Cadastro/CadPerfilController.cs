@@ -35,9 +35,9 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public JsonResult PerfilPagina(int pagina, int tamPag, string filtro, string ordem)
+        public JsonResult PerfilPagina(int pagina, int tamPag)
         {
-            var lista = PerfilDao.RecuperarLista(pagina, tamPag, filtro);
+            var lista = PerfilDao.RecuperarLista(pagina, tamPag);
             return Json(lista);
         }
 
@@ -47,8 +47,8 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         {
             
             var ret = PerfilDao.RecuperarPeloId(id);
-            //PerfilModel usuarios = new PerfilModel();
-            ret.CarregarUsuarios(ret);
+            //Perfil usuarios = new Perfil();
+            //ret.CarregarUsuarios(ret);
 
             return Json(ret);
         }
@@ -62,7 +62,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult SalvarPerfil(PerfilModel model, List<int> idUsuarios)
+        public JsonResult SalvarPerfil(Perfil model)
         {
             var resultado = "OK";
             var mensagens = new List<string>();
@@ -75,18 +75,18 @@ namespace ControleEstoque.Web.Controllers.Cadastro
             }
             else
             {
-                model.Usuarios = new List<UsuarioModel>();
-                if (idUsuarios == null || idUsuarios.Count == 0)
-                {
-                    model.Usuarios.Add(new UsuarioModel() { Id = -1 });
-                }
-                else
-                {
-                    foreach (var id in idUsuarios)
-                    {
-                        model.Usuarios.Add(new UsuarioModel() { Id = id });
-                    }
-                }
+                //model.Usuarios = new List<Usuario>();
+                //if (idUsuarios == null || idUsuarios.Count == 0)
+                //{
+                //    model.Usuarios.Add(new Usuario() { Id = -1 });
+                //}
+                //else
+                //{
+                //    foreach (var id in idUsuarios)
+                //    {
+                //        model.Usuarios.Add(new Usuario() { Id = id });
+                //    }
+                //}
 
                 try
                 {

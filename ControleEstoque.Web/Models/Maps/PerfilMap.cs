@@ -3,7 +3,7 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace ControleEstoque.Web.Models
 {
-    public class PerfilMap : EntityTypeConfiguration<PerfilModel>
+    public class PerfilMap : EntityTypeConfiguration<Perfil>
     {
         public PerfilMap()
         {
@@ -18,15 +18,15 @@ namespace ControleEstoque.Web.Models
             //Definindo o nome da coluna e obrigatório
             Property(x => x.Ativo).HasColumnName("ativo").IsRequired();
 
-            //Mapeando a tabela que surgirá com o relacionando N:N entre Perfil e Usuario
-            HasMany(x => x.Usuarios).WithMany(x => x.Perfis)
-                .Map(x =>
-                {
-                    //Definindo o nome da tabela N:N
-                    x.ToTable("perfil_usuario");
-                    x.MapLeftKey("id_perfil");
-                    x.MapRightKey("id_usuario");
-                });
+            //Mapeando a tabela que surgirá com o relacionando N: N entre Perfil e Usuario
+            //HasMany(x => x.Usuarios).WithMany(x => x.Perfis)
+            //    .Map(x =>
+            //    {
+            //        //Definindo o nome da tabela N:N
+            //        x.ToTable("perfil_usuario_teste");
+            //        x.MapLeftKey("id_perfil");
+            //        x.MapRightKey("id_usuario");
+            //    });
         }
     }
 }

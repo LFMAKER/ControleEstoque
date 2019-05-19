@@ -3,7 +3,7 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace ControleEstoque.Web.Models
 {
-    public class ProdutoMap : EntityTypeConfiguration<ProdutoModel>
+    public class ProdutoMap : EntityTypeConfiguration<Produto>
     {
         public ProdutoMap()
         {

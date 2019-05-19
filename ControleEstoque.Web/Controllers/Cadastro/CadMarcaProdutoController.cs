@@ -54,7 +54,7 @@ namespace ControleEstoque.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult SalvarMarcaProduto(MarcaProdutoModel model)
+        public JsonResult SalvarMarcaProduto(MarcaProduto model)
         {
             var resultado = "OK";
             var mensagens = new List<string>();

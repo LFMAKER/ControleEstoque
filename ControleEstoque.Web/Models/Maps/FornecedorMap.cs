@@ -3,7 +3,7 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace ControleEstoque.Web.Models
 {
-    public class FornecedorMap : EntityTypeConfiguration<FornecedorModel>
+    public class FornecedorMap : EntityTypeConfiguration<Fornecedor>
     {
         public FornecedorMap()
         {
@@ -33,21 +33,23 @@ namespace ControleEstoque.Web.Models
             //Definindo Nome, tamanho e Opcional
             Property(x => x.Complemento).HasColumnName("complemento").HasMaxLength(100).IsOptional();
             //Definindo Nome, tamanho e Opcional
-            Property(x => x.Cep).HasColumnName("cep").HasMaxLength(10).IsOptional();
+            Property(x => x.Cep).HasColumnName("cep").HasMaxLength(10).IsRequired();
+            //Definindo Nome, tamanho e Obrigatório
+            Property(x => x.Bairro).HasColumnName("bairro").HasMaxLength(50).IsRequired();
+            //Definindo Nome, tamanho e Obrigatório
+            Property(x => x.Cidade).HasColumnName("cidade").HasMaxLength(50).IsRequired();
+            //Definindo Nome, tamanho e Obrigatório
+            Property(x => x.Estado).HasColumnName("estado").HasMaxLength(50).IsRequired();
+            //Definindo Nome, tamanho e Obrigatório
+            Property(x => x.Pais).HasColumnName("pais").HasMaxLength(50).IsRequired();
+
+
+
+
             //Definindo Nome, tamanho e Obrigatório
             Property(x => x.Ativo).HasColumnName("ativo").IsRequired();
 
-            //Definindo PK Pais
-            Property(x => x.IdPais).HasColumnName("id_pais").IsRequired();
-            HasRequired(x => x.Pais).WithMany().HasForeignKey(x => x.IdPais).WillCascadeOnDelete(false);
-
-            //Definindo PK Estado
-            Property(x => x.IdEstado).HasColumnName("id_estado").IsRequired();
-            HasRequired(x => x.Estado).WithMany().HasForeignKey(x => x.IdPais).WillCascadeOnDelete(false);
-
-            //Definindo PK Cidade
-            Property(x => x.IdCidade).HasColumnName("id_cidade").IsRequired();
-            HasRequired(x => x.Cidade).WithMany().HasForeignKey(x => x.IdPais).WillCascadeOnDelete(false);
+      
         }
     }
 }

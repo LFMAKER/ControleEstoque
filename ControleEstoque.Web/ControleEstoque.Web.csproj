@@ -27,6 +27,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>3.2</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -139,6 +140,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -199,14 +202,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Apis\GoogleSheets\GoogleSheetsAPI.cs" />
+    <Compile Include="API\Correios\CorreiosAPI.cs" />
+    <Compile Include="API\GoogleSheets\GoogleSheetsAPI.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\Cadastro\CadCidadeController.cs" />
-    <Compile Include="Controllers\Cadastro\CadEstadoController.cs" />
     <Compile Include="Controllers\Cadastro\CadFornecedorController.cs" />
-    <Compile Include="Controllers\Cadastro\CadPaisController.cs" />
     <Compile Include="Controllers\Cadastro\CadGrupoProdutoController.cs" />
     <Compile Include="Controllers\Cadastro\CadLocalArmazenamentoController.cs" />
     <Compile Include="Controllers\Cadastro\CadMarcaProdutoController.cs" />
@@ -218,6 +219,7 @@
     <Compile Include="Controllers\Grafico\GraficoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OperacaoController.cs" />
+    <Compile Include="Controllers\Operacao\OperEncomendaController.cs" />
     <Compile Include="Controllers\Operacao\OperEntradaProdutoController.cs" />
     <Compile Include="Controllers\Operacao\OperEntradaSaidaProdutoController.cs" />
     <Compile Include="Controllers\Operacao\OperSaidaProdutoController.cs" />
@@ -226,19 +228,24 @@
     <Compile Include="Controllers\Relatorio\LogController.cs" />
     <Compile Include="Dados\PopularBanco.cs" />
     <Compile Include="Dal\Grafico\EntradaESaidaGraficoDao.cs" />
-    <Compile Include="Migrations\201905040518507_Inicial.cs" />
-    <Compile Include="Migrations\201905040518507_Inicial.Designer.cs">
-      <DependentUpon>201905040518507_Inicial.cs</DependentUpon>
+    <Compile Include="Migrations\201905190801079_Inicial.cs" />
+    <Compile Include="Migrations\201905190801079_Inicial.Designer.cs">
+      <DependentUpon>201905190801079_Inicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905190808468_Inicial2.cs" />
+    <Compile Include="Migrations\201905190808468_Inicial2.Designer.cs">
+      <DependentUpon>201905190808468_Inicial2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905190829166_Inicial3.cs" />
+    <Compile Include="Migrations\201905190829166_Inicial3.Designer.cs">
+      <DependentUpon>201905190829166_Inicial3.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Binders\EntradaSaidaProdutoViewModelModelBinder.cs" />
-    <Compile Include="Dal\Cadastro\CidadeDao.cs" />
-    <Compile Include="Dal\Cadastro\EstadoDao.cs" />
     <Compile Include="Dal\Cadastro\FornecedorDao.cs" />
     <Compile Include="Dal\Cadastro\GrupoProdutoDao.cs" />
     <Compile Include="Dal\Cadastro\LocalArmazenamentoDao.cs" />
     <Compile Include="Dal\Cadastro\MarcaProdutoDao.cs" />
-    <Compile Include="Dal\Cadastro\PaisDao.cs" />
     <Compile Include="Dal\Cadastro\PerfilDao.cs" />
     <Compile Include="Dal\Cadastro\ProdutoDao.cs" />
     <Compile Include="Dal\Cadastro\UnidadeMedidaDao.cs" />
@@ -249,50 +256,47 @@
     <Compile Include="Helpers\CriptoHelper.cs" />
     <Compile Include="Models\Context.cs" />
     <Compile Include="Dal\SingletonContext.cs" />
-    <Compile Include="Models\Domain\CidadeModel.cs" />
+    <Compile Include="Models\Domain\Encomenda.cs" />
     <Compile Include="Models\Domain\EntradaGraficos.cs" />
-    <Compile Include="Models\Domain\EntradaProdutoModel.cs" />
-    <Compile Include="Models\Domain\EstadoModel.cs" />
-    <Compile Include="Models\Domain\FornecedorModel.cs" />
-    <Compile Include="Models\Domain\GrupoProdutoModel.cs" />
-    <Compile Include="Models\Domain\LocalArmazenamentoModel.cs" />
-    <Compile Include="Models\Domain\MarcaProdutoModel.cs" />
-    <Compile Include="Models\Domain\PaisModel.cs" />
-    <Compile Include="Models\Domain\PerfilModel.cs" />
-    <Compile Include="Models\Domain\ProdutoModel.cs" />
+    <Compile Include="Models\Domain\EntradaProduto.cs" />
+    <Compile Include="Models\Domain\Fornecedor.cs" />
+    <Compile Include="Models\Domain\GrupoProduto.cs" />
+    <Compile Include="Models\Domain\LocalArmazenamento.cs" />
+    <Compile Include="Models\Domain\MarcaProduto.cs" />
+    <Compile Include="Models\Domain\Perfil.cs" />
+    <Compile Include="Models\Domain\Produto.cs" />
     <Compile Include="Models\Domain\Log.cs" />
     <Compile Include="Models\Domain\SaidaGraficos.cs" />
-    <Compile Include="Models\Domain\SaidaProdutoModel.cs" />
+    <Compile Include="Models\Domain\SaidaProduto.cs" />
     <Compile Include="Models\Domain\Tipos.cs" />
-    <Compile Include="Models\Domain\UnidadeMedidaModel.cs" />
-    <Compile Include="Models\Domain\UsuarioModel.cs" />
-    <Compile Include="Models\ViewModel\CidadeViewModel.cs" />
+    <Compile Include="Models\Domain\UnidadeMedida.cs" />
+    <Compile Include="Models\Domain\Usuario.cs" />
     <Compile Include="Models\ViewModel\EntradaSaidaProdutoViewModel.cs" />
-    <Compile Include="Models\ViewModel\EstadoViewModel.cs" />
     <Compile Include="Models\ViewModel\FornecedorViewModel.cs" />
     <Compile Include="Models\ViewModel\GrupoProdutoViewModel.cs" />
     <Compile Include="Models\ViewModel\LocalArmazenamentoViewModel.cs" />
     <Compile Include="Models\ViewModel\LoginViewModel.cs" />
-    <Compile Include="Models\Maps\CidadeMap.cs" />
     <Compile Include="Models\Maps\EntradaProdutoMap.cs" />
-    <Compile Include="Models\Maps\EstadoMap.cs" />
     <Compile Include="Models\Maps\FornecedorMap.cs" />
     <Compile Include="Models\Maps\GrupoProdutoMap.cs" />
     <Compile Include="Models\Maps\LocalArmazenamentoMap.cs" />
     <Compile Include="Models\Maps\MarcaProdutoMap.cs" />
-    <Compile Include="Models\Maps\PaisMap.cs" />
     <Compile Include="Models\Maps\PerfilMap.cs" />
     <Compile Include="Models\Maps\ProdutoMap.cs" />
     <Compile Include="Models\Maps\SaidaProdutoMap.cs" />
     <Compile Include="Models\Maps\UnidadeMedidaMap.cs" />
     <Compile Include="Models\Maps\UsuarioMap.cs" />
     <Compile Include="Models\ViewModel\MarcaProdutoViewModel.cs" />
-    <Compile Include="Models\ViewModel\PaisViewModel.cs" />
     <Compile Include="Models\ViewModel\PerfilViewModel.cs" />
     <Compile Include="Models\ViewModel\ProdutoViewModel.cs" />
     <Compile Include="Models\ViewModel\UnidadeMedidaViewModel.cs" />
     <Compile Include="Models\ViewModel\UsuarioViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\wsCorreios\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -395,6 +399,150 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\_references.js" />
+    <None Include="Service References\wsCorreios\configuration91.svcinfo" />
+    <None Include="Service References\wsCorreios\configuration.svcinfo" />
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.atualizaPagamentoNaEntregaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.atualizaRemessaAgrupadaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.bloquearObjetoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaClienteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaContratoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaDataAtualResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaPagamentoEntregaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaServicosAdicionaisAtivosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaServicosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaServicosValorDeclaradoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaServicosXServicosAdicionaisResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaTarifaValeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.calculaTarifaServicoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.cancelarObjetoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.cancelarPedidoScolResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.clienteERP.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.consultaCEPResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.consultaSROResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.consultaSRO_NEWResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.contratoERP.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.embalagemLRSMaster.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.enderecoERP.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.fechaPlpResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.fechaPlpVariosServicosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.geraDigitoVerificadorEtiquetasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.getStatusCartaoPostagemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.getStatusPLPResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.integrarUsuarioScolResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.obterClienteAtualizacaoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.obterEmbalagemLRSResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.retornoCancelamento.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.servicoAdicionalXML.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.servicoERP.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.solicitaEtiquetasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.solicitaPLPResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.solicitarPostagemScolResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.solicitaXmlPlpResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.statusCartao.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.statusPlp.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.valePostal.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.validaEtiquetaPLPResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.validaPlpResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.validarPostagemReversaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.validarPostagemSimultaneaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.verificaDisponibilidadeServicoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.VerificaSeTodosObjetosCanceladosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\wsCorreios\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -410,9 +558,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\CadGrupoProduto\Index.cshtml" />
     <Content Include="Views\CadUsuario\Index.cshtml" />
-    <Content Include="Views\CadPais\Index.cshtml" />
-    <Content Include="Views\CadEstado\Index.cshtml" />
-    <Content Include="Views\CadCidade\Index.cshtml" />
     <Content Include="Views\Grafico\PerdaMes.cshtml" />
     <Content Include="Views\Grafico\EntradaSaidaMesa.cshtml" />
     <Content Include="Views\Operacao\LancPerdaProduto.cshtml" />
@@ -441,6 +586,8 @@
     <Content Include="Views\OperEntradaProduto\Index.cshtml" />
     <Content Include="Views\OperSaidaProduto\Index.cshtml" />
     <Content Include="Views\Log\Index.cshtml" />
+    <Content Include="Views\OperEncomenda\Index.cshtml" />
+    <None Include="Service References\wsCorreios\AtendeClienteService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -459,8 +606,17 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201905040518507_Inicial.resx">
-      <DependentUpon>201905040518507_Inicial.cs</DependentUpon>
+    <WCFMetadataStorage Include="Service References\wsCorreios\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201905190801079_Inicial.resx">
+      <DependentUpon>201905190801079_Inicial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905190808468_Inicial2.resx">
+      <DependentUpon>201905190808468_Inicial2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905190829166_Inicial3.resx">
+      <DependentUpon>201905190829166_Inicial3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

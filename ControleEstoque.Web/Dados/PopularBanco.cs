@@ -12,21 +12,21 @@ namespace ControleEstoque.Web.Dados
 
         public static void Inserir()
         {
-            GrupoProdutoModel GrupoProduto1 = new GrupoProdutoModel
+            GrupoProduto GrupoProduto1 = new GrupoProduto
             {
                 Nome = "Hospitalar",
                 Ativo = true
             };
             GrupoProdutoDao.Salvar(GrupoProduto1);
 
-            MarcaProdutoModel MarcaProduto1 = new MarcaProdutoModel
+            MarcaProduto MarcaProduto1 = new MarcaProduto
             {
                 Nome = "OKX LTA",
                 Ativo = true
             };
             MarcaProdutoDao.Salvar(MarcaProduto1);
 
-            LocalArmazenamentoModel LocalArmazenamento1 = new LocalArmazenamentoModel
+            LocalArmazenamento LocalArmazenamento1 = new LocalArmazenamento
             {
                 Nome = "Salar 223",
                 Ativo = true
@@ -34,7 +34,7 @@ namespace ControleEstoque.Web.Dados
 
             LocalArmazenamentoDao.Salvar(LocalArmazenamento1);
 
-            UnidadeMedidaModel UnidadeMedida1 = new UnidadeMedidaModel
+            UnidadeMedida UnidadeMedida1 = new UnidadeMedida
             {
                 Nome = "Kilogramas",
                 Sigla = "KG",
@@ -42,39 +42,9 @@ namespace ControleEstoque.Web.Dados
             };
             UnidadeMedidaDao.Salvar(UnidadeMedida1);
 
-
-            PaisModel Pais1 = new PaisModel
-            {
-                Nome = "Brazil",
-                NomePt = "Brasil",
-                Sigla = "BR",
-                Bacen = "00023",
-                Ativo = true
-            };
-
-            PaisDao.Salvar(Pais1);
-
-            EstadoModel Estado1 = new EstadoModel
-            {
-                Nome = "Parana",
-                UF = "PR",
-                IdPais = 1,
-                Pais = null,
-                Ativo = true
-            };
-
-            EstadoDao.Salvar(Estado1);
-
-            CidadeModel Cidade1 = new CidadeModel
-            {
-                Nome = "Curitiba",
-                IdEstado = 1,
-                IdPais = 1,
-                Estado = null,
-                Ativo = true
-            };
-
-            CidadeDao.Salvar(Cidade1);
+           
+            
+           
 
 
 

@@ -53,7 +53,7 @@ namespace ControleEstoque.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult SalvarLocalArmazenamento(LocalArmazenamentoModel model)
+        public JsonResult SalvarLocalArmazenamento(LocalArmazenamento model)
         {
             var resultado = "OK";
             var mensagens = new List<string>();

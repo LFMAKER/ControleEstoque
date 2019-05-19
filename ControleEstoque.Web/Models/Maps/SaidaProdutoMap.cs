@@ -4,7 +4,7 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace ControleEstoque.Web.Models
 {
-    public class SaidaProdutoMap : EntityTypeConfiguration<SaidaProdutoModel>
+    public class SaidaProdutoMap : EntityTypeConfiguration<SaidaProduto>
     {
         public SaidaProdutoMap()
         {

@@ -33,6 +33,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
             var difQuantPaginas = (quant % ViewBag.QuantMaxLinhasPorPagina) > 0 ? 1 : 0;
 
             ViewBag.QuantPaginas = (quant / ViewBag.QuantMaxLinhasPorPagina) + difQuantPaginas;
+            ViewBag.Perfis = PerfilDao.RecuperarLista();
             return View(lista);
 
 
@@ -66,7 +67,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         [HttpPost]
         [Authorize(Roles = "Gerente, Desenvolvedor")]
         [ValidateAntiForgeryToken]
-        public ActionResult SalvarUsuario(UsuarioModel model)
+        public ActionResult SalvarUsuario(Usuario model, int IdPerfil)
         {
             var resultado = "OK";
             var mensagens = new List<string>();
@@ -88,7 +89,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
                     }
 
 
-                    var id = UsuarioDao.Salvar(model);
+                    var id = UsuarioDao.Salvar(model, IdPerfil);
                     if (id > 0)
                     {
                         idSalvo = id.ToString();

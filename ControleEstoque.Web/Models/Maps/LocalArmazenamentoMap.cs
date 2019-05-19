@@ -7,7 +7,7 @@ using System.Web;
 
 namespace ControleEstoque.Web.Models.Maps
 {
-    public class LocalArmazenamentoMap : EntityTypeConfiguration<LocalArmazenamentoModel>
+    public class LocalArmazenamentoMap : EntityTypeConfiguration<LocalArmazenamento>
     {
         public LocalArmazenamentoMap()
         {

@@ -57,7 +57,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public JsonResult SalvarUnidadeMedida(UnidadeMedidaModel model)
+        public JsonResult SalvarUnidadeMedida(UnidadeMedida model)
         {
             var resultado = "OK";
             var mensagens = new List<string>();

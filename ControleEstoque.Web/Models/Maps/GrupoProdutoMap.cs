@@ -7,7 +7,7 @@ using System.Web;
 
 namespace ControleEstoque.Web.Models
 {
-    public class GrupoProdutoMap : EntityTypeConfiguration<GrupoProdutoModel>
+    public class GrupoProdutoMap : EntityTypeConfiguration<GrupoProduto>
     {
         public GrupoProdutoMap()
         {

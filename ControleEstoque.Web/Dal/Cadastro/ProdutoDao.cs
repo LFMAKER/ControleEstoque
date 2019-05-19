@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -12,27 +13,33 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
     {
         public static int RecuperarQuantidade()
         {
+            //var ret = 0;
+
+            //using (var conexao = new SqlConnection())
+            //{
+            //    conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
+            //    conexao.Open();
+
+            //    ret = conexao.ExecuteScalar<int>("select count(*) from produto");
+            //}
+
+            //return ret;
+
+
             var ret = 0;
-
-            using (var conexao = new SqlConnection())
+            using (var ctx = new Context())
             {
-                conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-                conexao.Open();
-
-                ret = conexao.ExecuteScalar<int>("select count(*) from produto");
+                ret = ctx.Produtos.Count();
             }
-
             return ret;
         }
 
-        public static List<ProdutoModel> RecuperarLista(int pagina = 0, int tamPagina = 0, string filtro = "", string ordem = "", bool somenteAtivos = false)
+        public static List<Produto> RecuperarLista(int pagina = 0, int tamPagina = 0, string filtro = "", bool somenteAtivos = false)
         {
-            var ret = new List<ProdutoModel>();
+            var ret = new List<Produto>();
 
-            using (var conexao = new SqlConnection())
+            using (var ctx = new Context())
             {
-                conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-                conexao.Open();
 
                 var filtroWhere = "";
                 if (!string.IsNullOrEmpty(filtro))
@@ -59,23 +66,20 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
                     "id_marca as IdMarca, id_fornecedor as IdFornecedor, id_local_armazenamento as IdLocalArmazenamento " +
                     "from produto " +
                     filtroWhere +
-                    "order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
                     paginacao;
 
-                ret = conexao.Query<ProdutoModel>(sql).ToList();
+                ret = ctx.Database.Connection.Query<Produto>(sql).ToList();
             }
 
             return ret;
         }
 
-        public static ProdutoModel RecuperarPeloId(int id)
+        public static Produto RecuperarPeloId(int id)
         {
-            ProdutoModel ret = null;
+            Produto ret = null;
 
-            using (var conexao = new SqlConnection())
+            using (var ctx = new Context())
             {
-                conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-                conexao.Open();
 
                 var sql =
                     "select id, codigo, nome, ativo, preco_custo as PrecoCusto, preco_venda as PrecoVenda, " +
@@ -84,98 +88,127 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
                     "from produto " +
                     "where (id = @id)";
                 var parametros = new { id };
-                ret = conexao.Query<ProdutoModel>(sql, parametros).SingleOrDefault();
+                ret = ctx.Database.Connection.Query<Produto>(sql, parametros).SingleOrDefault();
             }
 
             return ret;
         }
 
-      
+
 
         public static bool ExcluirPeloId(int id)
         {
             var ret = false;
-
             if (RecuperarPeloId(id) != null)
             {
-                using (var conexao = new SqlConnection())
-                {
-                    conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-                    conexao.Open();
+                //using (var conexao = new SqlConnection())
+                //{
+                //    conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
+                //    conexao.Open();
 
-                    var sql = "delete from produto where (id = @id)";
-                    var parametros = new { id };
-                    ret = (conexao.Execute(sql, parametros) > 0);
+                //    var sql = "delete from produto where (id = @id)";
+                //    var parametros = new { id };
+                //    ret = (conexao.Execute(sql, parametros) > 0);
+                //}
+
+
+                var forn = new Produto { Id = id };
+                using (var ctx = new Context())
+                {
+                    ctx.Produtos.Attach(forn);
+                    ctx.Entry(forn).State = EntityState.Deleted;
+                    ctx.SaveChanges();
+                    ret = true;
                 }
             }
 
             return ret;
         }
 
-        public static int Salvar(ProdutoModel pm)
+        public static int Salvar(Produto pm)
         {
+            //var ret = 0;
+
+            //var model = RecuperarPeloId(pm.Id);
+
+            //using (var conexao = new SqlConnection())
+            //{
+            //    conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
+            //    conexao.Open();
+
+            //    if (model == null)
+            //    {
+            //        var sql =
+            //            "insert into produto " +
+            //            "(codigo, nome, preco_custo, preco_venda, quant_estoque, id_unidade_medida, id_grupo, id_marca, " +
+            //            "id_fornecedor, id_local_armazenamento, ativo) values " +
+            //            "(@codigo, @nome, @preco_custo, @preco_venda, @quant_estoque, @id_unidade_medida, @id_grupo, @id_marca, " +
+            //            "@id_fornecedor, @id_local_armazenamento, @ativo); select convert(int, scope_identity())";
+            //        var parametros = new
+            //        {
+            //            codigo = pm.Codigo,
+            //            nome = pm.Nome,
+            //            preco_custo = pm.PrecoCusto,
+            //            preco_venda = pm.PrecoVenda,
+            //            quant_estoque = pm.QuantEstoque,
+            //            id_unidade_medida = pm.IdUnidadeMedida,
+            //            id_grupo = pm.IdGrupo,
+            //            id_marca = pm.IdMarca,
+            //            id_fornecedor = pm.IdFornecedor,
+            //            id_local_armazenamento = pm.IdLocalArmazenamento,
+            //            ativo = (pm.Ativo ? 1 : 0)
+            //        };
+            //        ret = conexao.ExecuteScalar<int>(sql, parametros);
+            //    }
+            //    else
+            //    {
+            //        var sql =
+            //            "update produto set codigo=@codigo, nome=@nome, preco_custo=@preco_custo, " +
+            //            "preco_venda=@preco_venda, quant_estoque=@quant_estoque, id_unidade_medida=@id_unidade_medida, " +
+            //            "id_grupo=@id_grupo, id_marca=@id_marca, id_fornecedor=@id_fornecedor, " +
+            //            "id_local_armazenamento=@id_local_armazenamento, ativo=@ativo where id = @id";
+            //        var parametros = new
+            //        {
+            //            codigo = pm.Codigo,
+            //            nome = pm.Nome,
+            //            preco_custo = pm.PrecoCusto,
+            //            preco_venda = pm.PrecoVenda,
+            //            quant_estoque = pm.QuantEstoque,
+            //            id_unidade_medida = pm.IdUnidadeMedida,
+            //            id_grupo = pm.IdGrupo,
+            //            id_marca = pm.IdMarca,
+            //            id_fornecedor = pm.IdFornecedor,
+            //            id_local_armazenamento = pm.IdLocalArmazenamento,
+            //            ativo = (pm.Ativo ? 1 : 0),
+            //            id = pm.Id
+            //        };
+            //        if (conexao.Execute(sql, parametros) > 0)
+            //        {
+            //            ret = pm.Id;
+            //        }
+            //    }
+            //}
+
+            //return ret;
+
             var ret = 0;
-
             var model = RecuperarPeloId(pm.Id);
-
-            using (var conexao = new SqlConnection())
+            using (var ctx = new Context())
             {
-                conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-                conexao.Open();
-
                 if (model == null)
                 {
-                    var sql =
-                        "insert into produto " +
-                        "(codigo, nome, preco_custo, preco_venda, quant_estoque, id_unidade_medida, id_grupo, id_marca, " +
-                        "id_fornecedor, id_local_armazenamento, ativo) values " +
-                        "(@codigo, @nome, @preco_custo, @preco_venda, @quant_estoque, @id_unidade_medida, @id_grupo, @id_marca, " +
-                        "@id_fornecedor, @id_local_armazenamento, @ativo); select convert(int, scope_identity())";
-                    var parametros = new
-                    {
-                        codigo = pm.Codigo,
-                        nome = pm.Nome,
-                        preco_custo = pm.PrecoCusto,
-                        preco_venda = pm.PrecoVenda,
-                        quant_estoque = pm.QuantEstoque,
-                        id_unidade_medida = pm.IdUnidadeMedida,
-                        id_grupo = pm.IdGrupo,
-                        id_marca = pm.IdMarca,
-                        id_fornecedor = pm.IdFornecedor,
-                        id_local_armazenamento = pm.IdLocalArmazenamento,
-                        ativo = (pm.Ativo ? 1 : 0)
-                    };
-                    ret = conexao.ExecuteScalar<int>(sql, parametros);
+
+                    ctx.Produtos.Add(pm);
                 }
                 else
                 {
-                    var sql =
-                        "update produto set codigo=@codigo, nome=@nome, preco_custo=@preco_custo, " +
-                        "preco_venda=@preco_venda, quant_estoque=@quant_estoque, id_unidade_medida=@id_unidade_medida, " +
-                        "id_grupo=@id_grupo, id_marca=@id_marca, id_fornecedor=@id_fornecedor, " +
-                        "id_local_armazenamento=@id_local_armazenamento, ativo=@ativo where id = @id";
-                    var parametros = new
-                    {
-                        codigo = pm.Codigo,
-                        nome = pm.Nome,
-                        preco_custo = pm.PrecoCusto,
-                        preco_venda = pm.PrecoVenda,
-                        quant_estoque = pm.QuantEstoque,
-                        id_unidade_medida = pm.IdUnidadeMedida,
-                        id_grupo = pm.IdGrupo,
-                        id_marca = pm.IdMarca,
-                        id_fornecedor = pm.IdFornecedor,
-                        id_local_armazenamento = pm.IdLocalArmazenamento,
-                        ativo = (pm.Ativo ? 1 : 0),
-                        id = pm.Id
-                    };
-                    if (conexao.Execute(sql, parametros) > 0)
-                    {
-                        ret = pm.Id;
-                    }
-                }
-            }
 
+                    ctx.Entry(pm).State = System.Data.Entity.EntityState.Modified;
+
+                }
+                ctx.SaveChanges();
+                ret = pm.Id;
+            }
             return ret;
         }
 
@@ -191,42 +224,43 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
 
         public static string SalvarPedido(DateTime data, Dictionary<int, int> produtos, string nomeTabela, bool entrada)
         {
-            var ret = "";
+            //var ret = "";
 
-            try
-            {
-                using (var conexao = new SqlConnection())
-                {
-                    conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-                    conexao.Open();
+            //try
+            //{
+            //    using (var conexao = new SqlConnection())
+            //    {
+            //        conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
+            //        conexao.Open();
 
-                    var numPedido = conexao.ExecuteScalar<int>($"select next value for sec_{nomeTabela}").ToString("D10");
+            //        var numPedido = conexao.ExecuteScalar<int>($"select next value for sec_{nomeTabela}").ToString("D10");
 
-                    using (var transacao = conexao.BeginTransaction())
-                    {
-                        foreach (var produto in produtos)
-                        {
-                            var sql = $"insert into {nomeTabela} (numero, data, id_produto, quant) values (@numero, @data, @id_produto, @quant)";
-                            var parametrosInsert = new { numero = numPedido, data, id_produto = produto.Key, quant = produto.Value };
-                            conexao.Execute(sql, parametrosInsert, transacao);
+            //        using (var transacao = conexao.BeginTransaction())
+            //        {
+            //            foreach (var produto in produtos)
+            //            {
+            //                var sql = $"insert into {nomeTabela} (numero, data, id_produto, quant) values (@numero, @data, @id_produto, @quant)";
+            //                var parametrosInsert = new { numero = numPedido, data, id_produto = produto.Key, quant = produto.Value };
+            //                conexao.Execute(sql, parametrosInsert, transacao);
 
-                            var sinal = (entrada ? "+" : "-");
-                            sql = $"update produto set quant_estoque = quant_estoque {sinal} @quant_estoque where (id = @id)";
-                            var parametrosUpdate = new { id = produto.Key, quant_estoque = produto.Value };
-                            conexao.Execute(sql, parametrosUpdate, transacao);
-                        }
+            //                var sinal = (entrada ? "+" : "-");
+            //                sql = $"update produto set quant_estoque = quant_estoque {sinal} @quant_estoque where (id = @id)";
+            //                var parametrosUpdate = new { id = produto.Key, quant_estoque = produto.Value };
+            //                conexao.Execute(sql, parametrosUpdate, transacao);
+            //            }
 
-                        transacao.Commit();
+            //            transacao.Commit();
 
-                        ret = numPedido;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-            }
+            //            ret = numPedido;
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //}
 
-            return ret;
+            //return ret;
+            return null;
         }
 
     }

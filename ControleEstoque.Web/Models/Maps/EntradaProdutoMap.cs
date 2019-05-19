@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ControleEstoque.Web.Models
 {
-    public class EntradaProdutoMap : EntityTypeConfiguration<EntradaProdutoModel>
+    public class EntradaProdutoMap : EntityTypeConfiguration<EntradaProduto>
     {
 
         public EntradaProdutoMap()
