@@ -18,6 +18,7 @@ namespace ControleEstoque.Web.Models
         public string Senha { get; set; }
         [Required(ErrorMessage = "Informe o nome")]
         public string Nome { get; set; }
+        [Required(ErrorMessage = "Selecione um perfil")]
         public Perfil Perfil { get; set; }
 
 

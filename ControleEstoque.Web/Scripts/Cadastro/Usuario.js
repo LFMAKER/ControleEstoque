@@ -18,7 +18,6 @@ function set_dados_grid(dados) {
 }
 function get_dados_inclusao() {
 
-    debugger;
     return {
         Id: 0,
         Nome: '',
@@ -28,13 +27,26 @@ function get_dados_inclusao() {
 }
 
 function get_dados_form() {
+
+    if ($('#perfis').val() != "undefined") {
+        return {
+            Id: $('#id_cadastro').val(),
+            Nome: $('#txt_nome').val(),
+            Login: $('#txt_login').val(),
+            Senha: $('#txt_senha').val(),
+            IdPerfil: $('#ddl_perfil').val()
+        }
+    }
+
     return {
         Id: $('#id_cadastro').val(),
         Nome: $('#txt_nome').val(),
         Login: $('#txt_login').val(),
         Senha: $('#txt_senha').val(),
-        IdPerfil: $('#ddl_perfil').val()
+        IdPerfil: null
     }
+
+    
 
 }
 

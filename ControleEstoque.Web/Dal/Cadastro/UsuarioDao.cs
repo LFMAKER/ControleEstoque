@@ -189,7 +189,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
             return ret;
         }
 
-        public static int Salvar(Usuario um, int IdPerfil)
+        public static int Salvar(Usuario um, int? IdPerfil)
         {
             var ret = 0;
             //Recuperando o Perfil

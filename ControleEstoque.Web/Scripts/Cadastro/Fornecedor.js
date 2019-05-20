@@ -115,9 +115,10 @@ $('#txt_cep').on('blur', function () {
         if (!("erro" in dados)) {
             //Atualiza os campos com os valores da consulta.
             $("#txt_logradouro").val(dados.logradouro);
-            $("#txt_bairro").val(dados.Bairro);
+            $("#txt_bairro").val(dados.bairro);
+            $("#txt_cidade").val(dados.cidade);
             $("#txt_estado").val(dados.estado_info.nome);
-            $("#txt_logradouro").val(dados.logradouro);
+            $("#txt_pais").val("Brasil");
            
         } //end if.
         else {

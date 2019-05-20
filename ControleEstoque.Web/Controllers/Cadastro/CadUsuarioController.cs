@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace ControleEstoque.Web.Controllers.Cadastro
 {
-    
+
     public class CadUsuarioController : Controller
     {
 
@@ -18,9 +18,9 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         public ActionResult Index()
         {
 
-            
+
             ViewBag.SenhaPadrao = _senhaPadrao;
-           
+
             ViewBag.ListaTamPag = new SelectList(new int[] { _quantMaxLinhasPorPagina, 10, 15, 20 }, _quantMaxLinhasPorPagina);
 
 
@@ -34,6 +34,8 @@ namespace ControleEstoque.Web.Controllers.Cadastro
 
             ViewBag.QuantPaginas = (quant / ViewBag.QuantMaxLinhasPorPagina) + difQuantPaginas;
             ViewBag.Perfis = PerfilDao.RecuperarLista();
+            //ViewBag.ddl_perfil = new SelectList(PerfilDao.RecuperarLista(), "Id", "Nome");
+
             return View(lista);
 
 
@@ -67,11 +69,12 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         [HttpPost]
         [Authorize(Roles = "Gerente, Desenvolvedor")]
         [ValidateAntiForgeryToken]
-        public ActionResult SalvarUsuario(Usuario model, int IdPerfil)
+        public ActionResult SalvarUsuario(Usuario model, int? IdPerfil)
         {
             var resultado = "OK";
             var mensagens = new List<string>();
             var idSalvo = string.Empty;
+            model.Perfil = PerfilDao.RecuperarPeloId(IdPerfil);
 
             if (!ModelState.IsValid)
             {

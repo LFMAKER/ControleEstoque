@@ -60,9 +60,16 @@ namespace ControleEstoque.Web.Dal.Cadastro
             return ret;
         }
 
-        public static Perfil RecuperarPeloId(int id)
+        public static Perfil RecuperarPeloId(int? id)
         {
-            return ctx.Perfis.AsNoTracking().Where(x => x.Id == id).FirstOrDefault();
+            if(id != null)
+            {
+                return ctx.Perfis.AsNoTracking().Where(x => x.Id == id).FirstOrDefault();
+            }else
+            {
+                return null;
+            }
+           
         }
 
         public static bool ExcluirPeloId(int id)
