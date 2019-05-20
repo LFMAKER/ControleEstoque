@@ -125,23 +125,6 @@ namespace ControleEstoque.Web.Migrations
                 .PrimaryKey(t => t.id);
             
             CreateTable(
-                "dbo.usuario",
-                c => new
-                    {
-                        id = c.Int(nullable: false, identity: true),
-                        login = c.String(nullable: false, maxLength: 50),
-                        senha = c.String(nullable: false, maxLength: 32),
-                        nome = c.String(nullable: false, maxLength: 100),
-                        id_perfil = c.Int(nullable: false),
-                        Perfil_Id = c.Int(),
-                    })
-                .PrimaryKey(t => t.id)
-                .ForeignKey("dbo.perfil", t => t.id_perfil)
-                .ForeignKey("dbo.perfil", t => t.Perfil_Id)
-                .Index(t => t.id_perfil)
-                .Index(t => t.Perfil_Id);
-            
-            CreateTable(
                 "dbo.saida_produto",
                 c => new
                     {
@@ -155,30 +138,42 @@ namespace ControleEstoque.Web.Migrations
                 .ForeignKey("dbo.produto", t => t.id_produto)
                 .Index(t => t.id_produto);
             
+            CreateTable(
+                "dbo.usuario",
+                c => new
+                    {
+                        id = c.Int(nullable: false, identity: true),
+                        login = c.String(nullable: false, maxLength: 50),
+                        senha = c.String(nullable: false, maxLength: 32),
+                        nome = c.String(nullable: false, maxLength: 100),
+                        Perfil_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.id)
+                .ForeignKey("dbo.perfil", t => t.Perfil_Id)
+                .Index(t => t.Perfil_Id);
+            
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.saida_produto", "id_produto", "dbo.produto");
             DropForeignKey("dbo.usuario", "Perfil_Id", "dbo.perfil");
-            DropForeignKey("dbo.usuario", "id_perfil", "dbo.perfil");
+            DropForeignKey("dbo.saida_produto", "id_produto", "dbo.produto");
             DropForeignKey("dbo.entrada_produto", "id_produto", "dbo.produto");
             DropForeignKey("dbo.produto", "id_unidade_medida", "dbo.unidade_medida");
             DropForeignKey("dbo.produto", "id_marca", "dbo.marca_produto");
             DropForeignKey("dbo.produto", "id_local_armazenamento", "dbo.local_armazenamento");
             DropForeignKey("dbo.produto", "id_grupo", "dbo.grupo_produto");
             DropForeignKey("dbo.produto", "id_fornecedor", "dbo.fornecedor");
-            DropIndex("dbo.saida_produto", new[] { "id_produto" });
             DropIndex("dbo.usuario", new[] { "Perfil_Id" });
-            DropIndex("dbo.usuario", new[] { "id_perfil" });
+            DropIndex("dbo.saida_produto", new[] { "id_produto" });
             DropIndex("dbo.produto", new[] { "id_local_armazenamento" });
             DropIndex("dbo.produto", new[] { "id_fornecedor" });
             DropIndex("dbo.produto", new[] { "id_marca" });
             DropIndex("dbo.produto", new[] { "id_grupo" });
             DropIndex("dbo.produto", new[] { "id_unidade_medida" });
             DropIndex("dbo.entrada_produto", new[] { "id_produto" });
-            DropTable("dbo.saida_produto");
             DropTable("dbo.usuario");
+            DropTable("dbo.saida_produto");
             DropTable("dbo.perfil");
             DropTable("dbo.unidade_medida");
             DropTable("dbo.marca_produto");

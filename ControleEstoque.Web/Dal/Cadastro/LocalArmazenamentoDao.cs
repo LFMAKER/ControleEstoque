@@ -33,7 +33,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
 
         }
 
-        public static List<LocalArmazenamento> RecuperarLista(int pagina, int tamPagina, string filtro ="")
+        public static List<LocalArmazenamento> RecuperarLista(int pagina, int tamPagina, string filtro = "")
         {
             //var ret = new List<LocalArmazenamento>();
 

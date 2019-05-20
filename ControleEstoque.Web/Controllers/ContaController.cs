@@ -31,13 +31,14 @@ namespace ControleEstoque.Web.Controllers
             }
 
             var usuario = UsuarioDao.ValidarUsuario(login.Usuario, login.Senha);
-            var userString = UsuarioDao.RecuperarStringNomePerfis(usuario);
+          
 
 
 
 
             if (usuario != null)
             {
+                var userString = UsuarioDao.RecuperarStringNomePerfis(usuario);
 
                 //FormsAuthentication.SetAuthCookie(login.Usuario, login.LembrarMe);
                 var ticket = FormsAuthentication.Encrypt(new FormsAuthenticationTicket(

@@ -9,6 +9,7 @@ using System.IO;
 using System.Threading;
 using ControleEstoque.Web.Models;
 using System.Web;
+using System.IO;
 using static Google.Apis.Sheets.v4.SheetsService;
 using Newtonsoft.Json;
 
@@ -43,15 +44,14 @@ namespace ControleEstoque.Web.API.GoogleSheets
             using (var stream =
                 new FileStream(File, FileMode.Open, FileAccess.Read))
             {
-               
-                string credPath = "token.json";
+                string caminho = Path.Combine(HttpContext.Current.Server.MapPath("~/API/GoogleSheets/"), "token.json");
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
                     Scopes,
                     "user",
                     CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + credPath);
+                    new FileDataStore(caminho, true)).Result;
+                Console.WriteLine("Credential file saved to: " + caminho);
             }
 
             // Criando Google Sheets API service.

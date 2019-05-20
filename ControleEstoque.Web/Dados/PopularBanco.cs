@@ -42,7 +42,20 @@ namespace ControleEstoque.Web.Dados
             };
             UnidadeMedidaDao.Salvar(UnidadeMedida1);
 
-           
+            Perfil perfil = new Perfil
+            {
+                Nome = "Gerente",
+                Ativo = true
+            };
+            PerfilDao.Salvar(perfil);
+
+            Usuario user = new Usuario
+            {
+                Login = "admin",
+                Senha = Helpers.CriptoHelper.HashMD5("admin"),
+             
+            };
+            UsuarioDao.Salvar(user, 1);
             
            
 

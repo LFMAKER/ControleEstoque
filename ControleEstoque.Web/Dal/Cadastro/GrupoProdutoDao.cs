@@ -18,7 +18,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
             var ret = 0;
             using (var ctx = new Context())
             {
-                
+
                 ret = ctx.GruposProdutos.Count();
             }
             return ret;

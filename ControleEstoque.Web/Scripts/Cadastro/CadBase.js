@@ -184,6 +184,7 @@ $(document).on('click', '#btn_incluir', function () {
         else if (response.Resultado == "ERRO") {
             $('#msg_aviso').hide();
             $('#msg_mensagem_aviso').hide();
+            $('#msg_erro').text("Ops, ocorreu um erro!")
             $('#msg_erro').show();
         }
         else if (response.Resultado == "AVISO") {
@@ -191,6 +192,13 @@ $(document).on('click', '#btn_incluir', function () {
             $('#msg_aviso').show();
             $('#msg_mensagem_aviso').show();
             $('#msg_erro').hide();
+        } else {
+            $('#msg_aviso').hide();
+            $('#msg_mensagem_aviso').hide();
+            $('#msg_erro').text(response.Resultado)
+            $('#msg_erro').show();
+            console.log(response.Resultado);
+
         }
 
 

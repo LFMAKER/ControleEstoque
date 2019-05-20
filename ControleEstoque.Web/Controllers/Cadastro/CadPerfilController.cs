@@ -75,21 +75,14 @@ namespace ControleEstoque.Web.Controllers.Cadastro
             }
             else
             {
-                //model.Usuarios = new List<Usuario>();
-                //if (idUsuarios == null || idUsuarios.Count == 0)
-                //{
-                //    model.Usuarios.Add(new Usuario() { Id = -1 });
-                //}
-                //else
-                //{
-                //    foreach (var id in idUsuarios)
-                //    {
-                //        model.Usuarios.Add(new Usuario() { Id = id });
-                //    }
-                //}
+                
 
                 try
                 {
+                    if (!PerfilDao.VerificarNome(model))
+                    {
+
+                    
                     var id = PerfilDao.Salvar(model);
                     if (id > 0)
                     {
@@ -99,7 +92,10 @@ namespace ControleEstoque.Web.Controllers.Cadastro
                     {
                         resultado = "ERRO";
                     }
-
+                    }else
+                    {
+                        resultado = "Não é possível cadastrar um perfil com o mesmo nome!";
+                    }
 
                 }
                 catch (Exception ex)

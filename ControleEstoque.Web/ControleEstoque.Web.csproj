@@ -128,8 +128,8 @@
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Node, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -240,17 +240,9 @@
     <Compile Include="Controllers\Relatorio\LogController.cs" />
     <Compile Include="Dados\PopularBanco.cs" />
     <Compile Include="Dal\Grafico\EntradaESaidaGraficoDao.cs" />
-    <Compile Include="Migrations\201905190801079_Inicial.cs" />
-    <Compile Include="Migrations\201905190801079_Inicial.Designer.cs">
-      <DependentUpon>201905190801079_Inicial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905190808468_Inicial2.cs" />
-    <Compile Include="Migrations\201905190808468_Inicial2.Designer.cs">
-      <DependentUpon>201905190808468_Inicial2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905190829166_Inicial3.cs" />
-    <Compile Include="Migrations\201905190829166_Inicial3.Designer.cs">
-      <DependentUpon>201905190829166_Inicial3.cs</DependentUpon>
+    <Compile Include="Migrations\201905191245118_Inicial.cs" />
+    <Compile Include="Migrations\201905191245118_Inicial.Designer.cs">
+      <DependentUpon>201905191245118_Inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Binders\EntradaSaidaProdutoViewModelModelBinder.cs" />
@@ -555,7 +547,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -621,14 +615,8 @@
     <WCFMetadataStorage Include="Service References\wsCorreios\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201905190801079_Inicial.resx">
-      <DependentUpon>201905190801079_Inicial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905190808468_Inicial2.resx">
-      <DependentUpon>201905190808468_Inicial2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905190829166_Inicial3.resx">
-      <DependentUpon>201905190829166_Inicial3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201905191245118_Inicial.resx">
+      <DependentUpon>201905191245118_Inicial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
