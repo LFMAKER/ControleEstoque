@@ -14,8 +14,6 @@ The creation of this project is focused only on learning.
 - [Google Graphs](https://developers.google.com/chart/)
 - [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
 - [Fomantic UI](https://semantic-ui.com/)
-- SQL Server Express
-- Log4Net
 
 
 ps: Many technologies and old techniques will be used in the projects, over time will be realized the implementation of new technologies and techniques to demonstrate improvement.
@@ -40,8 +38,5 @@ A criação desse projeto é focada apenas no aprendizado.
 - [Google Graphs](https://developers.google.com/chart/)
 - [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
 - [Fomantic UI](https://semantic-ui.com/)
-- SQL Server Express
-- Log4Net
 
 
-obs: Muitas tecnologias e técnicas antigas serão usadas no projetos, com o tempo será realizado a implementação de novas tecnologias e técnicas para demonstrar a melhoria.
