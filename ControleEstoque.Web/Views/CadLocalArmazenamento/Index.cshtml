@@ -40,27 +40,33 @@
     }
 }
 @section CamposCadastro {
-   
-        <div class="form-group">
-            @Html.Label("txt_nome", "Nome", new { @class = "col-md-3 control-label" })
-            <div class="col-md-12">
-                @Html.TextBox("txt_nome", null, new { @class = "form-control" })
-            </div>
+
+    <div class="form-group">
+        @Html.Label("txt_nome", "Nome", new { @class = "col-md-3 control-label" })
+        <div class="col-md-12">
+            @Html.TextBox("txt_nome", null, new { @class = "form-control" })
         </div>
-        <div class="form-group">
-            @Html.Label("txt_capacidade_total", "Capacidade Total", new { @class = "col-md-3 control-label" })
-            <div class="col-md-12">
-                @Html.TextBox("txt_capacidade_total", null, new { @class = "form-control" })
-            </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("txt_capacidade_total", "Capacidade Total", new { @class = "col-md-3 control-label" })
+        <div class="col-md-12">
+            @Html.TextBox("txt_capacidade_total", null, new { @class = "form-control" })
         </div>
-        <div class="form-group ml-3 pt-2">
-            <div class="custom-control custom-checkbox mb-3 ">
-                @Html.CheckBox("cbx_ativo", new { @class = "custom-control-input " })
-                @Html.Label("cbx_ativo", "Ativo", new { @class = " mb-2 custom-control-label" })
-                <small id="caixa" class="form-text text-muted"></small>
-            </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("txt_capacidade_atual", "Capacidade Atual", new { @class = "col-md-3 control-label" })
+        <div class="col-md-12">
+            @Html.TextBox("txt_capacidade_atual", null, new { @class = "form-control", @readonly = "readonly" })
         </div>
-    
+    </div>
+    <div class="form-group ml-3 pt-2">
+        <div class="custom-control custom-checkbox mb-3 ">
+            @Html.CheckBox("cbx_ativo", new { @class = "custom-control-input " })
+            @Html.Label("cbx_ativo", "Ativo", new { @class = " mb-2 custom-control-label" })
+            <small id="caixa" class="form-text text-muted"></small>
+        </div>
+    </div>
+
 }
 @section Scripts{
     <script src="~/Scripts/bootstrap-select.js"></script>

@@ -46,5 +46,6 @@ namespace ControleEstoque.Web.Models
 
         public bool Ativo { get; set; }
 
+
     }
 }

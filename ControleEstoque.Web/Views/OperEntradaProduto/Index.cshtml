@@ -102,13 +102,16 @@
             incluir_linha_produto();
         }
         function obter_lista_entradas() {
-        )
-            .on('click', '#btn_salvar', function () {
-                var btn = $(this);
-                var lista_entradas = obter_lista_entradas();
-                if (lista_entradas.length == 0) {
-                    swal.fire('Aviso', 'Para salvar, você deve informar produtos com quantidades.', 'warning');
+            var ret = [];
+            $('#grid tbody tr').each(function (index, item) {
+                var txt_quantidade = $(this).find('input'),
+                    ddl_produto = $(this).find('select'),
+                    quantidade = parseInt(txt_quantidade.val()),
+                    produto = parseInt(ddl_produto.val());
+                if (quantidade > 0) {
+                    ret.push({ IdProduto: produto, Quantidade: quantidade });
                 }
+            });
             return ret;
         }
         $(document).ready(function () {
@@ -122,6 +125,7 @@
         .on('click', '#btn_salvar', function () {
             var btn = $(this);
             var lista_entradas = obter_lista_entradas();
+            console.log(lista_entradas);
             if (lista_entradas.length == 0) {
                 swal.fire('Aviso', 'Para salvar, você deve informar produtos com quantidades.', 'warning');
             }

@@ -89,7 +89,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
         public static bool ExcluirPeloId(int id)
         {
             var ret = false;
-            var existing = ctx.Produtos.FirstOrDefault(x => x.Id == id);
+            var existing = ctx.Produtos.Include("LocalArmazenamento").FirstOrDefault(x => x.Id == id);
             if (existing != null)
             {
                 ctx.Entry(existing).State = EntityState.Detached;
@@ -97,9 +97,18 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
 
             try
             {
+                //TODO: Tentar AtualizarCapacidadeAtual depois de remover o produto
+
+                LocalArmazenamentoDao.AtualizarCapacidadeAtual(existing.LocalArmazenamento, existing.QuantEstoque, "Remover", id);
+                 existing = ctx.Produtos.Include("LocalArmazenamento").FirstOrDefault(x => x.Id == id);
+                if (existing != null)
+                {
+                    ctx.Entry(existing).State = EntityState.Detached;
+                }
                 ctx.Produtos.Attach(existing);
                 ctx.Entry(existing).State = EntityState.Deleted;
                 ctx.SaveChanges();
+               
                 ret = true;
             }
             catch (System.Exception ex)
@@ -143,6 +152,9 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
         {
             ctx.Produtos.Add(p);
             ctx.SaveChanges();
+
+            //Atualizando CapacidadeAtual LocalArmazenamento
+            LocalArmazenamentoDao.AtualizarCapacidadeAtual(p.LocalArmazenamento, p.QuantEstoque, "Cadastrar");
             return true;
         }
 
@@ -287,55 +299,96 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
 
         public static string SalvarPedidoEntrada(DateTime data, Dictionary<int, int> produtos)
         {
-            return null; /*SalvarPedido(data, produtos, "entrada_produto", true);*/
+            return SalvarPedido(data, produtos, "entrada_produto", true);
         }
 
         public static string SalvarPedidoSaida(DateTime data, Dictionary<int, int> produtos)
         {
-            return null;/*SalvarPedido(data, produtos, "saida_produto", false);*/
+            return SalvarPedido(data, produtos, "saida_produto", false);
         }
 
-        //public static string SalvarPedido(DateTime data, Dictionary<int, int> produtos, string nomeTabela, bool entrada)
-        //{
-        //    //var ret = "";
 
-        //    //try
-        //    //{
-        //    //    using (var ctx = )
-        //    //    {
-        //    //        ctx.Database.BeginTransaction();
-        //    //        conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-        //    //        conexao.Open();
+        //TODO: Verificar se o método funciona, atualizarCapacidadeAtual, verificar JS no Front da Entrada
+        public static string SalvarPedido(DateTime data, Dictionary<int, int> produtos, string nomeTabela, bool entrada)
+        {
+            var ret = "";
 
-        //    //        var numPedido = conexao.ExecuteScalar<int>($"select next value for sec_{nomeTabela}").ToString("D10");
+            try
+            {
 
-        //    //        using (var transacao = conexao.BeginTransaction())
-        //    //        {
-        //    //            foreach (var produto in produtos)
-        //    //            {
-        //    //                var sql = $"insert into {nomeTabela} (numero, data, id_produto, quant) values (@numero, @data, @id_produto, @quant)";
-        //    //                var parametrosInsert = new { numero = numPedido, data, id_produto = produto.Key, quant = produto.Value };
-        //    //                conexao.Execute(sql, parametrosInsert, transacao);
+                //var numPedido = ctx.Database.Connection.Query<int>("select next value for sec_{nomeTabela}");
+                //var numPedidoLast =  ctx.EntradasProdutos.Last();
+                //var numPedido = (numPedidoLast.Id + 1).ToString();
+       
 
-        //    //                var sinal = (entrada ? "+" : "-");
-        //    //                sql = $"update produto set quant_estoque = quant_estoque {sinal} @quant_estoque where (id = @id)";
-        //    //                var parametrosUpdate = new { id = produto.Key, quant_estoque = produto.Value };
-        //    //                c.Execute(sql, parametrosUpdate, transacao);
-        //    //            }
+                using (var transacao = ctx.Database.BeginTransaction())
+                {
+                    foreach (var produto in produtos)
+                    {
 
-        //    //            transacao.Commit();
+                        if (nomeTabela.Equals("entrada_produto"))
+                        {
+                            EntradaProduto ep = new EntradaProduto();
+                            ep.Numero = numPedido;
+                            ep.Data = data;
+                            ep.IdProduto = produto.Key;
+                            ep.Quantidade = produto.Value;
 
-        //    //            ret = numPedido;
-        //    //        }
-        //    //    }
-        //    //}
-        //    //catch (Exception ex)
-        //    //{
-        //    //}
+                            ctx.EntradasProdutos.Add(ep);
 
-        //    //return ret;
-        //    //return null;
-        //}
+
+                            Produto recuperado = ctx.Produtos.Find(produto.Key);
+
+                            var existingProduto = ctx.Produtos.FirstOrDefault(x => x.Id == produto.Key);
+                            if (existingProduto != null)
+                            {
+                                ctx.Entry(existingProduto).State = EntityState.Detached;
+                            }
+
+                            try
+                            {
+                                ctx.Produtos.Attach(recuperado);
+                                recuperado.QuantEstoque = produto.Value;
+                                ctx.Entry(recuperado).State = EntityState.Modified;
+                                ctx.SaveChanges();
+
+                            }
+                            catch (System.Exception ex)
+                            {
+                                throw;
+                            }
+
+
+                            
+                            
+
+                        }
+
+                        //var sql = $"insert into {nomeTabela} (numero, data, id_produto, quant) values (@numero, @data, @id_produto, @quant)";
+                        //var parametrosInsert = new { numero = numPedido, data, id_produto = produto.Key, quant = produto.Value };
+                        //ctx.Database.Connection.Execute(sql, parametrosInsert, transacao);
+
+
+
+                        //var sinal = (entrada ? "+" : "-");
+                        //sql = $"update produto set quant_estoque = quant_estoque {sinal} @quant_estoque where (id = @id)";
+                        //var parametrosUpdate = new { id = produto.Key, quant_estoque = produto.Value };
+                        //c.Execute(sql, parametrosUpdate, transacao);
+                    }
+
+                    transacao.Commit();
+
+                    ret = numPedido;
+                }
+
+            }
+            catch (Exception ex)
+            {
+            }
+
+            return ret;
+            //return null;
+        }
 
     }
 

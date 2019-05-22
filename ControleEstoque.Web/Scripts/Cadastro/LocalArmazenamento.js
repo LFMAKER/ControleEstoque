@@ -9,6 +9,7 @@ function set_dados_form(dados) {
     $('#id_cadastro').val(dados.Id);
     $('#txt_nome').val(dados.Nome);
     $('#txt_capacidade_total').val(dados.CapacidadeTotal);
+    $('#txt_capacidade_atual').val(dados.CapacidadeAtual);
     $('#cbx_ativo').prop('checked', dados.Ativo);
 }
 
@@ -26,6 +27,7 @@ function get_dados_inclusao() {
         Id: 0,
         Nome: '',
         CapacidadeTotal: 0,
+        CapacidadeAtual: 0,
         Ativo: true
     };
 }
@@ -34,7 +36,8 @@ function get_dados_form() {
     return {
         Id: $('#id_cadastro').val(),
         Nome: $('#txt_nome').val(),
-        CapacidadeTotal:  $('#txt_capacidade_total').val(),
+        CapacidadeTotal: $('#txt_capacidade_total').val(),
+        CapacidadeAtual: $('#txt_capacidade_atual').val(),
         Ativo: $('#cbx_ativo').prop('checked')
     };
 }

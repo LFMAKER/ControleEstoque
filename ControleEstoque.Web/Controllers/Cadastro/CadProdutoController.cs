@@ -21,7 +21,7 @@ namespace ControleEstoque.Web.Controllers
 
             var lista = ProdutoDao.RecuperarLista(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
             var quant = ProdutoDao.RecuperarQuantidade();
-            
+
             var difQuantPaginas = (quant % ViewBag.QuantMaxLinhasPorPagina) > 0 ? 1 : 0;
             ViewBag.QuantPaginas = (quant / ViewBag.QuantMaxLinhasPorPagina) + difQuantPaginas;
 
@@ -98,7 +98,7 @@ namespace ControleEstoque.Web.Controllers
                 validationDropDownListErrorMessage += "  • Grupo ";
 
             }
-           if (model.MarcaProduto == null)
+            if (model.MarcaProduto == null)
             {
                 validationDropDownListError = true;
                 validationDropDownListErrorMessage += "  • Marca ";
@@ -122,55 +122,72 @@ namespace ControleEstoque.Web.Controllers
             if (!validationDropDownListError)
             {
 
-                /*
-                 O ModelState verifica se os demais campos atribuidos como required no
-                 modelo foram preenchidos, caso não atribui a mensagem "Aviso" ao resultado
-                 e resulta uma lista de todos as mensagens de erros do ModelState para
-                 "mensagens"
-                 */
-                if (!ModelState.IsValid)
+                /*Verificando se o Local de Armazenamento possui espaço suficiente para
+                 * armazenar os produtos
+                 * */
+                int capacidadeAtual = LocalArmazenamentoDao.VerificarCapacidadeAtual(model.LocalArmazenamento);
+                int capacidadeTotal = LocalArmazenamentoDao.VerificarCapacidadeTotal(model.LocalArmazenamento);
+                if ((capacidadeTotal - capacidadeAtual) >= model.QuantEstoque)
                 {
-                    resultado = "AVISO";
-                    mensagens = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
-                }
-                else
-                {
-                    /*O ModelState e todos os DropDownList estão validos
-                     Agora o sistema deverá tentar gravar as informações.
+
+
+                    /*
+                     O ModelState verifica se os demais campos atribuidos como required no
+                     modelo foram preenchidos, caso não atribui a mensagem "Aviso" ao resultado
+                     e resulta uma lista de todos as mensagens de erros do ModelState para
+                     "mensagens"
                      */
-                    try
+                    if (!ModelState.IsValid)
                     {
-                        /*O método salvar é chamado e realiza a operação, o mesmo
-                         * deverá retornar o id do modelo gravado caso tenha ocorrido
-                         * tudo certo, esse id será fundamental para o front-end caso
-                         * esteja utilizando uma abordagem em AJAX.
-                         * */
-                        
-                        var id = ProdutoDao.Salvar(model);
-                        //Se o id for maior que 0 significa que ocorreu tudo certo
-                        if (id > 0)
+                        resultado = "AVISO";
+                        mensagens = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
+                    }
+                    else
+                    {
+                        /*O ModelState e todos os DropDownList estão validos
+                         Agora o sistema deverá tentar gravar as informações.
+                         */
+                        try
                         {
-                            idSalvo = id.ToString();
+                            /*O método salvar é chamado e realiza a operação, o mesmo
+                             * deverá retornar o id do modelo gravado caso tenha ocorrido
+                             * tudo certo, esse id será fundamental para o front-end caso
+                             * esteja utilizando uma abordagem em AJAX.
+                             * */
+
+                            var id = ProdutoDao.Salvar(model);
+                            //Se o id for maior que 0 significa que ocorreu tudo certo
+                            if (id > 0)
+                            {
+                                idSalvo = id.ToString();
+                            }
+                            else
+                            {
+                                /*Aparentemente ocorreu um erro no processo de Salvar*/
+                                resultado = "ERRO";
+                            }
                         }
-                        else
+                        catch (Exception ex) //Uma exception foi detectada
                         {
-                            /*Aparentemente ocorreu um erro no processo de Salvar*/
+                            /*Como o sistema está utilizando uma abordagem em AJAX,
+                             * a tela não será atualizada, logo o usuário não receberá a mensagem de 
+                             * error gigantesca do Asp.net, para isso será atribuido a mensagem
+                             * "Erro" ao resultado.
+                             * Para que assim será tratado no front-end uma mensagem mais amigável. 
+                             * */
+
                             resultado = "ERRO";
                         }
                     }
-                    catch (Exception ex) //Uma exception foi detectada
-                    {
-                        /*Como o sistema está utilizando uma abordagem em AJAX,
-                         * a tela não será atualizada, logo o usuário não receberá a mensagem de 
-                         * error gigantesca do Asp.net, para isso será atribuido a mensagem
-                         * "Erro" ao resultado.
-                         * Para que assim será tratado no front-end uma mensagem mais amigável. 
-                         * */
-
-                        resultado = "ERRO";
-                    }
+                }else
+                {
+                    resultado = "O Local de Armazenamento selecionado não possui espaço suficiente para isso, " +
+                        " • Capacidade Atual é " + capacidadeAtual + "  • Capacidade Total é " + capacidadeTotal +
+                        " • Espaço Livre: " + (capacidadeTotal - capacidadeAtual);
                 }
-            }else
+
+            }
+            else
             {
                 /* A validação dos DropDownList FALHOU, assim o resultado recebe
                  todas as mensagens de erros construídas referente aos DropDownList

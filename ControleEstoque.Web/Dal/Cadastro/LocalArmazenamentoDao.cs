@@ -107,9 +107,10 @@ namespace ControleEstoque.Web.Dal.Cadastro
             ret = la.Id;
             return ret;
         }
-
+        //TODO: Construir um método para atualizar o armazenamento 
         public static bool Cadastrar(LocalArmazenamento la)
         {
+            //la.CapacidadeAtual = la.CapacidadeTotal;
             ctx.LocaisArmazenamentos.Add(la);
             ctx.SaveChanges();
             return true;
@@ -125,6 +126,11 @@ namespace ControleEstoque.Web.Dal.Cadastro
             try
             {
                 ctx.LocaisArmazenamentos.Attach(la);
+                /*Não desejo atualizar a capacidade atual
+                 * para que assim não perca o relatório dos dados já armazenados
+                 * */
+                
+                la.CapacidadeAtual = existing.CapacidadeAtual;
                 ctx.Entry(la).State = EntityState.Modified;
                 ctx.SaveChanges();
             }
@@ -136,20 +142,36 @@ namespace ControleEstoque.Web.Dal.Cadastro
         }
 
 
+        public static bool AtualizarCapacidadeAtual(LocalArmazenamento la, int quantidade, string acao = "", int recuperarProdutoPorId = 0)
+        {
+            Produto produtoRecuperado = null;
+            if(recuperarProdutoPorId != 0)
+            {
+                produtoRecuperado = ctx.Produtos.Find(recuperarProdutoPorId);
+                la = produtoRecuperado.LocalArmazenamento;
+            }
 
 
-        //public static bool AtualizarCapacidadeAtual(int quantidade, Produto p)
-        //{
+            var existing = ctx.LocaisArmazenamentos.FirstOrDefault(x => x.Id == la.Id);
+            la.Nome = existing.Nome;
+            la.CapacidadeTotal = existing.CapacidadeTotal;
+            if (acao.Equals("Cadastrar"))
+            {
+                la.CapacidadeAtual = quantidade + existing.CapacidadeAtual;
+            }
+            else if (acao.Equals("Remover"))
+            {
+                la.CapacidadeAtual =  existing.CapacidadeAtual - quantidade;
+            }
 
 
-        //        using (var ctx = new Context())
-        //    {
-        //    }
+            la.Ativo = existing.Ativo;
+            ctx.Entry(existing).State = EntityState.Modified;
+            ctx.SaveChanges();
+            return true;
+        }
 
-
-
-
-        //    }
+     
         public static int VerificarCapacidadeAtual(LocalArmazenamento la)
         {
             LocalArmazenamento localA = null;
@@ -157,6 +179,15 @@ namespace ControleEstoque.Web.Dal.Cadastro
             localA = ctx.LocaisArmazenamentos.AsNoTracking().Where(x => x.Nome.Equals(la.Nome)).FirstOrDefault();
             capacidadeAtual = localA.CapacidadeAtual;
             return capacidadeAtual;
+
+        }
+        public static int VerificarCapacidadeTotal(LocalArmazenamento la)
+        {
+            LocalArmazenamento localA = null;
+            int capacidadeTotal = 0;
+            localA = ctx.LocaisArmazenamentos.AsNoTracking().Where(x => x.Nome.Equals(la.Nome)).FirstOrDefault();
+            capacidadeTotal = localA.CapacidadeTotal;
+            return capacidadeTotal;
 
         }
 
