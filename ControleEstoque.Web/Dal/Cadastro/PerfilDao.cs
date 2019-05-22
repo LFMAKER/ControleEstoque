@@ -15,7 +15,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
     public class PerfilDao
     {
 
-        //Essa classe está perfeitamente funcionando com o ctx abaixo  
+        //Entity e Singleton 100% implementado, verificar métodos das regras de negócios
 
         private static Context ctx = SingletonContext.GetInstance();
 
@@ -29,7 +29,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
         }
 
 
-        public static List<Perfil> RecuperarLista(int pagina = 0, int tamPagina = 0, string filtro = "")
+        public static List<Perfil> RecuperarLista(int pagina = 0, int tamPagina = 0, string filtro = "", bool somenteAtivos = false)
         {
 
             var ret = new List<Perfil>();
@@ -44,6 +44,10 @@ namespace ControleEstoque.Web.Dal.Cadastro
                 {
                     ret = ctx.Perfis.AsNoTracking().OrderBy(x => x.Nome).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
                 }
+            }
+            else if (somenteAtivos)
+            {
+                ret = ctx.Perfis.AsNoTracking().OrderBy(x => x.Nome).Where(x => x.Ativo == true).ToList();
             }
             else
             {

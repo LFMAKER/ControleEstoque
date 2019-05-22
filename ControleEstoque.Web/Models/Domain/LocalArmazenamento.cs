@@ -13,6 +13,8 @@ namespace ControleEstoque.Web.Models
 
         [Required(ErrorMessage = "Preencha o nome.")]
         public string Nome { get; set; }
+        public int CapacidadeTotal { get; set; }
+        public int CapacidadeAtual { get; set; }
 
         public bool Ativo { get; set; }
 

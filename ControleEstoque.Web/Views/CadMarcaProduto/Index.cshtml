@@ -46,16 +46,17 @@
 
 @section CamposCadastro {
     <div class="row">
-        <div class="form-group">
+        <div class="form-group col-8">
             @Html.Label("txt_nome", "Nome", new { @class = "col-md-3 control-label" })
             <div class="col-md-12">
                 @Html.TextBox("txt_nome", null, new { @class = "form-control" })
             </div>
         </div>
-        <div class="form-group">
-            @Html.Label("cbx_ativo", "Ativo", new { @class = "col-md-3 control-label" })
-            <div class="col-md-12">
-                @Html.CheckBox("cbx_ativo")
+        <div class="col-4" style="padding-top: 30px;">
+            <div class="custom-control custom-checkbox mb-3 ">
+                @Html.CheckBox("cbx_ativo", new { @class = "custom-control-input " })
+                @Html.Label("cbx_ativo", "Ativo", new { @class = " mb-2 custom-control-label" })
+                <small id="caixa" class="form-text text-muted"></small>
             </div>
         </div>
     </div>

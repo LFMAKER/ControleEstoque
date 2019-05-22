@@ -79,34 +79,37 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             @Html.Label("ddl_unidade_medida", "Unidade de Medida", new { @class = "control-label" })
             @Html.DropDownList("ddl_unidade_medida", new SelectList(ViewBag.UnidadesMedida, "Id", "Nome"), new { @class = "form-control" })
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
             @Html.Label("ddl_grupo", "Grupo", new { @class = "control-label" })
             @Html.DropDownList("ddl_grupo", new SelectList(ViewBag.Grupos, "Id", "Nome"), new { @class = "form-control" })
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             @Html.Label("ddl_marca", "Marca", new { @class = "control-label" })
             @Html.DropDownList("ddl_marca", new SelectList(ViewBag.Marcas, "Id", "Nome"), new { @class = "form-control" })
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
             @Html.Label("ddl_fornecedor", "Fornecedor", new { @class = "control-label" })
             @Html.DropDownList("ddl_fornecedor", new SelectList(ViewBag.Fornecedores, "Id", "Nome"), new { @class = "form-control" })
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-8">
             @Html.Label("ddl_local_armazenamento", "Local Armazenamento", new { @class = "control-label" })
             @Html.DropDownList("ddl_local_armazenamento", new SelectList(ViewBag.LocaisArmazenamento, "Id", "Nome"), new { @class = "form-control" })
         </div>
-        <div class="col-md-8">
-            <div class="form-check" style="line-height: 6em; margin-bottom: -2em">
-                @Html.CheckBox("cbx_ativo", new { @class = "form-check-input" })
-                @Html.Label("cbx_ativo", "Ativo", new { @class = "form-check-label" })
+        <div class="col-md-4" style="padding-top: 30px">
+            <div class="form-check mb-4">
+                <div class="custom-control custom-checkbox mb-3 ">
+                    @Html.CheckBox("cbx_ativo", new { @class = "custom-control-input " })
+                    @Html.Label("cbx_ativo", "Ativo", new { @class = " mb-3 custom-control-label" })
+                    <small id="caixa" class="form-text text-muted"></small>
+                </div>
             </div>
         </div>
     </div>

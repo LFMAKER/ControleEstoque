@@ -6,135 +6,84 @@ using System.Configuration;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
+using VendasOsorioA.DAL;
 
 namespace ControleEstoque.Web.Dal.Cadastro
 {
     public class UnidadeMedidaDao
     {
+        //Entity e Singleton 100% implementado, verificar métodos das regras de negócios
+        private static Context ctx = SingletonContext.GetInstance();
 
         public static int RecuperarQuantidade()
         {
-            //var ret = 0;
-
-            //using (var conexao = new SqlConnection())
-            //{
-            //    conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-            //    conexao.Open();
-
-            //    ret = conexao.ExecuteScalar<int>("select count(*) from unidade_medida");
-            //}
-
-            //return ret;
             var ret = 0;
-            using (var ctx = new Context())
-            {
-                ret = ctx.UnidadesMedida.Count();
-            }
+            ret = ctx.UnidadesMedida.AsNoTracking().Count();
             return ret;
         }
 
-        public static List<UnidadeMedida> RecuperarLista(int pagina, int tamPagina, string filtro = "")
+        public static List<UnidadeMedida> RecuperarLista(int pagina = 0, int tamPagina = 0, string filtro = "", bool somenteAtivos = false)
         {
-            //var ret = new List<UnidadeMedida>();
-
-            //using (var conexao = new SqlConnection())
-            //{
-            //    conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-            //    conexao.Open();
-
-            //    var pos = (pagina - 1) * tamPagina;
-
-            //    var sql = string.Format(
-            //        "select *" +
-            //        " from unidade_medida" +
-            //        " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
-            //        " offset {0} rows fetch next {1} rows only",
-            //        pos > 0 ? pos - 1 : 0, tamPagina);
-
-            //    ret = conexao.Query<UnidadeMedida>(sql).ToList();
-            //}
-
-            //return ret;
-
+            //Implementar recuperar ativos
             var ret = new List<UnidadeMedida>();
-
-            using (var ctx = new Context())
+            if (tamPagina != 0 && pagina != 0)
             {
-                if (tamPagina != 0 && pagina != 0)
+
+                var pos = (pagina - 1) * tamPagina;
+                if (!string.IsNullOrEmpty(filtro))
                 {
 
-                    var pos = (pagina - 1) * tamPagina;
-                    if (!string.IsNullOrEmpty(filtro))
-                    {
-
-                        ret = ctx.UnidadesMedida.OrderBy(x => x.Nome).Where(x => x.Nome.ToLower().Contains(filtro.ToLower())).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
-                    }
-                    else
-                    {
-
-                        ret = ctx.UnidadesMedida.OrderBy(x => x.Nome).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
-                    }
+                    ret = ctx.UnidadesMedida.AsNoTracking().OrderBy(x => x.Nome).Where(x => x.Nome.ToLower().Contains(filtro.ToLower())).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
                 }
                 else
                 {
-                    ret = ctx.UnidadesMedida.OrderBy(x => x.Nome).ToList();
+
+                    ret = ctx.UnidadesMedida.AsNoTracking().OrderBy(x => x.Nome).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
                 }
+            }
+            else if (somenteAtivos)
+            {
+                ret = ctx.UnidadesMedida.AsNoTracking().OrderBy(x => x.Nome).Where(x => x.Ativo == true).ToList();
+            }
+            else
+            {
+                ret = ctx.UnidadesMedida.AsNoTracking().OrderBy(x => x.Nome).ToList();
             }
 
             return ret;
         }
 
-        public static UnidadeMedida RecuperarPeloId(int id)
+        public static UnidadeMedida RecuperarPeloId(int? id)
         {
-            //UnidadeMedida ret = null;
-
-            //using (var conexao = new SqlConnection())
-            //{
-            //    conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-            //    conexao.Open();
-
-            //    var sql = "select * from unidade_medida where (id = @id)";
-            //    var parametros = new { id };
-            //    ret = conexao.Query<UnidadeMedida>(sql, parametros).SingleOrDefault();
-            //}
-
-            //return ret;
-
-
-            using (var ctx = new Context())
+            if (id != null)
             {
-                return ctx.UnidadesMedida.Find(id);
+                return ctx.UnidadesMedida.AsNoTracking().Where(x => x.Id == id).FirstOrDefault();
+            }
+            else
+            {
+                return null;
             }
         }
 
         public static bool ExcluirPeloId(int id)
         {
-            //    var ret = false;
-
-            //    if (RecuperarPeloId(id) != null)
-            //    {
-            //        using (var conexao = new SqlConnection())
-            //        {
-            //            conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-            //            conexao.Open();
-
-            //            var sql = "delete from unidade_medida where (id = @id)";
-            //            var parametros = new { id };
-            //            ret = (conexao.Execute(sql, parametros) > 0);
-            //        }
-            //    }
-
-            //    return ret;
-
-
             var ret = false;
-            var unidade = new UnidadeMedida { Id = id };
-            using (var ctx = new Context())
+            var existing = ctx.UnidadesMedida.FirstOrDefault(x => x.Id == id);
+            if (existing != null)
             {
-                ctx.UnidadesMedida.Attach(unidade);
-                ctx.Entry(unidade).State = EntityState.Deleted;
+                ctx.Entry(existing).State = EntityState.Detached;
+            }
+
+            try
+            {
+                ctx.UnidadesMedida.Attach(existing);
+                ctx.Entry(existing).State = EntityState.Deleted;
                 ctx.SaveChanges();
                 ret = true;
+            }
+            catch (System.Exception ex)
+            {
+                throw;
             }
             return ret;
         }
@@ -142,56 +91,60 @@ namespace ControleEstoque.Web.Dal.Cadastro
 
         public static int Salvar(UnidadeMedida um)
         {
-            //var ret = 0;
-
-            //var model = RecuperarPeloId(um.Id);
-
-            //using (var conexao = new SqlConnection())
-            //{
-            //    conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-            //    conexao.Open();
-
-            //    if (model == null)
-            //    {
-            //        var sql = "insert into unidade_medida (nome, sigla, ativo) values (@nome, @sigla, @ativo); select convert(int, scope_identity())";
-            //        var parametros = new { nome = um.Nome, sigla = um.Sigla, ativo = (um.Ativo ? 1 : 0) };
-            //        ret = conexao.ExecuteScalar<int>(sql, parametros);
-            //    }
-            //    else
-            //    {
-            //        var sql = "update unidade_medida set nome=@nome, sigla=@sigla, ativo=@ativo where id = @id";
-            //        var parametros = new { id = um.Id, nome = um.Nome, sigla = um.Sigla, ativo = (um.Ativo ? 1 : 0) };
-            //        if (conexao.Execute(sql, parametros) > 0)
-            //        {
-            //            ret = um.Id;
-            //        }
-            //    }
-            //}
-
-            //return ret;
-
-
-
             var ret = 0;
             var model = RecuperarPeloId(um.Id);
-            using (var ctx = new Context())
+            if (model == null)
             {
-                if (model == null)
-                {
-
-                    ctx.UnidadesMedida.Add(um);
-                }
-                else
-                {
-
-                    ctx.Entry(um).State = System.Data.Entity.EntityState.Modified;
-
-                }
-                ctx.SaveChanges();
-                ret = um.Id;
+                Cadastrar(um);
             }
+            else
+            {
+                Alterar(um);
+            }
+            ret = um.Id;
             return ret;
         }
+
+        public static bool Cadastrar(UnidadeMedida um)
+        {
+            ctx.UnidadesMedida.Add(um);
+            ctx.SaveChanges();
+            return true;
+        }
+        public static bool Alterar(UnidadeMedida um)
+        {
+            var existing = ctx.UnidadesMedida.FirstOrDefault(x => x.Id == um.Id);
+            if (existing != null)
+            {
+                ctx.Entry(existing).State = EntityState.Detached;
+            }
+
+            try
+            {
+                ctx.UnidadesMedida.Attach(um);
+                ctx.Entry(um).State = EntityState.Modified;
+                ctx.SaveChanges();
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+            return true;
+        }
+
+
+        public static bool VerificarNome(UnidadeMedida um)
+        {
+            var result = ctx.UnidadesMedida.FirstOrDefault(x => x.Nome.Equals(um.Nome));
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
 
     }
 }

@@ -4,18 +4,15 @@
     ViewBag.Title = "Locais de Armazenamento";
     ViewBag.Lista = Model;
 }
-
 @section Styles {
     <link href="~/Content/bootstrap-select.css" rel="stylesheet" />
     <link href="~/Content/Cadastro/LocalArmazenamento.css" rel="stylesheet" />
 }
-
 @section TituloGrid {
     <th>Nome</th>
     <th>Ativo</th>
     <th>Ação</th>
 }
-
 @section LinhaGrid {
     @{
         var linha = 0;
@@ -42,9 +39,8 @@
         }
     }
 }
-
 @section CamposCadastro {
-    <div class="row">
+   
         <div class="form-group">
             @Html.Label("txt_nome", "Nome", new { @class = "col-md-3 control-label" })
             <div class="col-md-12">
@@ -52,14 +48,20 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.Label("cbx_ativo", "Ativo", new { @class = "col-md-3 control-label" })
+            @Html.Label("txt_capacidade_total", "Capacidade Total", new { @class = "col-md-3 control-label" })
             <div class="col-md-12">
-                @Html.CheckBox("cbx_ativo")
+                @Html.TextBox("txt_capacidade_total", null, new { @class = "form-control" })
             </div>
         </div>
-    </div>
+        <div class="form-group ml-3 pt-2">
+            <div class="custom-control custom-checkbox mb-3 ">
+                @Html.CheckBox("cbx_ativo", new { @class = "custom-control-input " })
+                @Html.Label("cbx_ativo", "Ativo", new { @class = " mb-2 custom-control-label" })
+                <small id="caixa" class="form-text text-muted"></small>
+            </div>
+        </div>
+    
 }
-
 @section Scripts{
     <script src="~/Scripts/bootstrap-select.js"></script>
     <script>
@@ -67,10 +69,10 @@
 
         var titulo_pagina = '@ViewBag.Title';
         var url_exclusao = '@Url.Action("ExcluirLocalArmazenamento", "CadLocalArmazenamento")';
-        var url_confirmar ='@Url.Action("SalvarLocalArmazenamento", "CadLocalArmazenamento")';
+        var url_confirmar = '@Url.Action("SalvarLocalArmazenamento", "CadLocalArmazenamento")';
         var url_page_click = '@Url.Action("LocalArmazenamentoPagina", "CadLocalArmazenamento")';
         var url_alterar = '@Url.Action("RecuperarLocalArmazenamento", "CadLocalArmazenamento")';
-        var url_ddl_tam_pag =  '@Url.Action("LocalArmazenamentoPagina", "CadLocalArmazenamento")';
+        var url_ddl_tam_pag = '@Url.Action("LocalArmazenamentoPagina", "CadLocalArmazenamento")';
         var url_filtro_change = '@Url.Action("LocalArmazenamentoPagina", "CadLocalArmazenamento")';
 
 

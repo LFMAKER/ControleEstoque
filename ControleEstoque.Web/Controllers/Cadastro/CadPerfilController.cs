@@ -47,8 +47,6 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         {
             
             var ret = PerfilDao.RecuperarPeloId(id);
-            //Perfil usuarios = new Perfil();
-            //ret.CarregarUsuarios(ret);
 
             return Json(ret);
         }

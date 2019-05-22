@@ -248,6 +248,22 @@
     <Compile Include="Migrations\201905201826053_RequiredUserAdd.Designer.cs">
       <DependentUpon>201905201826053_RequiredUserAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905202323405_AddLocalArmazenamentoCapacidadeTotal.cs" />
+    <Compile Include="Migrations\201905202323405_AddLocalArmazenamentoCapacidadeTotal.Designer.cs">
+      <DependentUpon>201905202323405_AddLocalArmazenamentoCapacidadeTotal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905210856199_AddProdutoDetails.cs" />
+    <Compile Include="Migrations\201905210856199_AddProdutoDetails.Designer.cs">
+      <DependentUpon>201905210856199_AddProdutoDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905211634237_testeLaze.cs" />
+    <Compile Include="Migrations\201905211634237_testeLaze.Designer.cs">
+      <DependentUpon>201905211634237_testeLaze.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905211649022_testeDropDown.cs" />
+    <Compile Include="Migrations\201905211649022_testeDropDown.Designer.cs">
+      <DependentUpon>201905211649022_testeDropDown.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Binders\EntradaSaidaProdutoViewModelModelBinder.cs" />
     <Compile Include="Dal\Cadastro\FornecedorDao.cs" />
@@ -300,11 +316,6 @@
     <Compile Include="Models\ViewModel\UnidadeMedidaViewModel.cs" />
     <Compile Include="Models\ViewModel\UsuarioViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\wsCorreios\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -407,150 +418,6 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\_references.js" />
-    <None Include="Service References\wsCorreios\configuration91.svcinfo" />
-    <None Include="Service References\wsCorreios\configuration.svcinfo" />
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.atualizaPagamentoNaEntregaResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.atualizaRemessaAgrupadaResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.bloquearObjetoResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaClienteResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaContratoResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaDataAtualResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaPagamentoEntregaResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaServicosAdicionaisAtivosResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaServicosResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaServicosValorDeclaradoResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaServicosXServicosAdicionaisResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.buscaTarifaValeResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.calculaTarifaServicoResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.cancelarObjetoResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.cancelarPedidoScolResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.clienteERP.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.consultaCEPResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.consultaSROResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.consultaSRO_NEWResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.contratoERP.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.embalagemLRSMaster.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.enderecoERP.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.fechaPlpResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.fechaPlpVariosServicosResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.geraDigitoVerificadorEtiquetasResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.getStatusCartaoPostagemResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.getStatusPLPResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.integrarUsuarioScolResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.obterClienteAtualizacaoResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.obterEmbalagemLRSResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.retornoCancelamento.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.servicoAdicionalXML.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.servicoERP.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.solicitaEtiquetasResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.solicitaPLPResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.solicitarPostagemScolResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.solicitaXmlPlpResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.statusCartao.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.statusPlp.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.valePostal.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.validaEtiquetaPLPResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.validaPlpResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.validarPostagemReversaResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.validarPostagemSimultaneaResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.verificaDisponibilidadeServicoResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\wsCorreios\ControleEstoque.Web.wsCorreios.VerificaSeTodosObjetosCanceladosResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Service References\wsCorreios\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -596,7 +463,6 @@
     <Content Include="Views\OperEntradaProduto\Index.cshtml" />
     <Content Include="Views\OperSaidaProduto\Index.cshtml" />
     <Content Include="Views\Log\Index.cshtml" />
-    <None Include="Service References\wsCorreios\AtendeClienteService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -616,14 +482,23 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\wsCorreios\" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Migrations\201905191245118_Inicial.resx">
       <DependentUpon>201905191245118_Inicial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905201826053_RequiredUserAdd.resx">
       <DependentUpon>201905201826053_RequiredUserAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905202323405_AddLocalArmazenamentoCapacidadeTotal.resx">
+      <DependentUpon>201905202323405_AddLocalArmazenamentoCapacidadeTotal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905210856199_AddProdutoDetails.resx">
+      <DependentUpon>201905210856199_AddProdutoDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905211634237_testeLaze.resx">
+      <DependentUpon>201905211634237_testeLaze.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905211649022_testeDropDown.resx">
+      <DependentUpon>201905211649022_testeDropDown.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

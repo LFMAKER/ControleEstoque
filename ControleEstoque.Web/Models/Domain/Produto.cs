@@ -29,29 +29,20 @@ namespace ControleEstoque.Web.Models
         [Required(ErrorMessage = "Preencha a quantidade em estoque.")]
         public int QuantEstoque { get; set; }
 
-        [Required(ErrorMessage = "Selecione a unidade de medida.")]
-        public int IdUnidadeMedida { get; set; }
+        
+        public UnidadeMedida UnidadeMedida { get; set; }
 
-        public virtual UnidadeMedida UnidadeMedida { get; set; }
+      
+        public GrupoProduto GrupoProduto { get; set; }
 
-        [Required(ErrorMessage = "Selecione o grupo.")]
-        public int IdGrupo { get; set; }
-        public virtual GrupoProduto GrupoProduto { get; set; }
+     
+        public MarcaProduto MarcaProduto { get; set; }
 
-        [Required(ErrorMessage = "Selecione a marca.")]
-        public int IdMarca { get; set; }
 
-        public virtual MarcaProduto MarcaProduto { get; set; }
+        public Fornecedor Fornecedor { get; set; }
 
-        [Required(ErrorMessage = "Selecione o fornecedor.")]
-        public int IdFornecedor { get; set; }
 
-        public virtual Fornecedor Fornecedor { get; set; }
-
-        [Required(ErrorMessage = "Selecione o local de armazenamento.")]
-        public int IdLocalArmazenamento { get; set; }
-
-        public virtual LocalArmazenamento LocalArmazenamento { get; set; }
+        public LocalArmazenamento LocalArmazenamento { get; set; }
 
         public bool Ativo { get; set; }
 

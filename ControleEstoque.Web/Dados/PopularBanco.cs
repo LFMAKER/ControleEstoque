@@ -12,35 +12,36 @@ namespace ControleEstoque.Web.Dados
 
         public static void Inserir()
         {
-            GrupoProduto GrupoProduto1 = new GrupoProduto
-            {
-                Nome = "Hospitalar",
-                Ativo = true
-            };
-            GrupoProdutoDao.Salvar(GrupoProduto1);
 
-            MarcaProduto MarcaProduto1 = new MarcaProduto
-            {
-                Nome = "OKX LTA",
-                Ativo = true
-            };
-            MarcaProdutoDao.Salvar(MarcaProduto1);
+            //GrupoProduto GrupoProduto1 = new GrupoProduto
+            //{
+            //    Nome = "Hospitalar",
+            //    Ativo = true
+            //};
+            //GrupoProdutoDao.Salvar(GrupoProduto1);
 
-            LocalArmazenamento LocalArmazenamento1 = new LocalArmazenamento
-            {
-                Nome = "Salar 223",
-                Ativo = true
-            };
+            //MarcaProduto MarcaProduto1 = new MarcaProduto
+            //{
+            //    Nome = "OKX LTA",
+            //    Ativo = true
+            //};
+            //MarcaProdutoDao.Salvar(MarcaProduto1);
 
-            LocalArmazenamentoDao.Salvar(LocalArmazenamento1);
+            //LocalArmazenamento LocalArmazenamento1 = new LocalArmazenamento
+            //{
+            //    Nome = "Salar 223",
+            //    Ativo = true
+            //};
 
-            UnidadeMedida UnidadeMedida1 = new UnidadeMedida
-            {
-                Nome = "Kilogramas",
-                Sigla = "KG",
-                Ativo = true
-            };
-            UnidadeMedidaDao.Salvar(UnidadeMedida1);
+            //LocalArmazenamentoDao.Salvar(LocalArmazenamento1);
+
+            //UnidadeMedida UnidadeMedida1 = new UnidadeMedida
+            //{
+            //    Nome = "Kilogramas",
+            //    Sigla = "KG",
+            //    Ativo = true
+            //};
+            //UnidadeMedidaDao.Salvar(UnidadeMedida1);
 
             Perfil perfil = new Perfil
             {
@@ -53,11 +54,13 @@ namespace ControleEstoque.Web.Dados
             {
                 Login = "admin",
                 Senha = Helpers.CriptoHelper.HashMD5("admin"),
-             
+                Perfil = perfil
+
             };
-            UsuarioDao.Salvar(user, 1);
-            
-           
+            //UsuarioDao.Salvar(user, 1);
+            UsuarioDao.SalvarUsuarioComPerfilNoModelo(user);
+
+
 
 
 

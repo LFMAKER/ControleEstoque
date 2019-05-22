@@ -8,6 +8,7 @@ Data de criação: 30/04/2019
 function set_dados_form(dados) {
     $('#id_cadastro').val(dados.Id);
     $('#txt_nome').val(dados.Nome);
+    $('#txt_capacidade_total').val(dados.CapacidadeTotal);
     $('#cbx_ativo').prop('checked', dados.Ativo);
 }
 
@@ -24,6 +25,7 @@ function get_dados_inclusao() {
     return {
         Id: 0,
         Nome: '',
+        CapacidadeTotal: 0,
         Ativo: true
     };
 }
@@ -32,6 +34,7 @@ function get_dados_form() {
     return {
         Id: $('#id_cadastro').val(),
         Nome: $('#txt_nome').val(),
+        CapacidadeTotal:  $('#txt_capacidade_total').val(),
         Ativo: $('#cbx_ativo').prop('checked')
     };
 }

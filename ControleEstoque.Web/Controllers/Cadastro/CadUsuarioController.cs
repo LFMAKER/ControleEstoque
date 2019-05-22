@@ -33,7 +33,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
             var difQuantPaginas = (quant % ViewBag.QuantMaxLinhasPorPagina) > 0 ? 1 : 0;
 
             ViewBag.QuantPaginas = (quant / ViewBag.QuantMaxLinhasPorPagina) + difQuantPaginas;
-            ViewBag.Perfis = PerfilDao.RecuperarLista();
+            ViewBag.Perfis = PerfilDao.RecuperarLista(0, 0, "", true);
             //ViewBag.ddl_perfil = new SelectList(PerfilDao.RecuperarLista(), "Id", "Nome");
 
             return View(lista);
@@ -75,41 +75,47 @@ namespace ControleEstoque.Web.Controllers.Cadastro
             var mensagens = new List<string>();
             var idSalvo = string.Empty;
             model.Perfil = PerfilDao.RecuperarPeloId(IdPerfil);
-
-            if (!ModelState.IsValid)
+            if (model.Perfil == null)
             {
-                resultado = "AVISO";
-                mensagens = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
+                resultado = "O campo Perfil é obrigatório!";
             }
             else
             {
-                try
+
+                if (!ModelState.IsValid)
                 {
-
-                    if (model.Senha == _senhaPadrao)
+                    resultado = "AVISO";
+                    mensagens = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
+                }
+                else
+                {
+                    try
                     {
-                        model.Senha = "";
-                    }
+
+                        if (model.Senha == _senhaPadrao)
+                        {
+                            model.Senha = "";
+                        }
 
 
-                    var id = UsuarioDao.Salvar(model, IdPerfil);
-                    if (id > 0)
-                    {
-                        idSalvo = id.ToString();
+                        var id = UsuarioDao.Salvar(model, IdPerfil);
+                        if (id > 0)
+                        {
+                            idSalvo = id.ToString();
+                        }
+                        else
+                        {
+                            resultado = "ERRO";
+                        }
+
+
                     }
-                    else
+                    catch (Exception ex)
                     {
                         resultado = "ERRO";
                     }
-
-
-                }
-                catch (Exception ex)
-                {
-                    resultado = "ERRO";
                 }
             }
-
             return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo });
         }
 

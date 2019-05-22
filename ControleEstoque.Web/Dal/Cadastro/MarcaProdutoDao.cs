@@ -6,56 +6,24 @@ using System.Configuration;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
+using VendasOsorioA.DAL;
 
 namespace ControleEstoque.Web.Dal.Cadastro
 {
     public class MarcaProdutoDao
     {
+        private static Context ctx = SingletonContext.GetInstance();
+
         public static int RecuperarQuantidade()
         {
-            //var ret = 0;
-
-            //using (var conexao = new SqlConnection())
-            //{
-            //    conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-            //    conexao.Open();
-            //    ret = conexao.ExecuteScalar<int>("select count(*) from marca_produto");
-            //}
-
-            //return ret;
-
-
             var ret = 0;
-            using (var ctx = new Context())
-            {
-                ret = ctx.MarcasProdutos.Count();
-            }
+
+            ret = ctx.MarcasProdutos.AsNoTracking().Count();
             return ret;
         }
 
-        public static List<MarcaProduto> RecuperarLista(int pagina, int tamPagina, string filtro = "")
+        public static List<MarcaProduto> RecuperarLista(int pagina = 0, int tamPagina = 0, string filtro = "", bool somenteAtivos = false)
         {
-            //var ret = new List<MarcaProduto>();
-
-            //using (var conexao = new SqlConnection())
-            //{
-            //    conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-            //    conexao.Open();
-
-            //    var pos = (pagina - 1) * tamPagina;
-
-            //    var sql = string.Format(
-            //        "select *" +
-            //        " from marca_produto" +
-            //        " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
-            //        " offset {0} rows fetch next {1} rows only",
-            //        pos > 0 ? pos - 1 : 0, tamPagina);
-
-            //    ret = conexao.Query<MarcaProduto>(sql).ToList();
-            //}
-
-            //return ret;
-
 
             var ret = new List<MarcaProduto>();
 
@@ -67,38 +35,37 @@ namespace ControleEstoque.Web.Dal.Cadastro
                     if (!string.IsNullOrEmpty(filtro))
                     {
 
-                        ret = ctx.MarcasProdutos.OrderBy(x => x.Nome).Where(x => x.Nome.ToLower().Contains(filtro.ToLower())).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
+                        ret = ctx.MarcasProdutos.AsNoTracking().OrderBy(x => x.Nome).Where(x => x.Nome.ToLower().Contains(filtro.ToLower())).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
                     }
                     else
                     {
 
-                        ret = ctx.MarcasProdutos.OrderBy(x => x.Nome).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
+                        ret = ctx.MarcasProdutos.AsNoTracking().OrderBy(x => x.Nome).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
                     }
+                }else if (somenteAtivos)
+                {
+                    ret = ctx.MarcasProdutos.AsNoTracking().OrderBy(x => x.Nome).Where(x => x.Ativo == true).ToList();
+                }else
+                {
+                    ret = ctx.MarcasProdutos.AsNoTracking().OrderBy(x => x.Nome).ToList();
                 }
+
+
+
             }
 
             return ret;
         }
 
-        public static MarcaProduto RecuperarPeloId(int id)
+        public static MarcaProduto RecuperarPeloId(int? id)
         {
-            //MarcaProduto ret = null;
-
-            //using (var conexao = new SqlConnection())
-            //{
-            //    conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-            //    conexao.Open();
-
-            //    var sql = "select * from marca_produto where (id = @id)";
-            //    var parametros = new { id };
-            //    ret = conexao.Query<MarcaProduto>(sql, parametros).SingleOrDefault();
-            //}
-
-            //return ret;
-
-            using (var ctx = new Context())
+            if (id != null)
             {
-                return ctx.MarcasProdutos.Find(id);
+                return ctx.MarcasProdutos.AsNoTracking().Where(x => x.Id == id).FirstOrDefault();
+            }
+            else
+            {
+                return null;
             }
 
 
@@ -106,86 +73,71 @@ namespace ControleEstoque.Web.Dal.Cadastro
 
         public static bool ExcluirPeloId(int id)
         {
-            //var ret = false;
-
-            //if (RecuperarPeloId(id) != null)
-            //{
-            //    using (var conexao = new SqlConnection())
-            //    {
-            //        conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-            //        conexao.Open();
-
-            //        var sql = "delete from marca_produto where (id = @id)";
-            //        var parametros = new { id };
-            //        ret = (conexao.Execute(sql, parametros) > 0);
-            //    }
-            //}
-
-            //return ret;
-
             var ret = false;
-            var forn = new MarcaProduto { Id = id };
-            using (var ctx = new Context())
+            var existing = ctx.MarcasProdutos.FirstOrDefault(x => x.Id == id);
+            if (existing != null)
             {
-                ctx.MarcasProdutos.Attach(forn);
-                ctx.Entry(forn).State = EntityState.Deleted;
+                ctx.Entry(existing).State = EntityState.Detached;
+            }
+
+            try
+            {
+                ctx.MarcasProdutos.Attach(existing);
+                ctx.Entry(existing).State = EntityState.Deleted;
                 ctx.SaveChanges();
                 ret = true;
             }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
             return ret;
-
         }
 
         public static int Salvar(MarcaProduto mp)
         {
-            //    var ret = 0;
-
-            //    var model = RecuperarPeloId(mp.Id);
-
-            //    using (var conexao = new SqlConnection())
-            //    {
-            //        conexao.ConnectionString = ConfigurationManager.ConnectionStrings["principal"].ConnectionString;
-            //        conexao.Open();
-
-            //        if (model == null)
-            //        {
-            //            var sql = "insert into marca_produto (nome, ativo) values (@nome, @ativo); select convert(int, scope_identity())";
-            //            var parametros = new { nome = mp.Nome, ativo = (mp.Ativo ? 1 : 0) };
-            //            ret = conexao.ExecuteScalar<int>(sql, parametros);
-            //        }
-            //        else
-            //        {
-            //            var sql = "update marca_produto set nome=@nome, ativo=@ativo where id = @id";
-            //            var parametros = new { id = mp.Id, nome = mp.Nome, ativo = (mp.Ativo ? 1 : 0) };
-            //            if (conexao.Execute(sql, parametros) > 0)
-            //            {
-            //                ret = mp.Id;
-            //            }
-            //        }
-            //    }
-
-            //    return ret;
-
-
             var ret = 0;
             var model = RecuperarPeloId(mp.Id);
-            using (var ctx = new Context())
+            if (model == null)
             {
-                if (model == null)
-                {
-
-                    ctx.MarcasProdutos.Add(mp);
-                }
-                else
-                {
-
-                    ctx.Entry(mp).State = System.Data.Entity.EntityState.Modified;
-
-                }
-                ctx.SaveChanges();
-                ret = mp.Id;
+                Cadastrar(mp);
             }
+            else
+            {
+                Alterar(mp);
+            }
+            ret = mp.Id;
             return ret;
         }
+
+        public static bool Cadastrar(MarcaProduto mp)
+        {
+            ctx.MarcasProdutos.Add(mp);
+            ctx.SaveChanges();
+            return true;
+        }
+        public static bool Alterar(MarcaProduto mp)
+        {
+            var existing = ctx.MarcasProdutos.FirstOrDefault(x => x.Id == mp.Id);
+            if (existing != null)
+            {
+                ctx.Entry(existing).State = EntityState.Detached;
+            }
+
+            try
+            {
+                ctx.MarcasProdutos.Attach(mp);
+                ctx.Entry(mp).State = EntityState.Modified;
+                ctx.SaveChanges();
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+            return true;
+        }
+
+
+
     }
 }
