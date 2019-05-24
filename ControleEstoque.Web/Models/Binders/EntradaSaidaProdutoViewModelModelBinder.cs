@@ -28,12 +28,29 @@ namespace ControleEstoque.Web.Models
 
                     foreach (var produto in produtos)
                     {
-                        ret.Produtos.Add((int)produto.IdProduto, (int)produto.Quantidade);
+                        /*Tentando adicionar os produtos
+                         * Apenas um produto com o mesmo IdProduto será adicionado, caso
+                         * tenha outra entrada ou saída com o mesmo IdProduto (Key), a lista de produtos será
+                         * zerada, recebendo null e assim cancelando a entrada.
+                         * */
+                        try
+                        {
+                            ret.Produtos.Add((int)produto.IdProduto, (int)produto.Quantidade);
+                        }
+                        catch (ArgumentException)
+                        {
+                            ret.Produtos = null;
+                        }
                     }
+
+
+
+
                 };
             }
-            catch
+            catch (System.Exception ex)
             {
+                throw;
             }
 
             return ret;

@@ -53,6 +53,16 @@ namespace ControleEstoque.Web.Controllers
         }
 
         [HttpPost]
+
+        public JsonResult RecuperarCapacidadeLivreArmazenamentoProduto(int? id)
+        {
+            int capacidadeLivreRecuperada = ProdutoDao.RecuperarCapacidadeLivreArmazenamentoProduto(id);
+
+            return Json(new { capacidadeLivre = capacidadeLivreRecuperada });
+        }
+
+
+        [HttpPost]
         [Authorize(Roles = "Gerente,Administrativo")]
         [ValidateAntiForgeryToken]
         public JsonResult ExcluirProduto(int id)

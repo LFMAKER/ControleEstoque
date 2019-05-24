@@ -32,10 +32,9 @@ namespace ControleEstoque.Web.Models
             modelBuilder.Configurations.Add(new SaidaProdutoMap());
             modelBuilder.Configurations.Add(new UnidadeMedidaMap());
             modelBuilder.Configurations.Add(new UsuarioMap());
-          
 
-      //      modelBuilder.Entity<PerfilUsuario>()
-      //.HasKey(x => new { x.PerfilId, x.UsuarioId });
+
+            
         }
 
         //Definindo o que o DB deve utilizar

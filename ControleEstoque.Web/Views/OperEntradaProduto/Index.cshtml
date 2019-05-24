@@ -1,79 +1,139 @@
-﻿@{
+﻿@model List<ControleEstoque.Web.Models.EntradaProduto>
+@{
     ViewBag.Title = "Entrada de produtos";
 }
-
 <style>
     #grid th:nth-child(2) {
         width: 150px;
+    }
+
+    #grid th:nth-child(3) {
+        width: 100px;
     }
 
     #entrada_produtos .row {
         margin: 15px 0;
     }
 
-    #entrada_produtos{
+    #entrada_produtos {
         margin: auto;
         padding-top: 40px;
     }
 </style>
+<div class="container">
+    <!-- Large modal -->
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target=".bd-example-modal-lg">Incluir</button>
+    <br /><br />
+</div>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
 
-<div class="row">
-    <div style="margin: 15px" class="col-md-12">
-        <div id="entrada_produtos" class="col-md-6 col-md-offset-3">
-            <h3 class="text-center">@ViewBag.Title</h3>
-            <hr />
-            <div id="msg_mensagem_aviso" class="text-danger invisivel"></div>
-            <fieldset>
-                @Html.AntiForgeryToken()
-                <div class="row">
-                    <div class="col-md-6">
-                        @Html.Label("txt_data", "Data", new { @class = "control-label" })
-                        @Html.TextBox("txt_data", null, new { @class = "form-control", type = "date" })
-                    </div>
-                    <div class="col-md-6">
-                        @Html.Label("txt_numero", "Número", new { @class = "control-label" })
-                        @Html.TextBox("txt_numero", null, new { @class = "form-control", @readonly = "readonly" })
+            <div class="row">
+                <div style="margin: 15px" class="col-md-12">
+                    <div id="entrada_produtos" class="col-md-10 col-md-offset-3">
+                        <h3 class="text-center">@ViewBag.Title</h3>
+                        <hr />
+                        <div id="msg_mensagem_aviso" class="text-danger invisivel"></div>
+                        <fieldset>
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("txt_data", "Data", new { @class = "control-label" })
+                                    @Html.TextBox("txt_data", null, new { @class = "form-control", type = "date" })
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("txt_numero", "Número", new { @class = "control-label" })
+                                    @Html.TextBox("txt_numero", null, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <a id="btn_incluir" style="color: #ffffff;" class="btn btn-success" role="button">
+                                        <i class="glyphicon glyphicon-plus"></i> Incluir Produto
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="grid" class="table table-bordered table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Produto</th>
+                                                <th>Quantidade</th>
+                                                <th>Espaço Livre Armazenamento</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <a id="btn_cancelar" style="color: #ffffff;" class="btn btn-danger" role="button" data-dismiss="modal">
+                                        Cancelar
+                                    </a>
+                                    <a id="btn_salvar" style="color: #ffffff;" class="btn btn-success" role="button">
+                                        Salvar
+                                    </a>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="text-danger invisivel" id="mensagem_erro"></div>
+
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-2">
-                        <a id="btn_incluir" style="color: #ffffff;" class="btn btn-success" role="button">
-                            <i class="glyphicon glyphicon-plus"></i> Incluir Produto
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <table id="grid" class="table table-bordered table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Produto</th>
-                                    <th>Quantidade</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 text-right">
-                        <a id="btn_cancelar" style="color: #ffffff;" class="btn btn-danger" role="button">
-                            <i class="glyphicon glyphicon-remove"></i> Cancelar
-                        </a>
-                        <a id="btn_salvar" style="color: #ffffff;" class="btn btn-success" role="button">
-                            <i class="glyphicon glyphicon-ok"></i> Salvar
-                        </a>
-                    </div>
-                </div>
-            </fieldset>
+            </div>
+
+
+
+
         </div>
     </div>
 </div>
+
+
+<div class="container">
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Data</th>
+                <th scope="col">Numero</th>
+                <th scope="col">Produto</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var entrada in ViewBag.Entradas)
+            {
+
+
+                <tr data-id="@entrada.Id">
+                    <th scope="row">@entrada.Id</th>
+                    <td>@entrada.Data.ToString("dd/MM/yyyy")</td>
+                    <td>@String.Format("{0:00000}", entrada.Numero)  </td>
+                    <td>@entrada.Produto.Nome</td>
+                    <td>@entrada.Quantidade</td>
+                    <td><button id="btn-remover" type="button" class="btn btn-danger">Remover</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+
 
 @section Scripts{
     <script src="~/Scripts/mustache.min.js"></script>
     <script src="~/Scripts/comum.js"></script>
     <script>
+
+        var quantidadeinvalida = false;
+        @*const produtos = @Html.Raw(Json.Encode(ViewBag.Produtos));*@
 
 
 
@@ -82,7 +142,6 @@
             data.__RequestVerificationToken = $('[name=__RequestVerificationToken]').val();
             return data;
         }
-
 
 
 
@@ -101,6 +160,10 @@
             $('#grid tbody').empty();
             incluir_linha_produto();
         }
+
+
+
+
         function obter_lista_entradas() {
             var ret = [];
             $('#grid tbody tr').each(function (index, item) {
@@ -123,27 +186,39 @@
             incluir_linha_produto();
         })
         .on('click', '#btn_salvar', function () {
-            var btn = $(this);
-            var lista_entradas = obter_lista_entradas();
-            console.log(lista_entradas);
-            if (lista_entradas.length == 0) {
-                swal.fire('Aviso', 'Para salvar, você deve informar produtos com quantidades.', 'warning');
-            }
-            else {
-                var url = '@Url.Action("Salvar", "OperEntradaProduto")',
-                    dados = {
-                        data: $('#txt_data').val(),
-                        produtos: JSON.stringify(lista_entradas)
-                    };
-                $.post(url, add_anti_forgery_token(dados), function (response) {
-                    if (response.OK) {
-                        $('#txt_numero').val(response.Numero);
-                        swal.fire('Sucesso', 'Entrada de produtos salva com sucesso.', 'info');
-                    }
-                })
-                .fail(function () {
-                    swal.fire('Aviso', 'Não foi possível salvar a entrada de produtos.', 'warning');
-                });
+            if (quantidadeinvalida == false) {
+                var btn = $(this);
+                var lista_entradas = obter_lista_entradas();
+                console.log(lista_entradas);
+                if (lista_entradas.length == 0) {
+                    swal.fire('Aviso', 'Para salvar, você deve informar produtos com quantidades.', 'warning');
+                }
+                else {
+                    var url = '@Url.Action("Salvar", "OperEntradaProduto")',
+                        dados = {
+                            data: $('#txt_data').val(),
+                            produtos: JSON.stringify(lista_entradas)
+                        };
+                    $.post(url, add_anti_forgery_token(dados), function (response) {
+                        if (response.OK) {
+                            $('#txt_numero').val(response.Numero);
+                            $('.bd-example-modal-lg').modal('toggle');
+                            swal.fire({
+                                type: 'success',
+                                title: response.Mensagem,
+                                text: 'Número da entrada: ' + response.Numero
+                            });
+                        } else {
+                            $('.bd-example-modal-lg').modal('toggle');
+                            swal.fire('Error', response.Mensagem, 'info');
+                        }
+                    })
+                    .fail(function () {
+                        swal.fire('Aviso', 'Não foi possível salvar a entrada de produtos, verique se a quantidade está dentro da capacidade livre do local de armazenamento de um ou mais produtos selecionados.', 'warning');
+                    });
+                }
+            } else {
+                swal.fire('Erro', 'Não foi possível salvar a entrada de produtos, verique se a quantidade está dentro da capacidade livre do local de armazenamento de um ou mais produtos selecionados.', 'error');
             }
         })
         .on('click', '#btn_cancelar', function () {
@@ -188,20 +263,117 @@
                     }
                 })
             }
+        }).on('change', '.produtos', function () {
+            var id_produto = parseInt($(this).val());
+            var atributo = $(this).attr('id');
+            url = '@Url.Action("RecuperarCapacidadeLivreArmazenamentoProduto", "CadProduto")';
+            //console.log(atributo);
+
+
+            if (id_produto != 0) {
+                var dados = { id: id_produto };
+                //console.log(dados.id);
+
+                $.post(url, dados, function (response) {
+                    if (response) {
+                        var linha = $("#" + atributo).closest('tr');
+                        linha.find('.capacidade').val(response.capacidadeLivre)
+                        //console.log(linha.find('.capacidade'));
+
+                        //Limitando a quantidade no valor da capacidade livre
+                        linha.find('.quantidade').attr('max', response.capacidadeLivre);
+
+                    }
+                })
+            } else {
+                var linha = $("#" + atributo).closest('tr');
+                linha.find('.capacidade').val('');
+            }
+
+
+
+        }).on('keyup', '.quantidade', function () {
+
+
+            var quantidade = Number($(this).val());
+            var maximo = Number($(this).attr('max'));
+            //console.log("DIGITADO: " + quantidade);
+            //console.log("MAXIMO: " + maximo)
+
+            if (quantidade > maximo) {
+                $(this).removeClass('is-valid');
+                $(this).addClass('is-invalid');
+                quantidadeinvalida = true;
+            } else {
+                $(this).removeClass('is-invalid');
+                $(this).addClass('is-valid');
+                quantidadeinvalida = false;
+
+
+
+            }
+
+        }).on('change', '.quantidade', function () {
+
+
+            var quantidade = Number($(this).val());
+            var maximo = Number($(this).attr('max'));
+            //console.log("DIGITADO: " + quantidade);
+            //console.log("MAXIMO: " + maximo)
+
+            if (quantidade > maximo) {
+                $(this).removeClass('is-valid');
+                $(this).addClass('is-invalid');
+                quantidadeinvalida = true;
+            } else {
+                $(this).removeClass('is-invalid');
+                $(this).addClass('is-valid');
+                quantidadeinvalida = false;
+
+            }
+
+        }).on('click', '#btn-remover', function () {
+            var btn = $(this),
+                tr = btn.closest('tr'),
+                id = tr.attr('data-id'),
+                url = '@Url.Action("RemoverEntradaSaidaProduto", "OperEntradaProduto")',
+                param = { 'id': id , 'tipo': 'entrada'};
+            $.post(url, param, function (response) {
+                if (response.OK) {
+                    swal.fire({
+                        type: 'success',
+                        title: response.Mensagem
+                    });
+                }else{
+                    swal.fire({
+                        type: 'error',
+                        title: response.Mensagem
+                    });
+                }
+            })
         });
     </script>
     <script id="template-produto" type="x-tmpl-mustache">
         <tr>
             <td>
-                <select class="form-control" id="ddl_produto_{{ Sequencia }}">
+
+                <select class="form-control produtos" id="ddl_produto_{{ Sequencia }}">
+                    <option value="0" selected>--SELECIONE--</option>
+
                     @foreach (var produto in ViewBag.Produtos)
                     {
+
                         <option value="@produto.Id">@produto.Nome</option>
                     }
+
+
                 </select>
             </td>
             <td>
-                <input type="number" id="txt_quantidade_{{ Sequencia }}" class="form-control" value="">
+                <input type="number" id="txt_quantidade_{{ Sequencia }}" class="form-control quantidade" value="" max="1000000000" min="1">
+            </td>
+            <td>
+                <input type="number" id="txt_capacidade_{{ Sequencia }}" class="form-control capacidade" value="" readonly>
             </td>
         </tr>
     </script>

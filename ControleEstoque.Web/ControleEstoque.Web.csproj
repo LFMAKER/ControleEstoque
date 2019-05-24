@@ -358,17 +358,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\Cadastro\CadBase.js" />
-    <Content Include="Scripts\Cadastro\Cidade.js" />
-    <Content Include="Scripts\Cadastro\Estado.js" />
     <Content Include="Scripts\Cadastro\Fornecedor.js" />
     <Content Include="Scripts\Cadastro\GrupoProduto.js" />
     <Content Include="Scripts\Cadastro\LocalArmazenamento.js" />
     <Content Include="Scripts\Cadastro\MarcaProduto.js" />
-    <Content Include="Scripts\Cadastro\Pais.js" />
     <Content Include="Scripts\Cadastro\Perfil.js" />
     <Content Include="Scripts\Cadastro\Produto.js" />
     <Content Include="Scripts\Cadastro\UnidadeMedida.js" />
     <Content Include="Scripts\Cadastro\Usuario.js" />
+    <Content Include="Scripts\comum.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -467,6 +465,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
+    <Folder Include="Scripts\Operacao\" />
     <Folder Include="Views\ApiExport\" />
   </ItemGroup>
   <ItemGroup>

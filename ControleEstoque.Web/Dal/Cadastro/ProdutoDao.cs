@@ -43,7 +43,8 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
                 if (!string.IsNullOrEmpty(filtro))
                 {
                     ret = ctx.Produtos.AsNoTracking().OrderBy(x => x.Nome).Where(x => x.Nome.ToLower().Contains(filtro.ToLower())).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
-                }else
+                }
+                else
                 {
                     ret = ctx.Produtos.AsNoTracking().OrderBy(x => x.Nome).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).ToList();
                 }
@@ -58,7 +59,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
             {
                 ret = ctx.Produtos.AsNoTracking().OrderBy(x => x.Nome).ToList();
             }
-          
+
             return ret;
         }
 
@@ -100,7 +101,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
                 //TODO: Tentar AtualizarCapacidadeAtual depois de remover o produto
 
                 LocalArmazenamentoDao.AtualizarCapacidadeAtual(existing.LocalArmazenamento, existing.QuantEstoque, "Remover", id);
-                 existing = ctx.Produtos.Include("LocalArmazenamento").FirstOrDefault(x => x.Id == id);
+                existing = ctx.Produtos.Include("LocalArmazenamento").FirstOrDefault(x => x.Id == id);
                 if (existing != null)
                 {
                     ctx.Entry(existing).State = EntityState.Detached;
@@ -108,7 +109,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
                 ctx.Produtos.Attach(existing);
                 ctx.Entry(existing).State = EntityState.Deleted;
                 ctx.SaveChanges();
-               
+
                 ret = true;
             }
             catch (System.Exception ex)
@@ -125,7 +126,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
         /// <returns></returns>
         public static int Salvar(Produto pm)
         {
-            var ret= 0;
+            var ret = 0;
             bool detachAndAtach = RealizarDetachAndAtach(pm);
             if (detachAndAtach)
             {
@@ -142,7 +143,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
             }
             return ret;
         }
-        
+
         /// <summary>
         /// Realiza o cadastro direto de um produto sem verificar se é um novo produto ou uma alteração de um existente
         /// </summary>
@@ -193,7 +194,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
                  * ou encontre um objeto diferente e trate o que desejamos utilizar como um novo.
                  * 
                  **/
-                 /*Para facilitar o debug desse método, será utilizado vários try catch*/
+                /*Para facilitar o debug desse método, será utilizado vários try catch*/
 
                 //Try Fornecedor
                 var existingFornecedor = ctx.Fornecedores.FirstOrDefault(x => x.Id == pm.Fornecedor.Id);
@@ -284,13 +285,25 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
 
             return true;
         }
 
+
+        public static int RecuperarCapacidadeLivreArmazenamentoProduto(int? id)
+        {
+            Produto recuperado = ctx.Produtos.AsNoTracking()
+                .Include("LocalArmazenamento")
+                .Where(x => x.Id == id)
+                .FirstOrDefault();
+
+            int capacidadeLivre = recuperado.LocalArmazenamento.CapacidadeTotal - recuperado.LocalArmazenamento.CapacidadeAtual;
+            return capacidadeLivre;
+
+        }
 
 
         //EM CONSTRUÇÂO--------------------------------------------------------------------
@@ -316,10 +329,43 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
             try
             {
 
-                //var numPedido = ctx.Database.Connection.Query<int>("select next value for sec_{nomeTabela}");
-                //var numPedidoLast =  ctx.EntradasProdutos.Last();
-                //var numPedido = (numPedidoLast.Id + 1).ToString();
-       
+                var numPedido = "";
+                var numPedidoCalculo = 0;
+                if (nomeTabela.Equals("entrada_produto"))
+                {
+                    EntradaProduto resultadoConsulta = null;
+
+                    var quantidadeEntradas = ctx.EntradasProdutos.Count();
+                    if (quantidadeEntradas > 0)
+                    {
+                        resultadoConsulta = ctx.EntradasProdutos.OrderByDescending(x => x.Id).Take(1).Single();
+                        numPedidoCalculo = (Convert.ToInt32(resultadoConsulta.Numero) + 1);
+                        numPedido = numPedidoCalculo.ToString();
+
+                    }
+                    else
+                    {
+                        numPedido = Convert.ToString(1);
+                    }
+                }
+                else if (nomeTabela.Equals("saida_produto"))
+                {
+                    SaidaProduto resultadoConsulta = null;
+
+                    var quantidadeSaidas = ctx.SaidasProdutos.Count();
+                    if (quantidadeSaidas > 0)
+                    {
+                        resultadoConsulta = ctx.SaidasProdutos.OrderByDescending(x => x.Id).Take(1).Single();
+                        numPedidoCalculo = (Convert.ToInt32(resultadoConsulta.Numero) + 1);
+                        numPedido = numPedidoCalculo.ToString();
+
+                    }
+                    else
+                    {
+                        numPedido = Convert.ToString(1);
+                    }
+                }
+
 
                 using (var transacao = ctx.Database.BeginTransaction())
                 {
@@ -348,7 +394,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
                             try
                             {
                                 ctx.Produtos.Attach(recuperado);
-                                recuperado.QuantEstoque = produto.Value;
+                                recuperado.QuantEstoque = recuperado.QuantEstoque + produto.Value;
                                 ctx.Entry(recuperado).State = EntityState.Modified;
                                 ctx.SaveChanges();
 
@@ -359,8 +405,45 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
                             }
 
 
-                            
-                            
+
+
+
+                        }
+                        else if (nomeTabela.Equals("saida_produto"))
+                        {
+                            SaidaProduto ep = new SaidaProduto();
+                            ep.Numero = numPedido;
+                            ep.Data = data;
+                            ep.IdProduto = produto.Key;
+                            ep.Quantidade = produto.Value;
+
+                            ctx.SaidasProdutos.Add(ep);
+
+
+                            Produto recuperado = ctx.Produtos.Find(produto.Key);
+
+                            var existingProduto = ctx.Produtos.FirstOrDefault(x => x.Id == produto.Key);
+                            if (existingProduto != null)
+                            {
+                                ctx.Entry(existingProduto).State = EntityState.Detached;
+                            }
+
+                            try
+                            {
+                                ctx.Produtos.Attach(recuperado);
+                                recuperado.QuantEstoque = recuperado.QuantEstoque - produto.Value;
+                                ctx.Entry(recuperado).State = EntityState.Modified;
+                                ctx.SaveChanges();
+
+                            }
+                            catch (System.Exception ex)
+                            {
+                                throw;
+                            }
+
+
+
+
 
                         }
 
@@ -389,6 +472,46 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
             return ret;
             //return null;
         }
+
+
+        public static List<EntradaProduto> RecuperarListaEntradaProdutos()
+        {
+            return ctx.EntradasProdutos.Include("Produto").ToList();
+        }
+
+
+        public static bool RemoverEntradaSaidaProduto(int? id, string tipo)
+        {
+            try
+            {
+                if (tipo.Equals("entrada"))
+                {
+                    var EntradaRecuperada = ctx.EntradasProdutos.Find(id);
+                    ctx.EntradasProdutos.Remove(EntradaRecuperada);
+                    ctx.SaveChanges();
+                    return true;
+                }else if (tipo.Equals("saida"))
+                {
+                    var SaidaRecuperada = ctx.SaidasProdutos.Find(id);
+                    ctx.SaidasProdutos.Remove(SaidaRecuperada);
+                    ctx.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+
+            return false;
+
+
+        }
+
+
+
+
 
     }
 
