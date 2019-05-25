@@ -24,6 +24,7 @@ namespace ControleEstoque.Web.Controllers
             var difQuantPaginas = (quant % ViewBag.QuantMaxLinhasPorPagina) > 0 ? 1 : 0;
             ViewBag.QuantPaginas = (quant / ViewBag.QuantMaxLinhasPorPagina) + difQuantPaginas;
 
+
             return View(lista);
         }
 
