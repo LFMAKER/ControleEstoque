@@ -15,6 +15,9 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
     {
         private static Context ctx = SingletonContext.GetInstance();
 
+
+        //TODO: Realizar o controle da exception de uma exclusão de produtos com relação
+
         /// <summary>
         /// Retorna a quantidade de produtos 
         /// </summary>
