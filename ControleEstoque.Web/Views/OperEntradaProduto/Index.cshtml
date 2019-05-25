@@ -95,7 +95,7 @@
 
 <div class="container">
 
-    <table class="table table-hover">
+    <table class="table table-hover table-dark">
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -340,6 +340,7 @@
                 param = { 'id': id , 'tipo': 'entrada'};
             $.post(url, param, function (response) {
                 if (response.OK) {
+                    tr.remove();
                     swal.fire({
                         type: 'success',
                         title: response.Mensagem
@@ -347,7 +348,8 @@
                 }else{
                     swal.fire({
                         type: 'error',
-                        title: response.Mensagem
+                        title: "Entrada cancelada!",
+                        text: response.Mensagem
                     });
                 }
             })
