@@ -1,3 +1,0 @@
-﻿$('.ui.checkbox')
-  .checkbox()
-;

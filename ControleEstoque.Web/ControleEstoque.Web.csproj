@@ -244,26 +244,6 @@
     <Compile Include="Migrations\201905191245118_Inicial.Designer.cs">
       <DependentUpon>201905191245118_Inicial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201905201826053_RequiredUserAdd.cs" />
-    <Compile Include="Migrations\201905201826053_RequiredUserAdd.Designer.cs">
-      <DependentUpon>201905201826053_RequiredUserAdd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905202323405_AddLocalArmazenamentoCapacidadeTotal.cs" />
-    <Compile Include="Migrations\201905202323405_AddLocalArmazenamentoCapacidadeTotal.Designer.cs">
-      <DependentUpon>201905202323405_AddLocalArmazenamentoCapacidadeTotal.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905210856199_AddProdutoDetails.cs" />
-    <Compile Include="Migrations\201905210856199_AddProdutoDetails.Designer.cs">
-      <DependentUpon>201905210856199_AddProdutoDetails.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905211634237_testeLaze.cs" />
-    <Compile Include="Migrations\201905211634237_testeLaze.Designer.cs">
-      <DependentUpon>201905211634237_testeLaze.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905211649022_testeDropDown.cs" />
-    <Compile Include="Migrations\201905211649022_testeDropDown.Designer.cs">
-      <DependentUpon>201905211649022_testeDropDown.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Binders\EntradaSaidaProdutoViewModelModelBinder.cs" />
     <Compile Include="Dal\Cadastro\FornecedorDao.cs" />
@@ -346,8 +326,6 @@
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
-    <Content Include="Scripts\bootstrap.bundle.js" />
-    <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -363,18 +341,6 @@
     <Content Include="Scripts\Cadastro\UnidadeMedida.js" />
     <Content Include="Scripts\Cadastro\Usuario.js" />
     <Content Include="Scripts\comum.js" />
-    <Content Include="Scripts\esm\popper-utils.js" />
-    <Content Include="Scripts\esm\popper-utils.min.js" />
-    <Content Include="Scripts\esm\popper.js" />
-    <Content Include="Scripts\esm\popper.min.js" />
-    <Content Include="Scripts\esm\popper.min.js.map" />
-    <Content Include="Scripts\esm\popper.js.map" />
-    <Content Include="Scripts\esm\popper-utils.min.js.map" />
-    <Content Include="Scripts\esm\popper-utils.js.map" />
-    <Content Include="Scripts\bootstrap.min.js.map" />
-    <Content Include="Scripts\bootstrap.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.js.map" />
     <None Include=".bin\node.cmd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
@@ -393,18 +359,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\mustache.min.js" />
-    <Content Include="Scripts\popper-utils.js" />
-    <Content Include="Scripts\popper-utils.min.js" />
-    <Content Include="Scripts\popper.js" />
-    <Content Include="Scripts\popper.min.js" />
-    <Content Include="Scripts\Profile\Profile.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sweetalert2.min.js" />
-    <Content Include="Scripts\umd\popper-utils.js" />
-    <Content Include="Scripts\umd\popper-utils.min.js" />
-    <Content Include="Scripts\umd\popper.js" />
-    <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -430,15 +387,6 @@
     <Content Include="Views\Operacao\Inventario.cshtml" />
     <Content Include="Views\Relatorio\PosicaoEstoque.cshtml" />
     <Content Include="Views\Relatorio\Ressuprimento.cshtml" />
-    <Content Include="Scripts\umd\popper.min.js.map" />
-    <Content Include="Scripts\umd\popper.js.map" />
-    <Content Include="Scripts\umd\popper-utils.min.js.map" />
-    <Content Include="Scripts\umd\popper-utils.js.map" />
-    <Content Include="Scripts\README.md" />
-    <Content Include="Scripts\popper.min.js.map" />
-    <Content Include="Scripts\popper.js.map" />
-    <Content Include="Scripts\popper-utils.min.js.map" />
-    <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Conta\Login.cshtml" />
     <Content Include="Views\Shared\_Cadastro.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
@@ -473,21 +421,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201905191245118_Inicial.resx">
       <DependentUpon>201905191245118_Inicial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905201826053_RequiredUserAdd.resx">
-      <DependentUpon>201905201826053_RequiredUserAdd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905202323405_AddLocalArmazenamentoCapacidadeTotal.resx">
-      <DependentUpon>201905202323405_AddLocalArmazenamentoCapacidadeTotal.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905210856199_AddProdutoDetails.resx">
-      <DependentUpon>201905210856199_AddProdutoDetails.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905211634237_testeLaze.resx">
-      <DependentUpon>201905211634237_testeLaze.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905211649022_testeDropDown.resx">
-      <DependentUpon>201905211649022_testeDropDown.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
