@@ -7,13 +7,49 @@ namespace ControleEstoque.Web.Controllers
 {
     public abstract class OperEntradaSaidaProdutoController : Controller
     {
+
+        private const int _quantMaxLinhasPorPagina = 5;
+
         public ActionResult Index()
         {
+            ViewBag.QuantMaxLinhasPorPagina = _quantMaxLinhasPorPagina;
+            ViewBag.PaginaAtual = 1;
+
+
             ViewBag.Produtos = ProdutoDao.RecuperarLista(somenteAtivos: true);
-            ViewBag.Entradas = ProdutoDao.RecuperarListaEntradaProdutos();
-           
+            ViewBag.Entradas = ProdutoDao.RecuperarListaEntradaProdutos(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
+
+            //Paginação Entrada
+            var quantEntradas = ProdutoDao.RecuperarQuantidadeEntradaProdutos();
+            var difQuantPaginasEntradas = (quantEntradas % ViewBag.QuantMaxLinhasPorPagina) > 0 ? 1 : 0;
+
+            ViewBag.QuantPaginasEntradas = (quantEntradas / ViewBag.QuantMaxLinhasPorPagina) + difQuantPaginasEntradas;
+
+
+
+            //Paginação Saídas
+
+
             return View();
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult EntradaSaidaPagina(int pagina, int tamPag, string dataInicio, string dataFim, string tipo)
+        {
+            List<object> lista = new List<object>();
+
+
+            if (tipo.Equals("entrada"))
+            {
+                lista.Add(ProdutoDao.RecuperarListaEntradaProdutos(pagina, tamPag, dataInicio, dataFim));
+            }
+
+
+            return Json(lista);
+        }
+       
 
         [HttpPost]
         [Authorize]

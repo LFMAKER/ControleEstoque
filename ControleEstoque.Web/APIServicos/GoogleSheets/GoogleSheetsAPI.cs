@@ -14,7 +14,7 @@ using static Google.Apis.Sheets.v4.SheetsService;
 using Newtonsoft.Json;
 
 
-namespace ControleEstoque.Web.API.GoogleSheets
+namespace ControleEstoque.Web.APIServicos.GoogleSheets
 {
     
 

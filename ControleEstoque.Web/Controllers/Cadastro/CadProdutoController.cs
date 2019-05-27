@@ -4,6 +4,7 @@ using ControleEstoque.Web.Models.Dal.Cadastro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace ControleEstoque.Web.Controllers
@@ -15,6 +16,7 @@ namespace ControleEstoque.Web.Controllers
 
         public ActionResult Index()
         {
+  
             ViewBag.ListaTamPag = new SelectList(new int[] { _quantMaxLinhasPorPagina, 10, 15, 20 }, _quantMaxLinhasPorPagina);
             ViewBag.QuantMaxLinhasPorPagina = _quantMaxLinhasPorPagina;
             ViewBag.PaginaAtual = 1;

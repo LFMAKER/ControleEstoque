@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 using VendasOsorioA.DAL;
 
 namespace ControleEstoque.Web.Models.Dal.Cadastro
@@ -477,9 +478,32 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
         }
 
 
-        public static List<EntradaProduto> RecuperarListaEntradaProdutos()
+        public static List<EntradaProduto> RecuperarListaEntradaProdutos(int pagina = 0, int tamPagina = 0, string dataInicio = "", string dataFim = "" )
         {
-            return ctx.EntradasProdutos.Include("Produto").ToList();
+            var pos = (pagina - 1) * tamPagina;
+            if (tamPagina != 0 && pagina != 0 && dataInicio == "" && dataFim == "")
+            {
+                
+                return ctx.EntradasProdutos.AsNoTracking().OrderByDescending(x => x.Data).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).Include("Produto").ToList();
+
+            }else if (tamPagina != 0 && pagina != 0 && dataInicio != "" && dataFim != "")
+            {
+                var dataInicioConvertida = Convert.ToDateTime(dataInicio);
+                var dataFimConvertida = Convert.ToDateTime(dataFim);
+
+
+                return ctx.EntradasProdutos.OrderByDescending(x => x.Data).Where(x => x.Data >= dataInicioConvertida && x.Data <= dataFimConvertida).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).Include("Produto").ToList();
+            }
+            else
+            {
+                return ctx.EntradasProdutos.OrderByDescending(x => x.Data).Include("Produto").ToList();
+            }
+
+        }
+
+        public static int RecuperarQuantidadeEntradaProdutos()
+        {
+            return ctx.EntradasProdutos.Count();
         }
 
 
