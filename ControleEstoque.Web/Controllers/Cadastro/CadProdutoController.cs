@@ -55,13 +55,21 @@ namespace ControleEstoque.Web.Controllers
         }
 
         [HttpPost]
-
         public JsonResult RecuperarCapacidadeLivreArmazenamentoProduto(int? id)
         {
             int capacidadeLivreRecuperada = ProdutoDao.RecuperarCapacidadeLivreArmazenamentoProduto(id);
 
             return Json(new { capacidadeLivre = capacidadeLivreRecuperada });
         }
+
+        [HttpPost]
+        public JsonResult RecuperarEstoqueAtualProduto(int? id)
+        {
+            int estoqueAtualRecuperado = ProdutoDao.RecuperarEstoqueAtualProduto(id);
+
+            return Json(new { estoqueAtual = estoqueAtualRecuperado });
+        }
+
 
 
         [HttpPost]

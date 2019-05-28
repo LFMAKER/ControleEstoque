@@ -309,6 +309,18 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
 
         }
 
+        public static int RecuperarEstoqueAtualProduto(int? id)
+        {
+            Produto recuperado = ctx.Produtos.AsNoTracking()
+                .Include("LocalArmazenamento")
+                .Where(x => x.Id == id)
+                .FirstOrDefault();
+
+            int estoqueAtual = recuperado.QuantEstoque;
+            return estoqueAtual;
+
+        }
+
 
         //EM CONSTRUÇÂO--------------------------------------------------------------------
         //TODO:  Construir Entrada e saída de produtos
@@ -444,23 +456,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
                             {
                                 throw;
                             }
-
-
-
-
-
                         }
-
-                        //var sql = $"insert into {nomeTabela} (numero, data, id_produto, quant) values (@numero, @data, @id_produto, @quant)";
-                        //var parametrosInsert = new { numero = numPedido, data, id_produto = produto.Key, quant = produto.Value };
-                        //ctx.Database.Connection.Execute(sql, parametrosInsert, transacao);
-
-
-
-                        //var sinal = (entrada ? "+" : "-");
-                        //sql = $"update produto set quant_estoque = quant_estoque {sinal} @quant_estoque where (id = @id)";
-                        //var parametrosUpdate = new { id = produto.Key, quant_estoque = produto.Value };
-                        //c.Execute(sql, parametrosUpdate, transacao);
                     }
 
                     transacao.Commit();
@@ -474,7 +470,6 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
             }
 
             return ret;
-            //return null;
         }
 
 
@@ -504,9 +499,44 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
 
         }
 
+
+        public static List<SaidaProduto> RecuperarListaSaidaProdutos(int pagina = 0, int tamPagina = 0, string dataInicio = "", string dataFim = "")
+        {
+            var pos = (pagina - 1) * tamPagina;
+            if (tamPagina != 0 && pagina != 0 && dataInicio == "" && dataFim == "" && (dataInicio != null && dataFim != null))
+            {
+
+                return ctx.SaidasProdutos.AsNoTracking().OrderByDescending(x => x.Data).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).Include("Produto").ToList();
+
+            }
+            else if (tamPagina != 0 && pagina != 0 && ((dataInicio != "" && dataFim != "") && (dataInicio != null && dataFim != null)))
+            {
+                var dataInicioConvertida = Convert.ToDateTime(dataInicio);
+                var dataFimConvertida = Convert.ToDateTime(dataFim);
+
+
+                return ctx.SaidasProdutos.OrderByDescending(x => x.Data).Where(x => x.Data >= dataInicioConvertida && x.Data <= dataFimConvertida).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).Include("Produto").ToList();
+            }
+            else if (tamPagina != 0 && pagina != 0 && ((dataInicio == "" && dataFim == "") || (dataInicio == null && dataFim == null)))
+            {
+                return ctx.SaidasProdutos.AsNoTracking().OrderByDescending(x => x.Data).Skip(pos > 0 ? pos - 1 : 0).Take(tamPagina).Include("Produto").ToList();
+            }
+            else
+            {
+                return ctx.SaidasProdutos.OrderByDescending(x => x.Data).Include("Produto").ToList();
+            }
+
+        }
+
+
         public static int RecuperarQuantidadeEntradaProdutos()
         {
             return ctx.EntradasProdutos.Count();
+        }
+
+        public static int RecuperarQuantidadeSaidaProdutos()
+        {
+            return ctx.SaidasProdutos.Count();
         }
 
 
@@ -543,6 +573,11 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
         public static List<EntradaProduto> RecuperarEntradaPorNumero(string numero)
         {
             return ctx.EntradasProdutos.Where(x => x.Numero.Equals(numero)).ToList();
+        }
+
+        public static List<SaidaProduto> RecuperarSaidaPorNumero(string numero)
+        {
+            return ctx.SaidasProdutos.Where(x => x.Numero.Equals(numero)).ToList();
         }
 
 

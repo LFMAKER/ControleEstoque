@@ -1,80 +1,224 @@
-﻿@{
-    ViewBag.Title = "Saída de produtos";
+﻿@model List<ControleEstoque.Web.Models.SaidaProduto>
+@{
+    ViewBag.Title = "Saída de Produtos";
 }
-
 <style>
     #grid th:nth-child(2) {
         width: 150px;
     }
 
-    #saida_produtos .row {
+    #grid th:nth-child(3) {
+        width: 100px;
+    }
+
+    #entrada_produtos .row {
         margin: 15px 0;
     }
 
-    #saida_produtos{
+    #entrada_produtos {
         margin: auto;
         padding-top: 40px;
     }
 </style>
+<body>
 
-<div class="row">
-    <div style="margin: 15px" class="col-md-12">
-        <div id="saida_produtos" class="col-md-6 col-md-offset-3">
-            <h3 class="text-center">@ViewBag.Title</h3>
-            <hr />
-            <div id="msg_mensagem_aviso" class="text-danger invisivel"></div>
-            <fieldset>
-                @Html.AntiForgeryToken()
-                <div class="row">
-                    <div class="col-md-6">
-                        @Html.Label("txt_data", "Data", new { @class = "control-label" })
-                        @Html.TextBox("txt_data", null, new { @class = "form-control", type = "date" })
+
+    <div class="container" style="padding-top: 20px">
+
+        <h1>@ViewBag.Title</h1>
+        <hr />
+        <br /><br />
+        <!-- Large modal -->
+        <div class="form-row">
+            <div class="mb-2">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target=".bd-example-modal-lg">Incluir</button>
+            </div>
+            <div class="mb-2 ml-4">
+                <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Filtrar
+                    <span class="badge badge-light" id="divTag"></span>
+                </button>
+            </div>
+
+            <div class="mb-2 ml-4">
+                <button type="button" class="badge badge-warning btn btn-warning invisivel" id="limparFiltro">Limpar Filtro</button>
+            </div>
+
+
+        </div>
+
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        @Html.TextBox("txt_data_inicio", null, new { @class = "form-control", type = "date", id = "txt_data_inicio" })
                     </div>
-                    <div class="col-md-6">
-                        @Html.Label("txt_numero", "Número", new { @class = "control-label" })
-                        @Html.TextBox("txt_numero", null, new { @class = "form-control", @readonly = "readonly" })
+                    <p>até</p>
+                    <div class="col-sm-4">
+                        @Html.TextBox("txt_data_fim", null, new { @class = "form-control", type = "date", id = "txt_data_fim" })
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-secondary" id="filtrarOk">Aplicar</button>
+                    </div>
+
+                </div>
+                <div class="alert-warning invisivel" role="alert" id="alertaFiltragem">
+                    Você deve preencher os dois campos acimas para aplicar a filtragem!
+                </div>
+            </div>
+        </div>
+
+
+        <br /><br />
+    </div>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="row">
+                    <div style="margin: 15px" class="col-md-12">
+                        <div id="entrada_produtos" class="col-md-10 col-md-offset-3">
+                            <h3 class="text-center">@ViewBag.Title</h3>
+                            <hr />
+                            <div id="msg_mensagem_aviso" class="text-danger invisivel"></div>
+                            <fieldset>
+                                @Html.AntiForgeryToken()
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        @Html.Label("txt_data", "Data", new { @class = "control-label" })
+                                        @Html.TextBox("txt_data", null, new { @class = "form-control", type = "date" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.Label("txt_numero", "Número", new { @class = "control-label" })
+                                        @Html.TextBox("txt_numero", null, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <a id="btn_incluir" style="color: #ffffff;" class="btn btn-success" role="button">
+                                            <i class="glyphicon glyphicon-plus"></i> Incluir Produto
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="alert alert-warning" role="alert">
+                                    Atenção: Adicione apenas uma entrada por produto, caso seja feito duas ou mais entradas de um mesmo produto, a entrada será cancelada!
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table id="grid" class="table table-bordered table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Produto</th>
+                                                    <th>Quantidade</th>
+                                                    <th>Estoque Atual</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <a id="btn_cancelar" style="color: #ffffff;" class="btn btn-danger" role="button" data-dismiss="modal">
+                                            Cancelar
+                                        </a>
+                                        <a id="btn_salvar" style="color: #ffffff;" class="btn btn-success" role="button">
+                                            Salvar
+                                        </a>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-2">
-                        <a id="btn_incluir" style="color: #ffffff;" class="btn btn-success" role="button">
-                            <i class="glyphicon glyphicon-plus"></i> Incluir Produto
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <table id="grid" class="table table-bordered table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Produto</th>
-                                    <th>Quantidade</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 text-right">
-                        <a id="btn_cancelar" style="color: #ffffff;" class="btn btn-danger" role="button">
-                            <i class="glyphicon glyphicon-remove"></i> Cancelar
-                        </a>
-                        <a id="btn_salvar" style="color: #ffffff;" class="btn btn-success" role="button">
-                            <i class="glyphicon glyphicon-ok"></i> Salvar
-                        </a>
-                    </div>
-                </div>
-            </fieldset>
+
+
+
+
+            </div>
         </div>
     </div>
-</div>
+
+
+    <div class="container">
+
+        @*@if(ViewBag.Entradas.Count > 0)
+            {*@
+
+
+        <table class="table table-hover" id="tabelaSaidas">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Numero</th>
+                    <th scope="col">Produto</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var linha = 0;
+                    foreach (var saida in ViewBag.Saidas)
+                    {
+                        linha++;
+                        if (linha <= ViewBag.QuantMaxLinhasPorPagina)
+                        {
+
+                            <tr data-id="@saida.Id">
+                                <th scope="row">@saida.Id</th>
+                                <td>@saida.Data.ToString("dd/MM/yyyy")</td>
+                                <td>@String.Format("{0:00000}", saida.Numero)  </td>
+                                <td>@saida.Produto.Nome</td>
+                                <td>@saida.Quantidade</td>
+                                <td><button id="btn-remover" type="button" class="btn btn-danger">Remover</button></td>
+                            </tr>
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+
+        @if (ViewBag.QuantPaginasSaidas > 1)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            @for (int i = 2; i <= ViewBag.QuantPaginasSaidas; i++)
+                            {
+                                <li class="page-item"><a class="page-link" href="#">@i</a></li>
+                            }
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        }
+
+
+    </div>
+</body>
+
 
 @section Scripts{
     <script src="~/Scripts/mustache.min.js"></script>
     <script src="~/Scripts/comum.js"></script>
     <script>
+        //TODO: Adicionar linhas na tabela
+        //TODO: Retornar idSalvo das saida
 
+
+        //Verificar se existem quantidades inválidas
+        var quantidadeinvalida = false;
 
         //anti_forgery_token
         function add_anti_forgery_token(data) {
@@ -83,22 +227,32 @@
         }
 
 
+
         var sequencia = 1;
+        //Formatando data
         function formatar_data(data) {
             var dia = ('0' + data.getDate()).slice(-2);
             var mes = ('0' + (data.getMonth() + 1)).slice(-2);
             return data.getFullYear() + "-" + mes + "-" + dia;
         }
+
+        //Incluindo linhas dos produtos na saida
         function incluir_linha_produto() {
             $('#grid tbody').append(Mustache.render($('#template-produto').html(), { Sequencia: sequencia }));
             sequencia++;
         }
+
+        //Limpando o modal
         function limpar_tela() {
             $('#txt_numero').val('');
             $('#grid tbody').empty();
             incluir_linha_produto();
         }
-        function obter_lista_saidas() {
+
+
+
+        //Obtendo a lista de todos os produtos que se desejam realizar uma saida
+        function obter_lista_entradas() {
             var ret = [];
             $('#grid tbody tr').each(function (index, item) {
                 var txt_quantidade = $(this).find('input'),
@@ -111,45 +265,89 @@
             });
             return ret;
         }
+
+
+        //Setando o dia atual no campo txt_data e limpando o modal.
         $(document).ready(function () {
             var hoje = new Date();
             $('#txt_data').val(formatar_data(hoje));
             limpar_tela();
         })
+
+         //Incluindo uma linha de produto caso clique no botão incluir
         .on('click', '#btn_incluir', function () {
             incluir_linha_produto();
         })
+
+         //Salvando a saida
         .on('click', '#btn_salvar', function () {
-            var btn = $(this);
-            var lista_saidas = obter_lista_saidas();
-            if (lista_saidas.length == 0) {
-                swal.fire('Aviso', 'Para salvar, você deve informar produtos com quantidades.', 'warning');
-            }
-            else {
-                var url = '@Url.Action("Salvar", "OperSaidaProduto")',
-                    dados = {
-                        data: $('#txt_data').val(),
-                        produtos: JSON.stringify(lista_saidas)
-                    };
-                $.post(url, add_anti_forgery_token(dados), function (response) {
-                    if (response.OK) {
-                        $('#txt_numero').val(response.Numero);
-                        swal.fire('Sucesso', 'Saída de produtos salva com sucesso.', 'info');
-                    }
-                })
-                .fail(function () {
-                    swal.fire('Aviso', 'Não foi possível salvar a saída de produtos.', 'warning');
-                });
+            if (quantidadeinvalida == false) {
+                var btn = $(this);
+                var lista_entradas = obter_lista_entradas();
+                var txtData = $('#txt_data').val();
+                if (lista_entradas.length == 0) {
+                    swal.fire('Aviso', 'Para salvar, você deve informar produtos com quantidades.', 'warning');
+                }
+                else {
+                    var url = '@Url.Action("Salvar", "OperSaidaProduto")',
+                        dados = {
+                            data: $('#txt_data').val(),
+                            produtos: JSON.stringify(lista_entradas)
+                        };
+                    $.post(url, add_anti_forgery_token(dados), function (response) {
+                        if (response.OK) {
+                            $('#txt_numero').val(response.Numero);
+                            limpar_tela();
+                            $('.bd-example-modal-lg').modal('toggle');
+
+
+                            //Adicionando Dados na tabela
+                            var table = $('#tabelaSaidas').find('tbody');
+
+
+                                console.log(response.Pedidos);
+                                //$('#grid_cadastro').removeClass('invisivel');
+                                //$('#mensagem_grid').addClass('invisivel');
+                                for (var i = 0; i < response.Pedidos[0].length; i++) {
+                                    //console.log(response.Pedidos[0][i]);
+                                    table.append(criar_linha_grid(response.Pedidos[0][i]));
+                                }
+
+
+
+                            //Mostrando mensagem
+                            swal.fire({
+                                type: 'success',
+                                title: response.Mensagem,
+                                text: 'Número da saída: ' + response.Numero
+                            });
+
+
+
+                        } else {
+                            //Fechando o modal e exibindo mensagem de erro
+                            $('.bd-example-modal-lg').modal('toggle');
+                            swal.fire('Error', response.Mensagem, 'info');
+                        }
+                    })
+                    .fail(function () {
+                        //Caso o $Post falhe
+                        swal.fire('Aviso', 'Não foi possível salvar a saída de produtos, verique se a quantidade está dentro do estoque atual do produtos.', 'warning');
+                    });
+                }
+            } else {
+                //A quantidade de algum produto está acima do que ele pode armazenar.
+                swal.fire('Erro', 'Não foi possível salvar a saida de produtos, verique se a quantidade está dentro do estoque atual dos produtos.', 'error');
             }
         })
+
+        //Cancelar a entrada
         .on('click', '#btn_cancelar', function () {
-            var lista_saidas = obter_lista_saidas();
-            if (lista_saidas.length == 0 || $('#txt_numero').val() != '') {
+            var lista_entradas = obter_lista_entradas();
+            if (lista_entradas.length == 0 || $('#txt_numero').val() != '') {
                 limpar_tela();
             }
             else {
-
-
                 const swalWithBootstrapButtons = Swal.mixin({
                     customClass: {
                         confirmButton: 'btn btn-success',
@@ -175,7 +373,6 @@
                           'success'
                         )
                     } else if (
-                        // Read more about handling dismissals
                       result.dismiss === Swal.DismissReason.cancel
                     ) {
                         swalWithBootstrapButtons.fire(
@@ -186,20 +383,332 @@
                     }
                 })
             }
+            //Recuperando o tamanho de armazenamento livre de um determinado produto
+        }).on('change', '.produtos', function () {
+            var id_produto = parseInt($(this).val());
+            var atributo = $(this).attr('id');
+            url = '@Url.Action("RecuperarEstoqueAtualProduto", "CadProduto")';
+            //console.log(atributo);
+
+
+            if (id_produto != 0) {
+                var dados = { id: id_produto };
+                //console.log(dados.id);
+
+                $.post(url, dados, function (response) {
+                    if (response) {
+                        var linha = $("#" + atributo).closest('tr');
+                        linha.find('.estoqueAtual').val(response.estoqueAtual)
+
+
+                        //Limitando a quantidade no valor da capacidade livre
+                        linha.find('.quantidade').attr('max', response.estoqueAtual);
+
+                    }
+                })
+            } else {
+                var linha = $("#" + atributo).closest('tr');
+                linha.find('.estoqueAtual').val('');
+            }
+
+
+            //Verificando se a quantidade informada está dentro do do máximo permitido pelo atribudo max
+        }).on('keyup', '.quantidade', function () {
+
+
+            var quantidade = Number($(this).val());
+            var maximo = Number($(this).attr('max'));
+            //console.log("DIGITADO: " + quantidade);
+            //console.log("MAXIMO: " + maximo)
+
+            if (quantidade > maximo) {
+                $(this).removeClass('is-valid');
+                $(this).addClass('is-invalid');
+                quantidadeinvalida = true;
+            } else {
+                $(this).removeClass('is-invalid');
+                $(this).addClass('is-valid');
+                quantidadeinvalida = false;
+
+
+
+            }
+
+            //Verificando se a quantidade informada está dentro do do máximo permitido pelo atribudo max
+        }).on('change', '.quantidade', function () {
+
+
+            var quantidade = Number($(this).val());
+            var maximo = Number($(this).attr('max'));
+            //console.log("DIGITADO: " + quantidade);
+            //console.log("MAXIMO: " + maximo)
+
+            if (quantidade > maximo) {
+                $(this).removeClass('is-valid');
+                $(this).addClass('is-invalid');
+                quantidadeinvalida = true;
+            } else {
+                $(this).removeClass('is-invalid');
+                $(this).addClass('is-valid');
+                quantidadeinvalida = false;
+
+            }
+            //Removendo uma entrada
+        }).on('click', '#btn-remover', function () {
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success ml-4',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false,
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Você tem certeza disso?',
+                text: "Não será possível reverter isso!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, Excluir!',
+                cancelButtonText: 'Não, Cancelar!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    var btn = $(this),
+                    tr = btn.closest('tr'),
+                    id = tr.attr('data-id'),
+                    url = '@Url.Action("RemoverEntradaSaidaProduto", "OperSaidaProduto")',
+                    param = { 'id': id, 'tipo': 'saida' };
+                    $.post(url, param, function (response) {
+                        if (response.OK) {
+                            tr.remove();
+                            swal.fire({
+                                type: 'success',
+                                title: response.Mensagem
+                            });
+                        } else {
+                            swal.fire({
+                                type: 'error',
+                                title: "Saída cancelada!",
+                                text: response.Mensagem
+                            });
+                        }
+                    })
+
+                } else if (
+                    // Read more about handling dismissals
+                  result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                      'Cancelado',
+                      'Sua saída está segura! :)',
+                      'error'
+                    )
+                }
+            })
+
+            //Paginação
+        }).on('click', '.page-item', function () {
+            var btn = $(this),
+                tamPag = 5,
+                pagina = btn.text(),
+                url = '@Url.Action("EntradaSaidaPagina", "OperSaidaProduto")',
+                param = { 'pagina': pagina, 'tamPag': tamPag, 'dataInicio': $('#txt_data_inicio').val(), 'dataFim': $('#txt_data_fim').val(), 'tipo': 'saida' };
+
+            $.post(url, add_anti_forgery_token(param), function (response) {
+                if (response) {
+                    var table = $('#tabelaSaidas').find('tbody');
+                    table.empty();
+
+                    if (response.length > 0) {
+                        //$('#grid_cadastro').removeClass('invisivel');
+                        //$('#mensagem_grid').addClass('invisivel');
+                        for (var i = 0; i < response[0].length; i++) {
+                            console.log(response[0][i]);
+                            table.append(criar_linha_grid(response[0][i]));
+                        }
+                    }
+                    else {
+                        //$('#grid_cadastro').addClass('invisivel');
+                        //$('#mensagem_grid').removeClass('invisivel');
+                    }
+
+                    btn.siblings().removeClass('active');
+                    btn.addClass('active');
+
+                }
+            })
+        }).on('click', '#filtrarOk', function () {
+            var data_inicio = $('#txt_data_inicio').val();
+            data_inicio = data_inicio.substr(0, 10).split("-");
+            data_inicio = data_inicio[2] + "-" + data_inicio[1] + "-" + data_inicio[0];
+            data_inicio = data_inicio.replace("-", "/");
+            data_inicio = data_inicio.replace("-", "/");
+
+
+
+            var data_fim = $('#txt_data_fim').val();
+            data_fim = data_fim.substr(0, 10).split("-");
+            data_fim = data_fim[2] + "-" + data_fim[1] + "-" + data_fim[0];
+            data_fim = data_fim.replace("-", "/");
+            data_fim = data_fim.replace("-", "/");
+
+            console.log(data_inicio);
+            if (data_inicio.includes("undefined") && data_fim.includes("undefined")) {
+                console.log("preencha as datas");
+                $('#alertaFiltragem').removeClass('invisivel');
+
+            } else {
+                $('#divTag').html("Filtrando de: " + data_inicio + " até " + data_fim);
+
+                $('#divTag').removeClass('invisivel');
+                $('#alertaFiltragem').addClass('invisivel');
+                $('#limparFiltro').removeClass('invisivel');
+
+                //Requisitando
+                var btn = $(this),
+                   tamPag = 5,
+                   pagina = 1,
+                   url = '@Url.Action("EntradaSaidaPagina", "OperSaidaProduto")',
+                   param = { 'pagina': pagina, 'tamPag': tamPag, 'dataInicio': data_inicio, 'dataFim': data_fim, 'tipo': 'saida' };
+
+                $.post(url, add_anti_forgery_token(param), function (response) {
+                    if (response) {
+                        var table = $('#tabelaSaidas').find('tbody');
+                        table.empty();
+
+                        if (response.length > 0) {
+                            //$('#grid_cadastro').removeClass('invisivel');
+                            //$('#mensagem_grid').addClass('invisivel');
+                            for (var i = 0; i < response[0].length; i++) {
+                                console.log(response[0][i]);
+                                table.append(criar_linha_grid(response[0][i]));
+                            }
+                        }
+                        else {
+                            //$('#grid_cadastro').addClass('invisivel');
+                            //$('#mensagem_grid').removeClass('invisivel');
+                        }
+
+                        //Ocultando campo filtrar
+                        $('#collapseExample').collapse('hide');
+
+
+                        btn.siblings().removeClass('active');
+                        btn.addClass('active');
+
+                    }
+                })
+            };
+
+
+
+
+        }).on('click', '#limparFiltro', function () {
+            $('#txt_data_inicio').val(0);
+            $('#txt_data_fim').val(0);
+            $('#limparFiltro').removeClass('invisivel');
+            $('#divTag').empty();
+            //Requisitando
+            var btn = $(this),
+               tamPag = 5,
+               pagina = 1,
+               url = '@Url.Action("EntradaSaidaPagina", "OperSaidaProduto")',
+               param = { 'pagina': pagina, 'tamPag': tamPag, 'tipo': 'saida' };
+
+            $.post(url, add_anti_forgery_token(param), function (response) {
+                if (response) {
+                    var table = $('#tabelaSaidas').find('tbody');
+                    table.empty();
+                    console.log(response);
+                    if (response.length > 0) {
+                        //$('#grid_cadastro').removeClass('invisivel');
+                        //$('#mensagem_grid').addClass('invisivel');
+                        for (var i = 0; i < response[0].length; i++) {
+                            console.log(response[0][i]);
+                            table.append(criar_linha_grid(response[0][i]));
+                        }
+                    }
+                    else {
+                        //$('#grid_cadastro').addClass('invisivel');
+                        //$('#mensagem_grid').removeClass('invisivel');
+                    }
+
+                    //Ocultando campo filtrar
+                    $('#collapseExample').collapse('hide');
+
+
+                    btn.siblings().removeClass('active');
+                    btn.addClass('active');
+                    $('#limparFiltro').addClass('invisivel');
+
+                }
+            })
+
         });
+
+        //Definindo os dados que serão inseridos na linha
+        function set_dados_grid(dados) {
+            return '<td scope="row"><strong>' + dados.Id + '</strong></td>' +
+                    '<td>' + parseJsonDate(dados.Data) + '</td>' +
+                    '<td>' + dados.Numero + '</td>' +
+                    '<td>' + dados.Produto.Nome + '</td>' +
+                   '<td>' + dados.Quantidade + '</td>';
+        }
+
+
+        //Cria uma linha da tabela conforme dados recebidos
+        function criar_linha_grid(dados) {
+            var result = set_dados_grid(dados);
+            var ret =
+                 '<tr data-id=' + dados.Id + '>' +
+                result +
+                '<td>' +
+                '<button id="btn-remover" type="button" class="btn btn-danger">Remover</button>' +
+                '</td>' +
+                '</tr>';
+            return ret;
+        }
+
+        //Desserializa a Data e formata em dia/mês/ano - dd/MM/yyyy
+        function parseJsonDate(jsonDate) {
+            var offset = new Date().getTimezoneOffset() * 60000;
+            var parts = /\/Date\((-?\d+)([+-]\d{2})?(\d{2})?.*/.exec(jsonDate);
+            if (parts[2] == undefined) parts[2] = 0;
+            if (parts[3] == undefined) parts[3] = 0;
+            d = new Date(+parts[1] + offset + parts[2] * 3600000 + parts[3] * 60000);
+            date = d.getDate() + 1;
+            date = date < 10 ? "0" + date : date;
+            date--;
+            mon = d.getMonth() + 1;
+            mon = mon < 10 ? "0" + mon : mon;
+            year = d.getFullYear();
+            return (date + "/" + mon + "/" + year);
+        };
+
     </script>
+
     <script id="template-produto" type="x-tmpl-mustache">
         <tr>
             <td>
-                <select class="form-control" id="ddl_produto_{{ Sequencia }}">
+
+                <select class="form-control produtos" id="ddl_produto_{{ Sequencia }}">
+                    <option value="0" selected>--SELECIONE--</option>
+
                     @foreach (var produto in ViewBag.Produtos)
                     {
+
                         <option value="@produto.Id">@produto.Nome</option>
                     }
+
+
                 </select>
             </td>
             <td>
-                <input type="number" id="txt_quantidade_{{ Sequencia }}" class="form-control" value="">
+                <input type="number" id="txt_quantidade_{{ Sequencia }}" class="form-control quantidade" value="" max="1000000000" min="1">
+            </td>
+            <td>
+                <input type="number" id="txt_estoqueAtual_{{ Sequencia }}" class="form-control estoqueAtual" value="" readonly>
             </td>
         </tr>
     </script>

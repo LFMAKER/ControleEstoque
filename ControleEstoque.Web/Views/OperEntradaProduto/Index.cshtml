@@ -640,6 +640,7 @@
 
                     btn.siblings().removeClass('active');
                     btn.addClass('active');
+                    $('#limparFiltro').addClass('invisivel');
 
                 }
             })
@@ -648,7 +649,7 @@
 
         //Definindo os dados que serão inseridos na linha
         function set_dados_grid(dados) {
-            return '<td>' + dados.Id + '</td>' +
+            return '<td scope="row"><strong>' + dados.Id + '</strong></td>' +
                     '<td>' + parseJsonDate(dados.Data) + '</td>' +
                     '<td>' + dados.Numero + '</td>' +
                     '<td>' + dados.Produto.Nome + '</td>' +
