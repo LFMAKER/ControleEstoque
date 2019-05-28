@@ -38,8 +38,12 @@
                     Filtrar
                     <span class="badge badge-light" id="divTag"></span>
                 </button>
-
             </div>
+
+            <div class="mb-2 ml-4">
+                <button type="button" class="badge badge-warning btn btn-warning invisivel" id="limparFiltro">Limpar Filtro</button>
+            </div>
+
 
         </div>
 
@@ -296,17 +300,26 @@
                             limpar_tela();
                             $('.bd-example-modal-lg').modal('toggle');
 
-                            //Adicionar as entradas na tabela
-                            for (var i = 0; i < lista_entradas.length; i++) {
-                                console.log(lista_entradas[i].IdProduto);
-                                set_dados_grid()
-                            }
+
+                            //Adicionando Dados na tabela
+                            var table = $('#tabelaEntradas').find('tbody');
+               
+                           
+                                console.log(response.Pedidos);
+                                //$('#grid_cadastro').removeClass('invisivel');
+                                //$('#mensagem_grid').addClass('invisivel');
+                                for (var i = 0; i < response.Pedidos[0].length; i++) {
+                                    //console.log(response.Pedidos[0][i]);
+                                    table.append(criar_linha_grid(response.Pedidos[0][i]));
+                                }
+                           
+
 
                             //Mostrando mensagem
                             swal.fire({
                                 type: 'success',
                                 title: response.Mensagem,
-                                text: 'Número da entrada: ' + response.Numero + '. E por motivos de inconsistências dos dados, para ver a entrada na listagem, atualize a página.'
+                                text: 'Número da entrada: ' + response.Numero
                             });
 
 
@@ -550,7 +563,7 @@
 
                 $('#divTag').removeClass('invisivel');
                 $('#alertaFiltragem').addClass('invisivel');
-
+                $('#limparFiltro').removeClass('invisivel');
 
                 //Requisitando
                 var btn = $(this),
@@ -590,6 +603,46 @@
 
 
 
+
+        }).on('click', '#limparFiltro', function () {
+            $('#txt_data_inicio').val(0);
+            $('#txt_data_fim').val(0);
+            $('#limparFiltro').removeClass('invisivel');
+            $('#divTag').empty();
+            //Requisitando
+            var btn = $(this),
+               tamPag = 5,
+               pagina = 1,
+               url = '@Url.Action("EntradaSaidaPagina", "OperEntradaProduto")',
+               param = { 'pagina': pagina, 'tamPag': tamPag, 'tipo': 'entrada' };
+
+            $.post(url, add_anti_forgery_token(param), function (response) {
+                if (response) {
+                    var table = $('#tabelaEntradas').find('tbody');
+                    table.empty();
+                    console.log(response);
+                    if (response.length > 0) {
+                        //$('#grid_cadastro').removeClass('invisivel');
+                        //$('#mensagem_grid').addClass('invisivel');
+                        for (var i = 0; i < response[0].length; i++) {
+                            console.log(response[0][i]);
+                            table.append(criar_linha_grid(response[0][i]));
+                        }
+                    }
+                    else {
+                        //$('#grid_cadastro').addClass('invisivel');
+                        //$('#mensagem_grid').removeClass('invisivel');
+                    }
+
+                    //Ocultando campo filtrar
+                    $('#collapseExample').collapse('hide');
+
+
+                    btn.siblings().removeClass('active');
+                    btn.addClass('active');
+
+                }
+            })
 
         });
 

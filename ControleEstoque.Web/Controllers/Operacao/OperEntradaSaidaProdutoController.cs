@@ -83,8 +83,9 @@ namespace ControleEstoque.Web.Controllers
 
             var numPedido = "";
             var Mensagem = "";
+            List <object> pedidosSalvos = new List<object>();
             var ok = false;
-
+           
             /*Na EntradaSaidaProdutoViewModelModelBinder é realizado a validação das entradas,
              *não é possível realizar várias entradas de um mesmo produtos, apenas será possível
              *realizar entradas de produtos diferentes.
@@ -94,6 +95,7 @@ namespace ControleEstoque.Web.Controllers
             if (dados.Produtos != null)
             {
                 numPedido = SalvarPedido(dados);
+                pedidosSalvos.Add(ProdutoDao.RecuperarEntradaPorNumero(numPedido));
                 Mensagem = "Entrada realizada com sucesso!";
                 ok = (numPedido != "");
 
@@ -110,7 +112,7 @@ namespace ControleEstoque.Web.Controllers
             //var numPedidoOuMensagem = SalvarPedido(dados);
             //var ok = (numPedido != "");
 
-            return Json(new { OK = ok, Numero = numPedido, Mensagem = Mensagem });
+            return Json(new { OK = ok, Numero = numPedido, Mensagem = Mensagem, Pedidos = pedidosSalvos });
         }
     }
 }
