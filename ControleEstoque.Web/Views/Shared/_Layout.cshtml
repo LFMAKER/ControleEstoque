@@ -1,167 +1,299 @@
-﻿
-<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
     <title>Inventory Analytics - @ViewBag.Title</title>
+
+    <!-- CSS-->
+    <link href="~/Content/inventory-analytics.min.css" rel="stylesheet" />
+    <link href="~/Content/semantic.min.css" rel="stylesheet" />
+    <link href="~/Content/sweetalert2.min.css" rel="stylesheet" />
+
+    <!-- Scripts-->
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link href="~/Content/sweetalert2.min.css" rel="stylesheet" />
-    @*<link href="~/Content/mdb.min.css" rel="stylesheet" />*@
 
-    <!-- You MUST include jQuery before Fomantic -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.4/dist/semantic.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.4/dist/semantic.min.js"></script>
+
+    <!-- Custom fonts for this template-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
 
 </head>
-<body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-
+<body id="page-top" style="padding-top:0px;">
 
 
-        <div class="container ">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        @if (Request.IsAuthenticated)
+        {
+        <!-- Sidebar -->
+            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <nav class="navbar navbar-light bg-light">
-                <a class="navbar-brand lead" href="@Url.Action("Index", "Home")">Inventory Analytics</a>
-            </nav>
+                <!-- Sidebar - Brand -->
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("Index", "Home")">
+                    <div class="sidebar-brand-icon rotate-n-15">
+                        <i class="fas fa-laugh-wink"></i>
+                    </div>
+                    <div class="sidebar-brand-text mx-3">Inventory Analytics</div>
+                </a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Alterna navegação">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0">
 
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item active">
+                    <a class="nav-link" href="@Url.Action("Index", "Home")">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
 
+                <!-- Divider -->
+                <hr class="sidebar-divider">
 
+                <!-- Heading -->
+                <!-- <div class="sidebar-heading">
+                  Interface
+                </div> -->
+                <!-- Nav Item - Gerenciar Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGerenciar" aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-cogs"></i>
+                        <span>Gerenciar</span>
+                    </a>
+                    <div id="collapseGerenciar" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <!-- <h6 class="collapse-header">Custom Components:</h6> -->
+                            <a class="collapse-item" href="@Url.Action("Index", "CadGrupoProduto")">Grupo de Produtos</a>
+                            <a class="collapse-item" href="@Url.Action("Index", "CadMarcaProduto")">Marcas de Produtos</a>
+                            <a class="collapse-item" href="@Url.Action("Index", "CadLocalArmazenamento")">Locais de Armazenamento</a>
+                            <a class="collapse-item" href="@Url.Action("Index", "CadUnidadeMedida")">Unidades de Medida</a>
+                            <a class="collapse-item" href="@Url.Action("Index", "CadProduto")">Produtos</a>
+                            <a class="collapse-item" href="@Url.Action("Index", "CadFornecedor")">Fornecedores</a>
+                            <a class="collapse-item" href="@Url.Action("Index", "CadPerfil")">Perfis de Usuários</a>
+                            <a class="collapse-item" href="@Url.Action("Index", "CadUsuario")">Usuários</a>
+                        </div>
+                    </div>
+                </li>
 
+                <!-- Nav Item - Operações Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOperacoes" aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-fw fa-exchange-alt"></i>
+                        <span>Operações</span>
+                    </a>
+                    <div id="collapseOperacoes" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <!-- <h6 class="collapse-header">Custom Utilities:</h6> -->
+                            <a class="collapse-item" href="@Url.Action("Index", "OperEntradaProduto")">Entrada de Produtos</a>
+                            <a class="collapse-item" href="@Url.Action("Index", "OperSaidaProduto")">Saída de Produtos</a>
+                        </div>
+                    </div>
+                </li>
 
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                @if (Request.IsAuthenticated)
-                {
-                    <ul class="navbar-nav">
+                <!-- Nav Item - Relatórios Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRelatorios" aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-fw fa-file-pdf"></i>
+                        <span>Relatórios</span>
+                    </a>
+                    <div id="collapseRelatorios" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <!-- <h6 class="collapse-header">Custom Utilities:</h6> -->
+                            <a class="collapse-item" href="@Url.Action("Index", "Log")">Logs</a>
+                        </div>
+                    </div>
+                </li>
 
-                        <li class="nav-item dropdown ml-4">
-                            <a class="nav-link dropdown-toggle lead" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Gerenciar
-                            </a>
-                            <div class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
-                                <p class="dropdown-item">@Html.ActionLink("Grupos de Produtos", "Index", "CadGrupoProduto")</p>
-                                <p class="dropdown-item">@Html.ActionLink("Marcas de Produtos", "Index", "CadMarcaProduto")</p>
-                                <p class="dropdown-item">@Html.ActionLink("Locais de Armazenamento", "Index", "CadLocalArmazenamento")</p>
-                                <p class="dropdown-item">@Html.ActionLink("Unidades de Medida", "Index", "CadUnidadeMedida")</p>
-                                <p class="dropdown-item">@Html.ActionLink("Produtos", "Index", "CadProduto")</p>
-                                <p class="dropdown-item">@Html.ActionLink("Fornecedores", "Index", "CadFornecedor") </p>
-                                <p class="dropdown-divider"></p>
-                                <p class="dropdown-item">@Html.ActionLink("Perfis de Usuários", "Index", "CadPerfil") </p>
-                                <p class="dropdown-item">@Html.ActionLink("Usuários", "Index", "CadUsuario") </p>
+                <!-- Nav Item - Gráficos Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGraficos" aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Gráficos</span>
+                    </a>
+                    <div id="collapseGraficos" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <!-- <h6 class="collapse-header">Custom Utilities:</h6> -->
+                            <a class="collapse-item" href="@Url.Action("EntradaSaidaMesa", "Grafico")">Entradas vs Saídas por mês</a>
+                        </div>
+                    </div>
+                </li>
 
+                <!-- Divider -->
+                <!-- <hr class="sidebar-divider"> -->
+                <!-- Heading -->
+                <!-- <div class="sidebar-heading">
+                  Addons
+                </div> -->
+                <!-- Nav Item - Pages Collapse Menu -->
+                <!-- <li class="nav-item">
+                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Pages</span>
+                  </a>
+                  <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                      <h6 class="collapse-header">Login Screens:</h6>
+                      <a class="collapse-item" href="login.html">Login</a>
+                      <a class="collapse-item" href="register.html">Register</a>
+                      <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                      <div class="collapse-divider"></div>
+                      <h6 class="collapse-header">Other Pages:</h6>
+                      <a class="collapse-item" href="404.html">404 Page</a>
+                      <a class="collapse-item" href="blank.html">Blank Page</a>
+                    </div>
+                  </div>
+                </li> -->
+                <!-- Nav Item - Charts -->
+                <!-- <li class="nav-item">
+                  <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Charts</span></a>
+                </li> -->
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
 
-                            </div>
-                        </li>
+                <!-- Sidebar Toggler (Sidebar) -->
+                <div class="text-center d-none d-md-inline">
+                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                </div>
 
-                        <li class="nav-item dropdown ml-4">
-                            <a class="nav-link dropdown-toggle lead" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Operações
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <p class="dropdown-item">@Html.ActionLink("Entrada de Produtos", "Index", "OperEntradaProduto")</p>
-                                <p class="dropdown-item">@Html.ActionLink("Saída de Produtos", "Index", "OperSaidaProduto")</p>
-                                <p class="dropdown-item">@Html.ActionLink("Lançamento de Perdas de Produtos", "LancPerdaProduto", "Operacao")</p>
-                                <p class="dropdown-item">@Html.ActionLink("Inventário de Estoque", "Inventario", "Operacao")</p>
+            </ul>
+        <!-- End of Sidebar -->
+        }
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
 
+            <!-- Main Content -->
+            <div id="content">
 
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                            </div>
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
 
-                        </li>   
-                        <li class="nav-item dropdown ml-4">
-                            <a class="nav-link dropdown-toggle lead" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Relatórios
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <p class="dropdown-item">@Html.ActionLink("Posição do Estoque", "PosicaoEstoque", "Relatorio")</p>
-                                <p class="dropdown-item">@Html.ActionLink("Ressuprimento", "Ressuprimento", "Relatorio")</p>
-                                <p class="dropdown-item">@Html.ActionLink("Logs", "Index", "Log")</p>
+                    @if (Request.IsAuthenticated)
+                    {
+                    <!-- Topbar Navbar -->
+                        <ul class="navbar-nav ml-auto">
+                            <!-- Nav Item - User Information -->
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@User.Identity.Name</span>
+                                    <img class="img-profile rounded-circle" src="https://www.amoedo.com.br/pub/media/catalog/product/cache/e4d64343b1bc593f1c5348fe05efa4a6/1/8/1831925.jpg">
+                                </a>
+                                <!-- Dropdown - User Information -->
 
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown ml-4">
-                            <a class="nav-link dropdown-toggle lead" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Gráficos
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <p class="dropdown-item">@Html.ActionLink("Perda por mês", "PerdaMes", "Grafico")</p>
-                                <p class="dropdown-item">@Html.ActionLink("Entradas vs Saídas por mês", "EntradaSaidaMesa", "Grafico")</p>
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <!-- <a class="dropdown-item" href="#">
+                                      <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                      Profile
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                      <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                      Settings
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                      <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                      Activity Log
+                                    </a>
+                                    <div class="dropdown-divider"></div> -->
+                                    @using (Html.BeginForm("LogOff", "Conta", FormMethod.Post, new { id = "logoffForm" }))
+                                    {
 
-                            </div>
-                        </li>
-
-
-                        <li class="nav-item  ml-5">
-                            <a class="ui yellow image label" href="@Url.Action("Index", "Profile")">
-                                <img src="~/Images/avatar.jpg">
-                                @User.Identity.Name
-                            </a>
-                        </li>
-
-
-                        @using (Html.BeginForm("LogOff", "Conta", FormMethod.Post, new { id = "logoffForm" }))
-                        {
-
-
-
-                            <li class="nav-item ml-3">
-
-                                <a href="javascript:document.getElementById('logoffForm').submit()">Sair <i alt="Sair" class="sign out alternate icon"></i></a>
-
+                                        <a class="dropdown-item" href="javascript:document.getElementById('logoffForm').submit()">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Sair
+                                        </a>
+                                    }
+                                </div>
                             </li>
 
+                        </ul>
+                    }
+                    else
+                    {
+     <!-- Topbar Navbar -->
+                        <ul class="navbar-nav ml-auto">
+                            <!-- Nav Item - User Information -->
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link" href="@Url.Action("Login", "Conta")" id="userLogin" role="button">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Logar</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
 
+                </nav>
 
-                        }
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    @RenderBody()
 
+                </div>
+                <!-- /.container-fluid -->
 
-
-                    </ul>
-
-                }
-                else
-                {
-                    <ul class="navbar-nav">
-                        <li class="nav-item ml-5">
-                            <a class="nav-link " href="@Url.Action("Login", "Conta")" role="button" aria-haspopup="true" aria-expanded="false">
-                                Login
-                            </a>
-
-                        </li>
-                    </ul>
-                }
             </div>
-
-
+            <!-- End of Main Content -->
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>&copy; @DateTime.Now.Year  -  Inventory Analytics</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
 
         </div>
-    </nav>
+        <!-- End of Content Wrapper -->
 
-
-
-    <br /><br /><br /><br />
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year  -  Inventory Analytics</p>
-        </footer>
     </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
+
+    <!--Scripts-->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     <script src="~/Scripts/sweetalert2.min.js"></script>
     @RenderSection("scripts", required: false)
-    @*<script src="~/Scripts/mdb.min.js"></script>*@
     <script src="~/Scripts/popper.min.js"></script>
 
 
+    <!-- Bootstrap core JavaScript-->
+    <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+    <script src="~/Scripts/popper.min.js"></script>
+    <!-- <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+    <!-- Core plugin JavaScript-->
+    <script src="~/Scripts/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/Scripts/inventory-analytics.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="~/Scripts/Chart.min.js"></script>
+
+
+
+
+
 </body>
+
 </html>

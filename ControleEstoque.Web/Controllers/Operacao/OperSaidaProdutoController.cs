@@ -24,9 +24,9 @@ namespace ControleEstoque.Web.Controllers
             List<object> pedidosSalvos = new List<object>();
             var ok = false;
 
-            /*Na EntradaSaidaProdutoViewModelModelBinder é realizado a validação das entradas,
-             *não é possível realizar várias entradas de um mesmo produtos, apenas será possível
-             *realizar entradas de produtos diferentes.
+            /*Na EntradaSaidaProdutoViewModelModelBinder é realizado a validação das saídas,
+             *não é possível realizar várias saídas de um mesmo produtos, apenas será possível
+             *realizar saídas de produtos diferentes.
              * Caso exista algum igual, a classe EntradaSaidaProdutoViewModelModelBinder
              * definirá a dictionary de produtos como null.
              * */
