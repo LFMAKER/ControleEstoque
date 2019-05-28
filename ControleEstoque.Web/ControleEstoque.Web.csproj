@@ -322,6 +322,7 @@
     <Content Include="Content\mdb.min.css" />
     <Content Include="Content\semantic.min.css" />
     <Content Include="Content\sweetalert2.min.css" />
+    <Content Include="favicon.ico" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\inventory-analytics.js" />
     <Content Include="Scripts\inventory-analytics.min.js" />
@@ -329,7 +330,6 @@
     <Content Include="Scripts\jquery.easing.min.js" />
     <Content Include="Scripts\mdb.min.js" />
     <Content Include="Scripts\popper.min.js" />
-    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />

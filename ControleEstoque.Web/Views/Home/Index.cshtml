@@ -21,9 +21,7 @@
         }
         <p class="lead">Hoje é @day - @DateTime.Now.Day de @year</p>
         <p class="lead">Você logou com o @host</p>
-        <button class="btn btn-primary"  id="ipublico"/>
-        <a class="btn btn-primary" style="color: white" id="ipublico" role="button"> Mostrar meu IP Público</a>
-
+  
         
 
 
@@ -34,31 +32,18 @@
 
     <script>
    
-
-        //Utilizando uma API para pegar o IP Público utilizando Jquery, Swal e api.ipify
-        $(document).on('click', '#ipublico', function (name) {
+        $(document).ready(function () {
             const ipAPI = 'https://api.ipify.org?format=json'
 
-            Swal.queue([{
-                title: 'Seu IP Público',
-                confirmButtonText: 'Mostrar meu IP Público',
-                text:
-                  'Olá usuário, seu IP público será requisitado via AJAX, essa informação pode comprometer a aplicação, verifique se possui permissão para utilizar essa função.',
-                showLoaderOnConfirm: true,
-                showCancelButton: true,
-                cancelButtonColor: '#d33',
-                preConfirm: () => {
+           
                     return fetch(ipAPI)
                       .then(response => response.json())
-                      .then(data => Swal.fire('Seu IP Público', data.ip, 'success'))
+                      .then(data => $('#myIp').html('Seu IP Público: '+ data.ip ))
                       .catch(() => {
-                          Swal.insertQueueStep({
-                              type: 'warning',
-                              title: 'Não foi possível obter seu IP Público'
-                          })
+                          $('#myIp').html('Não foi possível obter seu IP')
+
                       })
-                }
-            }])
+                
         });
     </script>
 }

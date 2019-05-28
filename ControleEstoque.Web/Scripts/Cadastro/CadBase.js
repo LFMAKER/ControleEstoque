@@ -54,8 +54,8 @@ function criar_linha_grid(dados) {
          '<tr data-id=' + dados.Id + '>' +
         result +
         '<td>' +
-        '<a class="btn btn-primary btn-alterar" style="margin-right: 3px; color: white;" role="button" >Alterar</a>' +
-        '<a class="btn btn-danger btn-excluir" role="button" style="margin-right: 3px; color: white;"> Excluir</a>' +
+        '<a class="btn btn-primary btn-alterar btn-sm" style="color: white;" role="button" >Alterar</a>' +
+        '<a class="btn btn-danger btn-excluir btn-sm" role="button" style="color: white;"> Excluir</a>' +
         '</td>' +
         '</tr>';
     return ret;
