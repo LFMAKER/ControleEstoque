@@ -78,7 +78,6 @@ namespace ControleEstoque.Web.Controllers.Cadastro
             if (model.Perfil == null)
             {
                 resultado = "O campo Perfil é obrigatório!";
-
             }
             else
             {
