@@ -91,23 +91,28 @@ namespace ControleEstoque.Web.Controllers.Cadastro
                 {
                     try
                     {
-
-                        if (model.Senha == _senhaPadrao)
+                        if ((!UsuarioDao.VerificarLogin(model) && !UsuarioDao.VerificarEmail(model)) || UsuarioDao.VerificarNomeEmailEId(model))
                         {
-                            model.Senha = "";
-                        }
+
+                            if (model.Senha == _senhaPadrao)
+                            {
+                                model.Senha = null;
+                            }
 
 
-                        var id = UsuarioDao.Salvar(model, IdPerfil);
-                        if (id > 0)
+                            var id = UsuarioDao.Salvar(model, IdPerfil);
+                            if (id > 0)
+                            {
+                                idSalvo = id.ToString();
+                            }
+                            else
+                            {
+                                resultado = "ERRO";
+                            }
+                        }else
                         {
-                            idSalvo = id.ToString();
+                            resultado = "Não é possível cadastrar um usuário com o mesmo login ou e-mail.";
                         }
-                        else
-                        {
-                            resultado = "ERRO";
-                        }
-
 
                     }
                     catch (Exception ex)

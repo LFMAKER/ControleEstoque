@@ -1,6 +1,7 @@
 ﻿using ControleEstoque.Web.Helpers;
 using ControleEstoque.Web.Models;
 using Dapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
@@ -84,7 +85,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
             if (RecuperarPeloId(id) != null)
             {
 
-                Usuario user = ctx.Usuarios.Find(id);
+                Usuario user = ctx.Usuarios.Include("Perfil").FirstOrDefault(x => x.Id == id);
                 ctx.Usuarios.Remove(user);
                 ctx.SaveChanges();
                 ret = true;
@@ -101,36 +102,29 @@ namespace ControleEstoque.Web.Dal.Cadastro
             um.Perfil = PerfilDao.RecuperarPeloId(IdPerfil);
             var model = RecuperarPeloId(um.Id);
 
-            if (model == null)
+            bool detachAndAtach = RealizarDetachAndAtach(um);
+            if (detachAndAtach)
             {
-                //Encriptando a senha
-                um.Senha = CriptoHelper.HashMD5(um.Senha);
-                ctx.Usuarios.Add(um);
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(um.Senha))
-                {
-                    um.Senha = CriptoHelper.HashMD5(um.Senha);
-                    //var sql = "update usuario set nome=@nome, login=@login, senha=@senha where id = @id";
-                    //var parametros = new { id = um.Id, nome = um.Nome, login = um.Login, senha = CriptoHelper.HashMD5(um.Senha) };
-                    //if (ctx.Database.Connection.Execute(sql, parametros) > 0)
-                    //{
-                    //    ret = um.Id;
-                    //}
+                
 
-                    ctx.Entry(um).State = System.Data.Entity.EntityState.Modified;
+                if (model == null)
+                {
+                    //Encriptando a senha
+                    um.Senha = CriptoHelper.HashMD5(um.Senha);
+                    Cadastrar(um);
                 }
                 else
                 {
-                    //var sql = "update usuario set nome=@nome, login=@login where id = @id";
-                    //var parametros = new { id = um.Id, nome = um.Nome, login = um.Login };
-                    //if (ctx.Database.Connection.Execute(sql, parametros) > 0)
-                    //{
-                    //    ret = um.Id;
-                    //}
+                    if (!string.IsNullOrEmpty(um.Senha))
+                    {
+                        um.Senha = CriptoHelper.HashMD5(um.Senha);
+                        Alterar(um);
+                    }
+                    else
+                    {
+                        Alterar(um);
+                    }
 
-                    ctx.Entry(um).State = System.Data.Entity.EntityState.Modified;
                 }
             }
             ctx.SaveChanges();
@@ -138,10 +132,51 @@ namespace ControleEstoque.Web.Dal.Cadastro
             //}
 
             return ret;
-
-
-
         }
+
+
+        public static bool Cadastrar(Usuario um)
+        {
+            ctx.Usuarios.Add(um);
+            ctx.SaveChanges();
+            return true;
+        }
+
+        public static bool Alterar(Usuario um)
+        {
+            var existing = ctx.Usuarios.FirstOrDefault(x => x.Id == um.Id);
+            if (existing != null)
+            {
+                if(um.Senha == null)
+                {
+                    um.Senha = existing.Senha;
+                }
+
+                ctx.Entry(existing).State = EntityState.Detached;
+            }
+
+            var existingPerfil = ctx.Perfis.FirstOrDefault(x => x.Id == um.Perfil.Id);
+            if (existingPerfil != null)
+            {
+                ctx.Entry(existingPerfil).State = EntityState.Detached;
+            }
+
+
+
+            try
+            {
+                ctx.Usuarios.Attach(um);
+                ctx.Entry(um).State = EntityState.Modified;
+                ctx.SaveChanges();
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+            return true;
+        }
+
+
 
         public static string RecuperarStringNomePerfis(Usuario um)
         {
@@ -159,6 +194,83 @@ namespace ControleEstoque.Web.Dal.Cadastro
         {
             ctx.Usuarios.Add(um);
         }
+
+        public static bool RealizarDetachAndAtach(Usuario pm)
+        {
+            try
+            {
+                /*Attachando para evitar duplicação, pois como estou trabalhando com o conceito
+                 * AsNoTracking, pode ocorrer que o entity não encontre o objeto no contexto e duplique, 
+                 * ou encontre um objeto diferente e trate o que desejamos utilizar como um novo.
+                 * 
+                 **/
+                /*Para facilitar o debug desse método, será utilizado vários try catch*/
+
+                //Try Perfis
+                var existingPerfis = ctx.Perfis.FirstOrDefault(x => x.Id == pm.Perfil.Id);
+                if (existingPerfis != null)
+                {
+                    ctx.Entry(existingPerfis).State = EntityState.Detached;
+
+                    try
+                    {
+                        ctx.Perfis.Attach(pm.Perfil);
+
+                    }
+                    catch (System.Exception ex)
+                    {
+                        throw;
+                    }
+                }
+
+               
+                //return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return true;
+        }
+
+
+
+        public static bool VerificarLogin(Usuario p)
+        {
+            var result = ctx.Usuarios.FirstOrDefault(x => x.Login.Equals(p.Login));
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        public static bool VerificarEmail(Usuario p)
+        {
+            var result = ctx.Usuarios.FirstOrDefault(x => x.Email.Equals(p.Email));
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        public static bool VerificarNomeEmailEId(Usuario p)
+        {
+            var result = ctx.Usuarios.FirstOrDefault(x => x.Login.Equals(p.Login) && x.Email.Equals(p.Email) && x.Id == p.Id);
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
 
 
     }

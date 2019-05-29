@@ -246,6 +246,10 @@
     <Compile Include="Migrations\201905191245118_Inicial.Designer.cs">
       <DependentUpon>201905191245118_Inicial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905282253115_AddEmailUsuario.cs" />
+    <Compile Include="Migrations\201905282253115_AddEmailUsuario.Designer.cs">
+      <DependentUpon>201905282253115_AddEmailUsuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Binders\EntradaSaidaProdutoViewModelModelBinder.cs" />
     <Compile Include="Dal\Cadastro\FornecedorDao.cs" />
@@ -435,6 +439,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201905191245118_Inicial.resx">
       <DependentUpon>201905191245118_Inicial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905282253115_AddEmailUsuario.resx">
+      <DependentUpon>201905282253115_AddEmailUsuario.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

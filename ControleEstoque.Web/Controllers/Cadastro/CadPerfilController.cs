@@ -77,7 +77,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
 
                 try
                 {
-                    if (!PerfilDao.VerificarNome(model))
+                    if (!PerfilDao.VerificarNome(model) || PerfilDao.VerificarNomeEId(model))
                     {
 
                     

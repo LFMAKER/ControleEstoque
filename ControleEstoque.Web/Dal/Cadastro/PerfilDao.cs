@@ -157,5 +157,20 @@ namespace ControleEstoque.Web.Dal.Cadastro
             return true;
         }
 
+
+        public static bool VerificarNomeEId(Perfil p)
+        {
+            var result = ctx.Perfis.FirstOrDefault(x => x.Nome.Equals(p.Nome) && x.Id == p.Id);
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+
+
     }
 }
