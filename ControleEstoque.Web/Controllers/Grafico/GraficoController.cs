@@ -45,6 +45,28 @@ namespace ControleEstoque.Web.Controllers
         }
 
 
+        [Authorize]
+        public JsonResult GetGanhosMesAtual()
+        {
+            DateTime dataAtual = new DateTime();
+            dataAtual = DateTime.Now;
+
+            EntradaGraficos entradas = new EntradaGraficos();
+            SaidaGraficos saidas = new SaidaGraficos();
+            decimal resultado;
+
+            entradas = EntradaESaidaGraficoDao.GetEntradaGastoMesAtual(dataAtual);
+            saidas = EntradaESaidaGraficoDao.GetSaidaGanhoMesAtual(dataAtual);
+
+            resultado = saidas.total - entradas.total;
+
+           
+
+            return Json( new {Resultado = resultado });
+        }
+
+
+
 
 
     }

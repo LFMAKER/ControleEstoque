@@ -1,13 +1,141 @@
-﻿@using System.Net;    
-
-@{ 
+﻿@using System.Net;
+@{
     ViewBag.Title = "Inicio";
 }
+
+<script src="~/Scripts/loader.js"></script>
+<script src="~/Scripts/jquery-3.4.0.min.js"></script>
+<script>
+
+    //Requisitando Ganhos do Mês Atual
+
+
+    var url_ganhosAtual = '@Url.Action("GetGanhosMesAtual", "Grafico")';
+    $.post(url_ganhosAtual, function (response) {
+        if (response) {
+            $('#ganhoAtual').html("R$ " + response.Resultado);
+
+            //Formatando o valor para o formato pt-br BRL
+            var formatter = new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+            });
+
+            //console.log(formatter.format(response.Resultado)); /* $2,500.00 */
+
+            $('#ganhoAtual').html(formatter.format(response.Resultado));
+
+
+        }
+    });
+
+
+
+</script>
+
+<script>
+
+            var dadosEntradas;
+            var url_entradas = '@Url.Action("GetDadosEntradas", "Grafico")';
+            $.post(url_entradas, function (response) {
+                if (response && response.length > 0) {
+                    dadosEntrada = response;
+                }
+            })
+
+
+            var dadosSaidas;
+            var url_saidas = '@Url.Action("GetDadosSaidas", "Grafico")';
+            $.post(url_saidas, function (response) {
+                if (response && response.length > 0) {
+                    dadosSaidas = response;
+                }
+            })
+
+
+    
+
+
+</script>
+
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function() {
+        setTimeout(function() {
+
+
+
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Mes/Ano');
+        data.addColumn('number', 'Entradas (Compras) R$');
+        data.addColumn('number', 'Saidas (Vendas) R$');
+
+        for (var i in dadosEntrada) {
+            for (var j in dadosSaidas) {
+
+                var entradaValor = dadosEntrada[i]["total"];
+                var saidaValor = dadosSaidas[j]["total"];
+
+                var dataConvertEntrada = parseJsonDate(dadosEntrada[i]["Data"]);
+                var dataConvertSaida = parseJsonDate(dadosSaidas[j]["Data"]);
+
+
+                if (dataConvertEntrada == dataConvertSaida) {
+                    data.addRows([
+                      [dataConvertEntrada, entradaValor, saidaValor],
+
+                    ]);
+                }
+            }
+        }
+
+        //Deserilização da Data JSON
+        function parseJsonDate(jsonDate) {
+            var offset = new Date().getTimezoneOffset() * 60000;
+            var parts = /\/Date\((-?\d+)([+-]\d{2})?(\d{2})?.*/.exec(jsonDate);
+            if (parts[2] == undefined) parts[2] = 0;
+            if (parts[3] == undefined) parts[3] = 0;
+            d = new Date(+parts[1] + offset + parts[2] * 3600000 + parts[3] * 60000);
+            date = d.getDate() + 1;
+            date = date < 10 ? "0" + date : date;
+            mon = d.getMonth() + 1;
+            mon = mon < 10 ? "0" + mon : mon;
+            year = d.getFullYear();
+            return (mon + "/" + year);
+        };
+
+        //Opções do Gráfico
+        var options = {
+            title: 'Entradas (Compras) e Saídas (Vendas)',
+            curveType: 'function',
+            legend: { position: 'bottom' },
+            series: {
+                0: { color: '#d21625' },
+                1: { color: '#16d265' },
+            }
+        };
+
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+    }
+
+        }, 1000);
+    });
+</script>
+
+
 
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
         <h1 class="display-4">Olá, @User.Identity.Name</h1>
-        @{ 
+        @{
             //Data
             var culture = new System.Globalization.CultureInfo("pt-PT");
             var day = culture.DateTimeFormat.GetDayName(DateTime.Today.DayOfWeek);
@@ -21,29 +149,158 @@
         }
         <p class="lead">Hoje é @day - @DateTime.Now.Day de @year</p>
         <p class="lead">Você logou com o @host</p>
-  
-        
 
+        <!-- Content Row -->
+        <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Ganhos (Mês Atual)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="ganhoAtual"></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks</div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="progress progress-sm mr-2">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Requests</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                            </div>
+
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Segunda Linha do Dashboard-->
+        <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-6 col-md-12 mb-8">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Entradas e Saídas (Anual)</div>
+                                <div class="" id="curve_chart" style="width: 515px; height: 400px"></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-6 col-md-12 mb-8">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks</div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="progress progress-sm mr-2">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
 
     </div>
 </div>
-
 @section Scripts{
-
     <script>
-   
+
         $(document).ready(function () {
             const ipAPI = 'https://api.ipify.org?format=json'
 
-           
-                    return fetch(ipAPI)
-                      .then(response => response.json())
-                      .then(data => $('#myIp').html('Seu IP Público: '+ data.ip ))
-                      .catch(() => {
-                          $('#myIp').html('Não foi possível obter seu IP')
 
-                      })
-                
+            return fetch(ipAPI)
+              .then(response => response.json())
+              .then(data => $('#myIp').html('Seu IP Público: ' + data.ip))
+              .catch(() => {
+                  $('#myIp').html('Não foi possível obter seu IP')
+
+              })
+
         });
+
+
     </script>
 }

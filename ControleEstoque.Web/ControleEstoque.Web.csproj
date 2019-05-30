@@ -332,6 +332,7 @@
     <Content Include="Scripts\inventory-analytics.min.js" />
     <Content Include="Scripts\jquery-3.4.0.min.js" />
     <Content Include="Scripts\jquery.easing.min.js" />
+    <Content Include="Scripts\loader.js" />
     <Content Include="Scripts\mdb.min.js" />
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Global.asax" />

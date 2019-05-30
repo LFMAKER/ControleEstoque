@@ -37,6 +37,36 @@ namespace ControleEstoque.Web.Dal.Grafico
             return entradas;
         }
 
+
+        public static EntradaGraficos GetEntradaGastoMesAtual(DateTime dataAtual)
+        {
+            EntradaGraficos entradas = new EntradaGraficos();
+
+
+            using (var ctx = new Context())
+            {
+
+                //entradas = ctx.EntradasProdutos.Include("Produto").ToList();
+                var sql = "SELECT FORMAT (data, 'MM/yyyy') as data, SUM((preco_custo*quant)) as total " +
+                "from entrada_produto " +
+                 "inner join produto on produto.id = entrada_produto.id_produto " +
+                 "WHERE MONTH(data) ="+dataAtual.Month+"and YEAR(data) ="+ dataAtual.Year+
+                  "GROUP BY FORMAT(data, 'MM/yyyy')";
+
+                entradas = ctx.Database.Connection.Query<EntradaGraficos>(sql).FirstOrDefault();
+
+            }
+
+
+
+
+            return entradas;
+        }
+
+
+
+
+
         public static List<SaidaGraficos> GetSaidasGrafico()
         {
             List<SaidaGraficos> saidas = new List<SaidaGraficos>();
@@ -57,6 +87,34 @@ namespace ControleEstoque.Web.Dal.Grafico
 
             return saidas;
         }
+
+
+        public static SaidaGraficos GetSaidaGanhoMesAtual(DateTime dataAtual)
+        {
+            SaidaGraficos saidas = new SaidaGraficos();
+
+
+            using (var ctx = new Context())
+            {
+
+                //entradas = ctx.EntradasProdutos.Include("Produto").ToList();
+                var sql = "SELECT FORMAT (data, 'MM/yyyy') as data, SUM((preco_custo*quant)) as total " +
+                "from saida_produto " +
+                 "inner join produto on produto.id = saida_produto.id_produto " +
+                 "WHERE MONTH(data) =" + dataAtual.Month + "and YEAR(data) =" + dataAtual.Year +
+                  "GROUP BY FORMAT(data, 'MM/yyyy')";
+
+                saidas = ctx.Database.Connection.Query<SaidaGraficos>(sql).FirstOrDefault();
+
+            }
+
+
+
+
+            return saidas;
+        }
+
+
 
     }
 }
