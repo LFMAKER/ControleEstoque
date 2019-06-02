@@ -5,18 +5,16 @@
     ViewBag.Lista = Model;
 
 }
-
 @section Styles {
     <link href="~/Content/bootstrap-select.css" rel="stylesheet" />
     <link href="~/Content/Cadastro/MarcaProduto.css" rel="stylesheet" />
+    <link href="~/Content/inventory-analytics.min.css" rel="stylesheet" />
 }
-
 @section TituloGrid {
     <th>Nome</th>
     <th>Ativo</th>
-    <th>Ação</th>
+    <th style="width: 150px;">Ação</th>
 }
-
 @section LinhaGrid {
     @{
         var linha = 0;
@@ -31,8 +29,8 @@
                     <td>@item.Nome</td>
                     <td>@ativo</td>
                     <td>
-                        <a class="btn btn-primary btn-alterar" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
-                        <a class="btn btn-danger btn-excluir" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                        <a class="btn btn-primary btn-alterar btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                        <a class="btn btn-danger btn-excluir btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
                     </td>
                 </tr>
             }
@@ -43,7 +41,6 @@
         }
     }
 }
-
 @section CamposCadastro {
     <div class="row">
         <div class="form-group col-8">
@@ -61,7 +58,6 @@
         </div>
     </div>
 }
-
 @section Scripts{
     <script src="~/Scripts/bootstrap-select.js"></script>
     <script>

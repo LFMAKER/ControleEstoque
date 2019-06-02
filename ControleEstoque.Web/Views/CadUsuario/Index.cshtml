@@ -8,13 +8,14 @@
 }
 @section Styles {
     <link href="~/Content/Cadastro/Usuario.css" rel="stylesheet" />
+    <link href="~/Content/inventory-analytics.min.css" rel="stylesheet" />
 }
 
 @section TituloGrid {
     <th>Nome</th>
     <th>Login</th>
     <th>E-mail</th>
-    <th>Ação</th>
+    <th style="width: 150px;">Ação</th>
 }
 
 @section LinhaGrid {
@@ -32,8 +33,8 @@
                     <td>@item.Login</td>
                     <td>@item.Email</td>
                     <td>
-                        <a class="btn btn-primary btn-alterar btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
-                        <a class="btn btn-danger btn-excluir btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                        <a class="btn btn-primary btn-alterar btn-sm btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                        <a class="btn btn-danger btn-excluir btn-sm btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
                     </td>
                 </tr>
             }

@@ -15,7 +15,7 @@ function set_focus_form() {
 }
 function set_dados_grid(dados) {
     return '<td>' + dados.Nome + '</td>' +
-           '<td>' + dados.Login + '</td>'+
+           '<td>' + dados.Login + '</td>' +
            '<td>' + dados.Email + '</td>';
 }
 function get_dados_inclusao() {
@@ -61,4 +61,5 @@ function preencher_linha_grid(param, linha) {
         .eq(0).html(param.Nome).end()
         .eq(1).html(param.Login)
         .eq(2).html(param.Email);
+
 }

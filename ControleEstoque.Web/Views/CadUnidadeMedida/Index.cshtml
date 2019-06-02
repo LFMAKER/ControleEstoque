@@ -1,25 +1,21 @@
 ﻿
 @model List<ControleEstoque.Web.Models.UnidadeMedida>
-
 @{
     Layout = "~/Views/Shared/_Cadastro.cshtml";
     ViewBag.Title = "Unidade de Medida";
     ViewBag.Lista = Model;
 }
 
-
 @section Styles {
-
     <link href="~/Content/Cadastro/UnidadeMedida.css" rel="stylesheet" />
+    <link href="~/Content/inventory-analytics.min.css" rel="stylesheet" />
 }
-
 @section TituloGrid {
     <th>Nome</th>
     <th>Sigla</th>
     <th>Ativo</th>
-    <th>Ação</th>
+    <th style="width: 150px;">Ação</th>
 }
-
 @section LinhaGrid {
     @{
         var linha = 0;
@@ -35,8 +31,8 @@
                     <td>@item.Sigla</td>
                     <td>@ativo</td>
                     <td>
-                        <a class="btn btn-primary btn-alterar" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
-                        <a class="btn btn-danger btn-excluir" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                        <a class="btn btn-primary btn-alterar btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                        <a class="btn btn-danger btn-excluir btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
                     </td>
                 </tr>
             }
@@ -46,11 +42,8 @@
             }
         }
     }
-
 }
-
 @section CamposCadastro{
-
     <div class="form-group row">
         @Html.Label("txt_nome", "Nome", new { @class = "col-md-3 control-label" })
         <div class="col-sm-10">
@@ -72,7 +65,6 @@
         </div>
     </div>
 }
-
 @section Scripts{
     <script src="~/Scripts/Cadastro/UnidadeMedida.js"></script>
     <script>
@@ -86,5 +78,4 @@
         var url_filtro_change = '@Url.Action("UnidadeMedidaPagina", "CadUnidadeMedida")';
 
     </script>
-
 }

@@ -4,7 +4,6 @@
     ViewBag.Title = "Produtos";
     ViewBag.Lista = Model;
 }
-
 @section Styles {
     <link href="~/Content/bootstrap-select.css" rel="stylesheet" />
     <link href="~/Content/Cadastro/Produto.css" rel="stylesheet" />
@@ -13,16 +12,15 @@
             width: 700px !important;
         }
     </style>
+    <link href="~/Content/inventory-analytics.min.css" rel="stylesheet" />
 }
-
 @section TituloGrid {
-   <th>Código</th>
-<th>Nome</th>
-<th>Quantidade</th>
-<th>Ativo</th>
-<th>Ação</th>
+    <th >Código</th>
+    <th style="width: 600px;">Nome</th>
+    <th style="width: 200px;">Quantidade</th>
+    <th style="width: 100px;">Ativo</th>
+    <th style="width: 150px;">Ação</th>
 }
-
 @section LinhaGrid {
     @{
         var linha = 0;
@@ -39,8 +37,8 @@
                     <td>@item.QuantEstoque</td>
                     <td>@ativo</td>
                     <td>
-                        <a class="btn btn-primary btn-alterar" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
-                        <a class="btn btn-danger btn-excluir" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                        <a class="btn btn-primary btn-alterar btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                        <a class="btn btn-danger btn-excluir btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
                     </td>
                 </tr>
             }
@@ -51,7 +49,6 @@
         }
     }
 }
-
 
 @section CamposCadastro {
     <div class="row">
@@ -114,7 +111,6 @@
         </div>
     </div>
 }
-
 @section Scripts{
     <script src="~/Scripts/bootstrap-select.js"></script>
     <script src="~/Scripts/jquery.mask.min.js"></script>
