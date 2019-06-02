@@ -54,12 +54,8 @@ namespace ControleEstoque.Web.Controllers
                 }
                 else
                 {
-                    //Autenticando no google
-                    if (APIServicos.GoogleSheets.GoogleSheetsAPI.AutenticarGoogle(User.Identity.Name))
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
-                    //return RedirectToAction("Index", "Home");
+                   
+                    return RedirectToAction("Index", "Home");
                 }
             }
             else

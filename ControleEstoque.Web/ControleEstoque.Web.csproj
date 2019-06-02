@@ -231,17 +231,14 @@
     <Compile Include="Controllers\ContaController.cs" />
     <Compile Include="Controllers\Grafico\GraficoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\OperacaoController.cs" />
     <Compile Include="Controllers\Operacao\OperEntradaProdutoController.cs" />
     <Compile Include="Controllers\Operacao\OperEntradaSaidaProdutoController.cs" />
     <Compile Include="Controllers\Operacao\OperSaidaProdutoController.cs" />
-    <Compile Include="Controllers\ProfileController.cs" />
-    <Compile Include="Controllers\RelatorioController.cs" />
     <Compile Include="Controllers\Relatorio\LogController.cs" />
     <Compile Include="Dados\PopularBanco.cs" />
     <Compile Include="Dal\Grafico\EntradaESaidaGraficoDao.cs" />
     <Compile Include="Dal\Operacao\EntradaProdutoDao.cs" />
-    <Compile Include="Dal\Operacao\SaidaProdutoDal.cs" />
+    <Compile Include="Dal\Operacao\SaidaProdutoDao.cs" />
     <Compile Include="Migrations\201905191245118_Inicial.cs" />
     <Compile Include="Migrations\201905191245118_Inicial.Designer.cs">
       <DependentUpon>201905191245118_Inicial.cs</DependentUpon>
@@ -332,7 +329,6 @@
     <Content Include="Content\Cadastro\UnidadeMedida.css" />
     <Content Include="Content\Cadastro\Usuario.css" />
     <Content Include="Content\Cadastro\GrupoProduto.css" />
-    <Content Include="Content\fontawesome-free\all.min.css" />
     <Content Include="Content\inventory-analytics.css" />
     <Content Include="Content\inventory-analytics.min.css" />
     <Content Include="Content\mdb.min.css" />

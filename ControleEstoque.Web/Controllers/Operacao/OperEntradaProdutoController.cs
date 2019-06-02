@@ -1,4 +1,5 @@
-﻿using ControleEstoque.Web.Models;
+﻿using ControleEstoque.Web.Dal.Operacao;
+using ControleEstoque.Web.Models;
 using ControleEstoque.Web.Models.Dal.Cadastro;
 using System.Collections.Generic;
 using System.Web.Http.Results;
@@ -39,7 +40,7 @@ namespace ControleEstoque.Web.Controllers
             if (dados.Produtos != null)
             {
                 numPedido = SalvarPedido(dados);
-                pedidosSalvos.Add(ProdutoDao.RecuperarEntradaPorNumero(numPedido));
+                pedidosSalvos.Add(EntradaProdutoDao.RecuperarEntradaPorNumero(numPedido));
                 Mensagem = "Entrada realizada com sucesso!";
                 ok = (numPedido != "");
 

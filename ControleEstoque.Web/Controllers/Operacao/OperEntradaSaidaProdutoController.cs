@@ -1,4 +1,5 @@
-﻿using ControleEstoque.Web.Models;
+﻿using ControleEstoque.Web.Dal.Operacao;
+using ControleEstoque.Web.Models;
 using ControleEstoque.Web.Models.Dal.Cadastro;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -17,11 +18,11 @@ namespace ControleEstoque.Web.Controllers
 
 
             ViewBag.Produtos = ProdutoDao.RecuperarLista(somenteAtivos: true);
-            ViewBag.Entradas = ProdutoDao.RecuperarListaEntradaProdutos(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
-            ViewBag.Saidas = ProdutoDao.RecuperarListaSaidaProdutos(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
+            ViewBag.Entradas = EntradaProdutoDao.RecuperarListaEntradaProdutos(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
+            ViewBag.Saidas = SaidaProdutoDao.RecuperarListaSaidaProdutos(ViewBag.PaginaAtual, _quantMaxLinhasPorPagina);
 
             //Paginação Entrada
-            var quantEntradas = ProdutoDao.RecuperarQuantidadeEntradaProdutos();
+            var quantEntradas = EntradaProdutoDao.RecuperarQuantidadeEntradaProdutos();
             var difQuantPaginasEntradas = (quantEntradas % ViewBag.QuantMaxLinhasPorPagina) > 0 ? 1 : 0;
 
             ViewBag.QuantPaginasEntradas = (quantEntradas / ViewBag.QuantMaxLinhasPorPagina) + difQuantPaginasEntradas;
@@ -29,7 +30,7 @@ namespace ControleEstoque.Web.Controllers
 
 
             //Paginação Saídas
-            var quantSaidas = ProdutoDao.RecuperarQuantidadeSaidaProdutos();
+            var quantSaidas = SaidaProdutoDao.RecuperarQuantidadeSaidaProdutos();
             var difQuantPaginasSaidas = (quantSaidas % ViewBag.QuantMaxLinhasPorPagina) > 0 ? 1 : 0;
 
             ViewBag.QuantPaginasSaidas = (quantSaidas / ViewBag.QuantMaxLinhasPorPagina) + difQuantPaginasSaidas;
@@ -48,10 +49,10 @@ namespace ControleEstoque.Web.Controllers
 
             if (tipo.Equals("entrada"))
             {
-                lista.Add(ProdutoDao.RecuperarListaEntradaProdutos(pagina, tamPag, dataInicio, dataFim));
+                lista.Add(EntradaProdutoDao.RecuperarListaEntradaProdutos(pagina, tamPag, dataInicio, dataFim));
             }else if (tipo.Equals("saida"))
             {
-                lista.Add(ProdutoDao.RecuperarListaSaidaProdutos(pagina, tamPag, dataInicio, dataFim));
+                lista.Add(SaidaProdutoDao.RecuperarListaSaidaProdutos(pagina, tamPag, dataInicio, dataFim));
             }
 
 
