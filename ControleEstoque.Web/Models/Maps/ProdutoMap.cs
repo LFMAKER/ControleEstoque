@@ -25,7 +25,18 @@ namespace ControleEstoque.Web.Models
             Property(x => x.QuantEstoque).HasColumnName("quant_estoque").IsRequired();
             //Definindo nome da coluna e obrigatório
             Property(x => x.Ativo).HasColumnName("ativo").IsRequired();
-            
+
+
+
+            //Definindo a FK
+            HasRequired(x => x.Fornecedor).WithMany().HasForeignKey(x => x.IdFornecedor).WillCascadeOnDelete(false);
+            HasRequired(x => x.GrupoProduto).WithMany().HasForeignKey(x => x.IdGrupo).WillCascadeOnDelete(false);
+            HasRequired(x => x.LocalArmazenamento).WithMany().HasForeignKey(x => x.IdLocalArmazenamento).WillCascadeOnDelete(false);
+            HasRequired(x => x.UnidadeMedida).WithMany().HasForeignKey(x => x.IdUnidadeMedida).WillCascadeOnDelete(false);
+            HasRequired(x => x.MarcaProduto).WithMany().HasForeignKey(x => x.IdMarca).WillCascadeOnDelete(false);
+
+
+
         }
     }
 }

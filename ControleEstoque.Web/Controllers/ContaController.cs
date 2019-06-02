@@ -11,7 +11,7 @@ namespace ControleEstoque.Web.Controllers
 {
     public class ContaController : Controller
     {
-        
+
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -31,7 +31,7 @@ namespace ControleEstoque.Web.Controllers
             }
 
             var usuario = UsuarioDao.ValidarUsuario(login.Usuario, login.Senha);
-          
+
 
 
 
@@ -54,7 +54,12 @@ namespace ControleEstoque.Web.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Home");
+                    //Autenticando no google
+                    if (APIServicos.GoogleSheets.GoogleSheetsAPI.AutenticarGoogle(User.Identity.Name))
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    //return RedirectToAction("Index", "Home");
                 }
             }
             else

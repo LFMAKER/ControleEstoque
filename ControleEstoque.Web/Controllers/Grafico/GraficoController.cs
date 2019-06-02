@@ -58,9 +58,16 @@ namespace ControleEstoque.Web.Controllers
             entradas = EntradaESaidaGraficoDao.GetEntradaGastoMesAtual(dataAtual);
             saidas = EntradaESaidaGraficoDao.GetSaidaGanhoMesAtual(dataAtual);
 
-            resultado = saidas.total - entradas.total;
+            if(saidas != null && entradas != null)
+            {
+                resultado = saidas.total - entradas.total;
 
-           
+            }else
+            {
+                resultado = 0;
+            }
+
+
 
             return Json( new {Resultado = resultado });
         }

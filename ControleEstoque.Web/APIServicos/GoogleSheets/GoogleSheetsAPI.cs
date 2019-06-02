@@ -32,19 +32,23 @@ namespace ControleEstoque.Web.APIServicos.GoogleSheets
         static string[] Scopes = { SheetsService.Scope.Spreadsheets  };
         static string ApplicationName = "Google Sheets API .NET Quickstart";
         static string[] testeScope = { SheetsService.Scope.Spreadsheets };
-
-        public static List<Log> RequestLogsListar()
+        public static UserCredential credential;
+        
+        public static bool AutenticarGoogle(string UserLogado = null)
         {
-            List<Log> LogsFounded = new List<Log>();
-            UserCredential credential;
+            
 
+            bool result = false;
             var File = System.Web.Hosting.HostingEnvironment.MapPath("~/credentials.json");
 
             //Autenticando no Google API
             using (var stream =
                 new FileStream(File, FileMode.Open, FileAccess.Read))
             {
-                string caminho = Path.Combine(HttpContext.Current.Server.MapPath("~/API/GoogleSheets/"), "token.json");
+
+                string tokenUser = "token" + UserLogado + ".json";
+
+                string caminho = Path.Combine(HttpContext.Current.Server.MapPath("~/API/GoogleSheets/TokensUsers"), tokenUser);
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
                     Scopes,
@@ -52,7 +56,36 @@ namespace ControleEstoque.Web.APIServicos.GoogleSheets
                     CancellationToken.None,
                     new FileDataStore(caminho, true)).Result;
                 Console.WriteLine("Credential file saved to: " + caminho);
+                result = true;
             }
+
+            return result;
+        }
+
+
+        public static List<Log> RequestLogsListar()
+        {
+            List<Log> LogsFounded = new List<Log>();
+
+            //Autenticando
+            if (AutenticarGoogle())
+            {
+
+            //var File = System.Web.Hosting.HostingEnvironment.MapPath("~/credentials.json");
+
+            ////Autenticando no Google API
+            //using (var stream =
+            //    new FileStream(File, FileMode.Open, FileAccess.Read))
+            //{
+            //    string caminho = Path.Combine(HttpContext.Current.Server.MapPath("~/API/GoogleSheets/"), "token.json");
+            //    credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+            //        GoogleClientSecrets.Load(stream).Secrets,
+            //        Scopes,
+            //        "user",
+            //        CancellationToken.None,
+            //        new FileDataStore(caminho, true)).Result;
+            //    Console.WriteLine("Credential file saved to: " + caminho);
+            //}
 
             // Criando Google Sheets API service.
             var service = new SheetsService(new BaseClientService.Initializer()
@@ -93,7 +126,15 @@ namespace ControleEstoque.Web.APIServicos.GoogleSheets
             {
                 LogsFounded = null;//O response.Values está vazio, logo a lista será null
             }
+
             return LogsFounded;//Retornando uma List<Log> com todos os resultados ou null caso vazio.
+            }else
+            {
+                LogsFounded = null;
+                return LogsFounded;
+            }
+
+
 
         }
         public static void RequestLogsGravar(List<IList<object>> data)

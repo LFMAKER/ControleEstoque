@@ -250,6 +250,18 @@
     <Compile Include="Migrations\201905282253115_AddEmailUsuario.Designer.cs">
       <DependentUpon>201905282253115_AddEmailUsuario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906012320240_tryfix.cs" />
+    <Compile Include="Migrations\201906012320240_tryfix.Designer.cs">
+      <DependentUpon>201906012320240_tryfix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906012342494_tryfixProduto.cs" />
+    <Compile Include="Migrations\201906012342494_tryfixProduto.Designer.cs">
+      <DependentUpon>201906012342494_tryfixProduto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906012345327_tryfixProduto2.cs" />
+    <Compile Include="Migrations\201906012345327_tryfixProduto2.Designer.cs">
+      <DependentUpon>201906012345327_tryfixProduto2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Binders\EntradaSaidaProdutoViewModelModelBinder.cs" />
     <Compile Include="Dal\Cadastro\FornecedorDao.cs" />
@@ -420,7 +432,9 @@
     <Content Include="Views\Log\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="APIServicos\GoogleSheets\TokensUsers\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Credenciais\" />
     <Folder Include="Images\" />
     <Folder Include="Scripts\Operacao\" />
     <Folder Include="Views\ApiExport\" />
@@ -443,6 +457,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905282253115_AddEmailUsuario.resx">
       <DependentUpon>201905282253115_AddEmailUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906012320240_tryfix.resx">
+      <DependentUpon>201906012320240_tryfix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906012342494_tryfixProduto.resx">
+      <DependentUpon>201906012342494_tryfixProduto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906012345327_tryfixProduto2.resx">
+      <DependentUpon>201906012345327_tryfixProduto2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

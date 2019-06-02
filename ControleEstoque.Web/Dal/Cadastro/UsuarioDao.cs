@@ -96,16 +96,15 @@ namespace ControleEstoque.Web.Dal.Cadastro
 
 
         //O método Salvar deve ser construído.
-        public static int Salvar(Usuario um, int? IdPerfil)
+        public static int Salvar(Usuario um)
         {
             var ret = 0;
-            um.Perfil = PerfilDao.RecuperarPeloId(IdPerfil);
             var model = RecuperarPeloId(um.Id);
 
             bool detachAndAtach = RealizarDetachAndAtach(um);
             if (detachAndAtach)
             {
-                
+
 
                 if (model == null)
                 {
@@ -137,6 +136,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
 
         public static bool Cadastrar(Usuario um)
         {
+
             ctx.Usuarios.Add(um);
             ctx.SaveChanges();
             return true;
@@ -147,7 +147,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
             var existing = ctx.Usuarios.FirstOrDefault(x => x.Id == um.Id);
             if (existing != null)
             {
-                if(um.Senha == null)
+                if (um.Senha == null)
                 {
                     um.Senha = existing.Senha;
                 }
@@ -165,6 +165,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
 
             try
             {
+               
                 ctx.Usuarios.Attach(um);
                 ctx.Entry(um).State = EntityState.Modified;
                 ctx.SaveChanges();
@@ -223,7 +224,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                     }
                 }
 
-               
+
                 //return true;
             }
             catch (Exception)

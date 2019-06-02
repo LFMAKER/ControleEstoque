@@ -69,13 +69,13 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         [HttpPost]
         [Authorize(Roles = "Gerente, Desenvolvedor")]
         [ValidateAntiForgeryToken]
-        public ActionResult SalvarUsuario(Usuario model, int? IdPerfil)
+        public ActionResult SalvarUsuario(Usuario model)
         {
             var resultado = "OK";
             var mensagens = new List<string>();
             var idSalvo = string.Empty;
-            model.Perfil = PerfilDao.RecuperarPeloId(IdPerfil);
-            if (model.Perfil == null)
+            model.Perfil = PerfilDao.RecuperarPeloId(model.IdPerfil);
+            if (model.Perfil ==  null)
             {
                 resultado = "O campo Perfil é obrigatório!";
 
@@ -101,7 +101,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
                             }
 
 
-                            var id = UsuarioDao.Salvar(model, IdPerfil);
+                            var id = UsuarioDao.Salvar(model);
                             if (id > 0)
                             {
                                 idSalvo = id.ToString();

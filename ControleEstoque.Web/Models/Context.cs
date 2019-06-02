@@ -34,7 +34,7 @@ namespace ControleEstoque.Web.Models
             modelBuilder.Configurations.Add(new UsuarioMap());
 
 
-            
+
         }
 
         //Definindo o que o DB deve utilizar

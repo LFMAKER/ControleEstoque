@@ -15,7 +15,8 @@
 
 function set_focus_form() {
     var alterando = (parseInt($('#id_cadastro').val()) > 0);
-    $('#txt_quant_estoque').attr('readonly', alterando);
+    $('#txt_quant_estoque').attr('disabled', alterando);
+    $('#ddl_local_armazenamento').attr('disabled', alterando);
 
     $('#txt_codigo').focus();
 }

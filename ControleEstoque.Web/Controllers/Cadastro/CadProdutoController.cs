@@ -82,9 +82,7 @@ namespace ControleEstoque.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult SalvarProduto(Produto model, int? IdUnidadeMedida,
-            int? IdGrupo, int? IdMarca, int? IdFornecedor,
-            int? IdLocalArmazenamento)
+        public JsonResult SalvarProduto(Produto model)
         {
             //Iniciando variáveis auxiliares
             var resultado = "OK";
@@ -94,11 +92,11 @@ namespace ControleEstoque.Web.Controllers
             string validationDropDownListErrorMessage = "Os campos a seguir são obrigatórios: ";
 
             //Recuperando relações
-            model.UnidadeMedida = UnidadeMedidaDao.RecuperarPeloId(IdUnidadeMedida);
-            model.GrupoProduto = GrupoProdutoDao.RecuperarPeloId(IdGrupo);
-            model.MarcaProduto = MarcaProdutoDao.RecuperarPeloId(IdMarca);
-            model.Fornecedor = FornecedorDao.RecuperarPeloId(IdFornecedor);
-            model.LocalArmazenamento = LocalArmazenamentoDao.RecuperarPeloId(IdLocalArmazenamento);
+            model.UnidadeMedida = UnidadeMedidaDao.RecuperarPeloId(model.IdUnidadeMedida);
+            model.GrupoProduto = GrupoProdutoDao.RecuperarPeloId(model.IdGrupo);
+            model.MarcaProduto = MarcaProdutoDao.RecuperarPeloId(model.IdMarca);
+            model.Fornecedor = FornecedorDao.RecuperarPeloId(model.IdFornecedor);
+            model.LocalArmazenamento = LocalArmazenamentoDao.RecuperarPeloId(model.IdLocalArmazenamento);
 
 
             /*Validando se todas os DropDownList foram preenchidos pelo usuário,

@@ -29,19 +29,19 @@ namespace ControleEstoque.Web.Models
         [Required(ErrorMessage = "Preencha a quantidade em estoque.")]
         public int QuantEstoque { get; set; }
 
-        
+        public int IdUnidadeMedida { get; set; }
         public UnidadeMedida UnidadeMedida { get; set; }
 
-      
+        public int IdGrupo { get; set; }
         public GrupoProduto GrupoProduto { get; set; }
 
-     
+        public int IdMarca { get; set; }
         public MarcaProduto MarcaProduto { get; set; }
 
-
+        public int IdFornecedor { get; set; }
         public Fornecedor Fornecedor { get; set; }
 
-
+        public int IdLocalArmazenamento { get; set; }
         public LocalArmazenamento LocalArmazenamento { get; set; }
 
         public bool Ativo { get; set; }
