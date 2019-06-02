@@ -434,7 +434,6 @@
   <ItemGroup>
     <Folder Include="APIServicos\GoogleSheets\TokensUsers\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Credenciais\" />
     <Folder Include="Images\" />
     <Folder Include="Scripts\Operacao\" />
     <Folder Include="Views\ApiExport\" />

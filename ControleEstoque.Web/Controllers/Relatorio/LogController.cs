@@ -13,7 +13,8 @@ namespace ControleEstoque.Web.Controllers.Relatorio
         [Authorize(Roles = "Gerente,Administrativo")]
         public ActionResult Index()
         {
-            List<Log> logs = APIServicos.GoogleSheets.GoogleSheetsAPI.RequestLogsListar();
+            var UserLogado = User.Identity.Name;
+            List<Log> logs = APIServicos.GoogleSheets.GoogleSheetsAPI.RequestLogsListar(UserLogado);
             return View(logs);
         }
     }

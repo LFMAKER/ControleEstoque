@@ -30,32 +30,33 @@ namespace ControleEstoque.Web.APIServicos.GoogleSheets
 
 
         static string[] Scopes = { SheetsService.Scope.Spreadsheets  };
-        static string ApplicationName = "Google Sheets API .NET Quickstart";
+        static string ApplicationName = "Inventory Analytics";
         static string[] testeScope = { SheetsService.Scope.Spreadsheets };
         public static UserCredential credential;
         
-        public static bool AutenticarGoogle(string UserLogado = null)
+        public static bool AutenticarGoogle(string userLogado = null)
         {
             
 
             bool result = false;
+            //Credencial do Desenvolvedor - Isso não está relacionado ao usuário do sistema
             var File = System.Web.Hosting.HostingEnvironment.MapPath("~/credentials.json");
 
             //Autenticando no Google API
             using (var stream =
                 new FileStream(File, FileMode.Open, FileAccess.Read))
             {
+                //Diferente da credentials, o token está relacionado ao usuário logado no sistema
+                string tokenUser = "token" + userLogado + ".json";
 
-                string tokenUser = "token" + UserLogado + ".json";
-
-                string caminho = Path.Combine(HttpContext.Current.Server.MapPath("~/API/GoogleSheets/TokensUsers"), tokenUser);
+                string caminho = Path.Combine(HttpContext.Current.Server.MapPath("~/APIServicos/GoogleSheets/TokensUsers"), tokenUser);
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
                     Scopes,
                     "user",
                     CancellationToken.None,
                     new FileDataStore(caminho, true)).Result;
-                Console.WriteLine("Credential file saved to: " + caminho);
+                //Console.WriteLine("Credential file saved to: " + caminho);
                 result = true;
             }
 
@@ -63,12 +64,12 @@ namespace ControleEstoque.Web.APIServicos.GoogleSheets
         }
 
 
-        public static List<Log> RequestLogsListar()
+        public static List<Log> RequestLogsListar(string userLogado = null)
         {
             List<Log> LogsFounded = new List<Log>();
 
             //Autenticando
-            if (AutenticarGoogle())
+            if (AutenticarGoogle(userLogado))
             {
 
             //var File = System.Web.Hosting.HostingEnvironment.MapPath("~/credentials.json");
