@@ -7,14 +7,18 @@
 @section Styles {
     <link href="~/Content/bootstrap-select.css" rel="stylesheet" />
     <link href="~/Content/Cadastro/LocalArmazenamento.css" rel="stylesheet" />
+    <link href="~/Content/inventory-analytics.min.css" rel="stylesheet" />
 }
+
 @section TituloGrid {
-    <th>Nome</th>
-    <th>Ativo</th>
-    <th>Ação</th>
+    <th style="width: 150px;">Nome</th>
+    <th style="width: 50px;">Ativo</th>
+    <th>Uso</th>
+    <th style="width: 150px;">Ação</th>
 }
 @section LinhaGrid {
     @{
+
         var linha = 0;
         foreach (var item in Model)
         {
@@ -22,13 +26,40 @@
             if (linha <= ViewBag.QuantMaxLinhasPorPagina)
             {
                 var ativo = (item.Ativo ? "Sim" : "Não");
+                var cemPorcento = @item.CapacidadeTotal;
+                var xAtualPorcento = (100 * @item.CapacidadeAtual) / @item.CapacidadeTotal;
+
+
 
                 <tr data-id="@item.Id">
                     <td>@item.Nome</td>
                     <td>@ativo</td>
                     <td>
-                        <a class="btn btn-primary btn-alterar" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
-                        <a class="btn btn-danger btn-excluir" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@xAtualPorcento%</div>
+                            </div>
+                            <div class="col">
+                                @if (xAtualPorcento <= 99)
+                                {
+                                    <div class="progress progress-sm mr-2">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: @xAtualPorcento%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="progress progress-sm mr-2">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: @xAtualPorcento%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-alterar btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                        <a class="btn btn-danger btn-excluir btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
                     </td>
                 </tr>
             }
@@ -66,6 +97,7 @@
             <small id="caixa" class="form-text text-muted"></small>
         </div>
     </div>
+
 
 }
 @section Scripts{

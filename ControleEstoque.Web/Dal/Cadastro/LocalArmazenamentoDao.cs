@@ -18,7 +18,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
         {
             var ret = 0;
 
-            ret = ctx.Perfis.AsNoTracking().Count();
+            ret = ctx.LocaisArmazenamentos.AsNoTracking().Count();
             return ret;
 
         }
@@ -105,6 +105,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                 Alterar(la);
             }
             ret = la.Id;
+            ctx.SaveChanges();
             return ret;
         }
         //TODO: Construir um método para atualizar o armazenamento 

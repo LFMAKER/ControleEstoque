@@ -4,6 +4,7 @@ using ControleEstoque.Web.Models.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -25,10 +26,10 @@ namespace ControleEstoque.Web.Controllers
         }
 
         [Authorize]
-        public JsonResult GetDadosEntradas()
+        public async Task<JsonResult> GetDadosEntradas()
         {
             List<EntradaGraficos> entradasResult = new List<EntradaGraficos>();
-            entradasResult = EntradaESaidaGraficoDao.GetEntradasGrafico();
+            entradasResult = await EntradaESaidaGraficoDao.GetEntradasGrafico();
 
             return Json(entradasResult);
         }
@@ -36,17 +37,17 @@ namespace ControleEstoque.Web.Controllers
 
 
         [Authorize]
-        public JsonResult GetDadosSaidas()
+        public async Task<JsonResult> GetDadosSaidas()
         {
             List<SaidaGraficos> saidasResult = new List<SaidaGraficos>();
-            saidasResult = EntradaESaidaGraficoDao.GetSaidasGrafico();
+            saidasResult = await EntradaESaidaGraficoDao.GetSaidasGrafico();
 
             return Json(saidasResult);
         }
 
 
         [Authorize]
-        public JsonResult GetGanhosMesAtual()
+        public async Task<JsonResult> GetGanhosMesAtual()
         {
             DateTime dataAtual = new DateTime();
             dataAtual = DateTime.Now;
@@ -55,8 +56,8 @@ namespace ControleEstoque.Web.Controllers
             SaidaGraficos saidas = new SaidaGraficos();
             decimal resultado;
 
-            entradas = EntradaESaidaGraficoDao.GetEntradaGastoMesAtual(dataAtual);
-            saidas = EntradaESaidaGraficoDao.GetSaidaGanhoMesAtual(dataAtual);
+            entradas = await EntradaESaidaGraficoDao.GetEntradaGastoMesAtual(dataAtual);
+            saidas = await EntradaESaidaGraficoDao.GetSaidaGanhoMesAtual(dataAtual);
 
             if(saidas != null && entradas != null)
             {

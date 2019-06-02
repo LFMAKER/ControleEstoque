@@ -4,6 +4,7 @@ using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace ControleEstoque.Web.Dal.Grafico
@@ -13,7 +14,7 @@ namespace ControleEstoque.Web.Dal.Grafico
 
 
 
-        public static List<EntradaGraficos> GetEntradasGrafico()
+        public static async Task<List<EntradaGraficos>> GetEntradasGrafico()
         {
             List<EntradaGraficos> entradas = new List<EntradaGraficos>();
 
@@ -27,7 +28,7 @@ namespace ControleEstoque.Web.Dal.Grafico
                  "inner join produto on produto.id = entrada_produto.id_produto " +
                   "GROUP BY FORMAT(data, 'MM/yyyy')";
 
-                entradas = ctx.Database.Connection.Query<EntradaGraficos>(sql).ToList();
+                entradas = (List<EntradaGraficos>) await ctx.Database.Connection.QueryAsync<EntradaGraficos>(sql);
 
             }
 
@@ -38,7 +39,7 @@ namespace ControleEstoque.Web.Dal.Grafico
         }
 
 
-        public static EntradaGraficos GetEntradaGastoMesAtual(DateTime dataAtual)
+        public static async Task<EntradaGraficos> GetEntradaGastoMesAtual(DateTime dataAtual)
         {
             EntradaGraficos entradas = new EntradaGraficos();
 
@@ -53,7 +54,8 @@ namespace ControleEstoque.Web.Dal.Grafico
                  "WHERE MONTH(data) ="+dataAtual.Month+"and YEAR(data) ="+ dataAtual.Year+
                   "GROUP BY FORMAT(data, 'MM/yyyy')";
 
-                entradas = ctx.Database.Connection.Query<EntradaGraficos>(sql).FirstOrDefault();
+                var entradasBanco  = await ctx.Database.Connection.QueryAsync<EntradaGraficos>(sql);
+                entradas = entradasBanco.FirstOrDefault();
 
             }
 
@@ -67,7 +69,7 @@ namespace ControleEstoque.Web.Dal.Grafico
 
 
 
-        public static List<SaidaGraficos> GetSaidasGrafico()
+        public static async Task<List<SaidaGraficos>> GetSaidasGrafico()
         {
             List<SaidaGraficos> saidas = new List<SaidaGraficos>();
 
@@ -81,7 +83,7 @@ namespace ControleEstoque.Web.Dal.Grafico
                  "inner join produto on produto.id = saida_produto.id_produto " +
                   "GROUP BY FORMAT(data, 'MM/yyyy')";
 
-                saidas = ctx.Database.Connection.Query<SaidaGraficos>(sql).ToList();
+                saidas = (List<SaidaGraficos>) await ctx.Database.Connection.QueryAsync<SaidaGraficos>(sql);
             }
 
 
@@ -89,7 +91,7 @@ namespace ControleEstoque.Web.Dal.Grafico
         }
 
 
-        public static SaidaGraficos GetSaidaGanhoMesAtual(DateTime dataAtual)
+        public static async Task<SaidaGraficos> GetSaidaGanhoMesAtual(DateTime dataAtual)
         {
             SaidaGraficos saidas = new SaidaGraficos();
 
@@ -104,8 +106,9 @@ namespace ControleEstoque.Web.Dal.Grafico
                  "WHERE MONTH(data) =" + dataAtual.Month + "and YEAR(data) =" + dataAtual.Year +
                   "GROUP BY FORMAT(data, 'MM/yyyy')";
 
-                saidas = ctx.Database.Connection.Query<SaidaGraficos>(sql).FirstOrDefault();
-
+                var saidaBanco = await ctx.Database.Connection.QueryAsync<SaidaGraficos>(sql);
+                saidas = saidaBanco.FirstOrDefault();
+                
             }
 
 

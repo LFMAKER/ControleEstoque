@@ -18,8 +18,23 @@ function set_focus_form() {
 }
 
 function set_dados_grid(dados) {
-    return '<td>' + dados.Nome + '</td>' +
-           '<td>' + (dados.Ativo ? 'Sim' : 'Não') + '</td>';
+    
+    var cemPorcento = Number(dados.CapacidadeTotal);
+    var xAtualPorcento = Number((100 * Number(dados.CapacidadeAtual)) / Number(dados.CapacidadeTotal));
+
+    if (xAtualPorcento <= 99) {
+        xAtualPorcento = xAtualPorcento + '%';  
+        return '<td>' + dados.Nome + '</td>' +
+               '<td>' + (dados.Ativo ? 'Sim' : 'Não') + '</td>' +
+               '<td>' + '<div class="row no-gutters align-items-center">' + '<div class="col-auto"><div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">' + xAtualPorcento + '</div>' + '</div>' + '<div class="col">' + '<div class="progress progress-sm mr-2"><div class="progress-bar bg-warning" role="progressbar" style="width:' + xAtualPorcento + '" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">' + '</div>' + '</div>' + '</div>' + '</div>' + '</td>';
+
+    } else {
+
+        return '<td>' + dados.Nome + '</td>' +
+               '<td>' + (dados.Ativo ? 'Sim' : 'Não') + '</td>' +
+               '<td>' + '<div class="row no-gutters align-items-center"><div class="col-auto"><div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">' + xAtualPorcento + '</div></div><div class="col"><div class="progress progress-sm mr-2"><div class="progress-bar bg-danger" role="progressbar" style="width:' + xAtualPorcento + '" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div></div></div></div>' + '</td>';
+    }
+
 }
 
 function get_dados_inclusao() {
@@ -45,5 +60,5 @@ function get_dados_form() {
 function preencher_linha_grid(param, linha) {
     linha
         .eq(0).html(param.Nome).end()
-        .eq(1).html(param.Ativo ? 'Sim' : 'Não');
-}
+        .eq(1).html(param.Ativo ? 'Sim' : 'Não')
+};
