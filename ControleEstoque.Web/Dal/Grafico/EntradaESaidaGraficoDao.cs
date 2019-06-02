@@ -28,7 +28,7 @@ namespace ControleEstoque.Web.Dal.Grafico
                  "inner join produto on produto.id = entrada_produto.id_produto " +
                   "GROUP BY FORMAT(data, 'MM/yyyy')";
 
-                entradas = (List<EntradaGraficos>) await ctx.Database.Connection.QueryAsync<EntradaGraficos>(sql);
+                entradas = (List<EntradaGraficos>)await ctx.Database.Connection.QueryAsync<EntradaGraficos>(sql);
 
             }
 
@@ -51,10 +51,10 @@ namespace ControleEstoque.Web.Dal.Grafico
                 var sql = "SELECT FORMAT (data, 'MM/yyyy') as data, SUM((preco_custo*quant)) as total " +
                 "from entrada_produto " +
                  "inner join produto on produto.id = entrada_produto.id_produto " +
-                 "WHERE MONTH(data) ="+dataAtual.Month+"and YEAR(data) ="+ dataAtual.Year+
+                 "WHERE MONTH(data) =" + dataAtual.Month + "and YEAR(data) =" + dataAtual.Year +
                   "GROUP BY FORMAT(data, 'MM/yyyy')";
 
-                var entradasBanco  = await ctx.Database.Connection.QueryAsync<EntradaGraficos>(sql);
+                var entradasBanco = await ctx.Database.Connection.QueryAsync<EntradaGraficos>(sql);
                 entradas = entradasBanco.FirstOrDefault();
 
             }
@@ -83,7 +83,7 @@ namespace ControleEstoque.Web.Dal.Grafico
                  "inner join produto on produto.id = saida_produto.id_produto " +
                   "GROUP BY FORMAT(data, 'MM/yyyy')";
 
-                saidas = (List<SaidaGraficos>) await ctx.Database.Connection.QueryAsync<SaidaGraficos>(sql);
+                saidas = (List<SaidaGraficos>)await ctx.Database.Connection.QueryAsync<SaidaGraficos>(sql);
             }
 
 
@@ -108,7 +108,7 @@ namespace ControleEstoque.Web.Dal.Grafico
 
                 var saidaBanco = await ctx.Database.Connection.QueryAsync<SaidaGraficos>(sql);
                 saidas = saidaBanco.FirstOrDefault();
-                
+
             }
 
 
@@ -118,6 +118,65 @@ namespace ControleEstoque.Web.Dal.Grafico
         }
 
 
+        public static async Task<Decimal> GetEntradaGastoAnoAtual(DateTime dataAtual)
+        {
+
+
+            string data = dataAtual.Year.ToString();
+            decimal total = 0;
+            using (var ctx = new Context())
+            {
+
+                //entradas = ctx.EntradasProdutos.Include("Produto").ToList();
+                var sql = "SELECT FORMAT(data, 'MM/yyyy') as data, SUM((preco_custo * quant)) as total " +
+               "from entrada_produto " +
+                "inner join produto on produto.id = entrada_produto.id_produto " +
+                "WHERE YEAR(data) =" + data +
+                 " GROUP BY FORMAT(data, 'MM/yyyy') ";
+
+                var entradasBanco = await ctx.Database.Connection.QueryAsync<EntradaGraficos>(sql);
+                total = entradasBanco.Sum(x => Convert.ToDecimal(x.total));
+
+            }
+
+
+
+
+            return total;
+        }
+
+
+        public static async Task<Decimal> GetSaidaGanhoAnoAtual(DateTime dataAtual)
+        {
+
+
+            string data = dataAtual.Year.ToString();
+            decimal total = 0;
+
+            using (var ctx = new Context())
+            {
+
+
+                var sql = "SELECT FORMAT(data, 'MM/yyyy') as data, SUM((preco_custo * quant)) as total " +
+                "from saida_produto " +
+                 "inner join produto on produto.id = saida_produto.id_produto " +
+                 "WHERE YEAR(data) =" + data +
+                  " GROUP BY FORMAT(data, 'MM/yyyy')";
+
+
+
+                var saidaBanco = await ctx.Database.Connection.QueryAsync<SaidaGraficos>(sql);
+                total = saidaBanco.Sum(x => Convert.ToDecimal(x.total));
+
+
+
+            }
+
+
+
+
+            return total;
+        }
 
     }
 }

@@ -10,20 +10,45 @@
     //Requisitando Ganhos do Mês Atual
 
 
-    var url_ganhosAtual = '@Url.Action("GetGanhosMesAtual", "Grafico")';
+    var url_ganhosAtual = '@Url.Action("GetGanhosMesAtualEAnoAtual", "Grafico")';
     $.post(url_ganhosAtual, function (response) {
         if (response) {
-            $('#ganhoAtual').html("R$ " + response.Resultado);
-
+         
             //Formatando o valor para o formato pt-br BRL
             var formatter = new Intl.NumberFormat('pt-BR', {
                 style: 'currency',
                 currency: 'BRL',
             });
 
-            //console.log(formatter.format(response.Resultado)); /* $2,500.00 */
+            if (parseFloat(response.ResultadoMes) < 0) {
+                $('#ganhoAtualMes').html(formatter.format(response.ResultadoMes));
+                $('#CardganhoAtualMes').removeClass('border-left-primary').addClass('border-left-danger');
+                $('#CardganhoAtualMes').removeClass('border-left-success').addClass('border-left-danger');
+                $('#TituloganhoAtualMes').removeClass('text-primary').addClass('text-danger');
+                $('#TituloganhoAtualMes').removeClass('text-success').addClass('text-danger');
+            } else {
+                $('#ganhoAtualMes').html(formatter.format(response.ResultadoMes));
+                $('#CardganhoAtualMes').removeClass('border-left-primary').addClass('border-left-success');
+                $('#CardganhoAtualMes').removeClass('border-left-danger').addClass('border-left-success');
+                $('#TituloganhoAtualMes').removeClass('text-primary').addClass('text-success');
+                $('#TituloganhoAtualMes').removeClass('text-danger').addClass('text-success');
 
-            $('#ganhoAtual').html(formatter.format(response.Resultado));
+            }
+
+            if (parseFloat(response.ResultadoAno) < 0) {
+                $('#ganhoAtualAno').html(formatter.format(response.ResultadoAno));
+                $('#CardganhoAtualAno').removeClass('border-left-primary').addClass('border-left-danger');
+                $('#CardganhoAtualAno').removeClass('border-left-success').addClass('border-left-danger');
+                $('#TituloganhoAtualAno').removeClass('text-primary').addClass('text-danger');
+                $('#TituloganhoAtualAno').removeClass('text-success').addClass('text-danger');
+            } else {
+                $('#ganhoAtualAno').html(formatter.format(response.ResultadoAno));
+                $('#CardganhoAtualAno').removeClass('border-left-danger').addClass('border-left-success');
+                $('#CardganhoAtualAno').removeClass('border-left-primary').addClass('border-left-success');
+                $('#TituloganhoAtualAno').removeClass('text-primary').addClass('text-success');
+                $('#TituloganhoAtualAno').removeClass('text-danger').addClass('text-success');
+
+            }
 
 
         }
@@ -139,7 +164,7 @@
             //Data
             var culture = new System.Globalization.CultureInfo("pt-PT");
             var day = culture.DateTimeFormat.GetDayName(DateTime.Today.DayOfWeek);
-            var year = culture.DateTimeFormat.GetMonthName(DateTime.Today.Month);
+            var mes = culture.DateTimeFormat.GetMonthName(DateTime.Today.Month);
 
             //PC NAME
             string host = Dns.GetHostName();
@@ -147,7 +172,7 @@
 
 
         }
-        <p class="lead">Hoje é @day - @DateTime.Now.Day de @year</p>
+        <p class="lead">Hoje é @day - @DateTime.Now.Day de @mes</p>
         <p class="lead">Você logou com o @host</p>
 
         <!-- Content Row -->
@@ -155,12 +180,13 @@
 
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card border-left-primary shadow h-100 py-2" id="CardganhoAtualMes">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Ganhos (Mês Atual)</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="ganhoAtual"></div>
+
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="TituloganhoAtualMes">Ganhos (Mensal - @mes)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="ganhoAtualMes"></div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -172,12 +198,12 @@
 
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
+                <div class="card border-left-success shadow h-100 py-2" id="CardganhoAtualAno">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1"  id="TituloganhoAtualAno">Ganhos (Anual - @DateTime.Now.Year)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="ganhoAtualAno"></div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -193,15 +219,14 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks</div>
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Dólar Hoje</div>
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-auto">
                                         <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
                                     </div>
                                     <div class="col">
-                                        <div class="progress progress-sm mr-2">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
+                                        
+
                                     </div>
                                 </div>
                             </div>

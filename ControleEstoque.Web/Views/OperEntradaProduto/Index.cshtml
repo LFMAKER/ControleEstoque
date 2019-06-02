@@ -19,7 +19,9 @@
         margin: auto;
         padding-top: 40px;
     }
+
 </style>
+<link href="~/Content/inventory-analytics.min.css" rel="stylesheet" />
 <body>
 
 
@@ -640,7 +642,7 @@
 
                     btn.siblings().removeClass('active');
                     btn.addClass('active');
-                    $('#limparFiltro').addClass('invisivel');
+                    $(this).addClass('invisivel');
 
                 }
             })

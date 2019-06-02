@@ -47,35 +47,42 @@ namespace ControleEstoque.Web.Controllers
 
 
         [Authorize]
-        public async Task<JsonResult> GetGanhosMesAtual()
+        public async Task<JsonResult> GetGanhosMesAtualEAnoAtual()
         {
             DateTime dataAtual = new DateTime();
             dataAtual = DateTime.Now;
 
             EntradaGraficos entradas = new EntradaGraficos();
             SaidaGraficos saidas = new SaidaGraficos();
-            decimal resultado;
+            decimal resultadoMes;
 
             entradas = await EntradaESaidaGraficoDao.GetEntradaGastoMesAtual(dataAtual);
             saidas = await EntradaESaidaGraficoDao.GetSaidaGanhoMesAtual(dataAtual);
 
             if(saidas != null && entradas != null)
             {
-                resultado = saidas.total - entradas.total;
+                resultadoMes = saidas.total - entradas.total;
 
             }else
             {
-                resultado = 0;
+                resultadoMes = 0;
             }
 
+            //Calculando Ano
+            decimal resultadoAno;
+
+            decimal totalEntradas = await EntradaESaidaGraficoDao.GetEntradaGastoAnoAtual(dataAtual);
+            decimal totalSaidas = await EntradaESaidaGraficoDao.GetSaidaGanhoAnoAtual(dataAtual);
+
+            resultadoAno = totalSaidas - totalEntradas;
 
 
-            return Json( new {Resultado = resultado });
+
+            return Json( new {ResultadoMes = resultadoMes, ResultadoAno = resultadoAno });
         }
 
 
-
-
+     
 
     }
 }
