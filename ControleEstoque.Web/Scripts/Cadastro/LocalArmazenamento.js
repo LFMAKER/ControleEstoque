@@ -19,10 +19,14 @@ function set_focus_form() {
 
 function set_dados_grid(dados) {
     
-    var cemPorcento = Number(dados.CapacidadeTotal);
-    var xAtualPorcento = Number((100 * Number(dados.CapacidadeAtual)) / Number(dados.CapacidadeTotal));
+    //var cemPorcento = Number(dados.CapacidadeTotal);
+    //var xAtualPorcento = Number((100 * Number(dados.CapacidadeAtual)) / Number(dados.CapacidadeTotal));
+    var cemPorcento = dados.CapacidadeTotal;
+    var xAtualPorcento = (100 * dados.CapacidadeAtual) / dados.CapacidadeTotal;
+    xAtualPorcento = parseFloat(xAtualPorcento).toFixed(2);
 
-    if (xAtualPorcento <= 99) {
+
+    if (xAtualPorcento < 100) {
         xAtualPorcento = xAtualPorcento + '%';  
         return '<td>' + dados.Nome + '</td>' +
                '<td>' + (dados.Ativo ? 'Sim' : 'Não') + '</td>' +
@@ -58,7 +62,32 @@ function get_dados_form() {
 }
 
 function preencher_linha_grid(param, linha) {
-    linha
+
+    var cemPorcento = param.CapacidadeTotal;
+    var xAtualPorcento = (100 * param.CapacidadeAtual) / param.CapacidadeTotal;
+    xAtualPorcento = parseFloat(xAtualPorcento).toFixed(2);
+    
+
+
+    if (xAtualPorcento < 100) {
+        xAtualPorcento = xAtualPorcento + '%';
+        var progress = '<div class="row no-gutters align-items-center">' + '<div class="col-auto"><div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">' + xAtualPorcento + '</div>' + '</div>' + '<div class="col">' + '<div class="progress progress-sm mr-2"><div class="progress-bar bg-warning" role="progressbar" style="width:' + xAtualPorcento + '" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">' + '</div>' + '</div>' + '</div>' + '</div>';
+        linha
         .eq(0).html(param.Nome).end()
-        .eq(1).html(param.Ativo ? 'Sim' : 'Não')
+        .eq(1).html(param.Ativo ? 'Sim' : 'Não');
+        linha.eq(2).html(progress)
+    } else {
+        xAtualPorcento = xAtualPorcento + '%';
+        var progress = '<div class="row no-gutters align-items-center">' + '<div class="col-auto"><div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">' + xAtualPorcento + '</div>' + '</div>' + '<div class="col">' + '<div class="progress progress-sm mr-2"><div class="progress-bar bg-danger" role="progressbar" style="width:' + xAtualPorcento + '" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">' + '</div>' + '</div>' + '</div>' + '</div>';
+
+        linha
+       .eq(0).html(param.Nome).end()
+       .eq(1).html(param.Ativo ? 'Sim' : 'Não');
+        linha.eq(2).html(progress);
+       
+
+    }
+
+
+
 };
