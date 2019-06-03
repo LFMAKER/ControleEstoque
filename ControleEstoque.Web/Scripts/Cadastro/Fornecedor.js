@@ -1,4 +1,7 @@
-﻿function set_dados_form(dados) {
+﻿
+var dadosValidos = true;
+
+function set_dados_form(dados) {
     $('#id_cadastro').val(dados.Id);
     $('#txt_nome').val(dados.Nome);
     $('#txt_num_documento').val(dados.NumDocumento);
@@ -112,18 +115,22 @@ $(document)
         if (valido) {
             $(this).removeClass('is-invalid');
             $(this).addClass('is-valid');
+            dadosValidos = true;
         } else {
             $(this).removeClass('is-valid');
             $(this).addClass('is-invalid');
+            dadosValidos = false;
         }
     } else {
         var valido = validarCNPJ($(this).val())
         if (valido) {
             $(this).removeClass('is-invalid');
             $(this).addClass('is-valid');
+            dadosValidos = true;
         } else {
             $(this).removeClass('is-valid');
             $(this).addClass('is-invalid');
+            dadosValidos = false;
         }
     }
 
@@ -162,6 +169,13 @@ $('#txt_cep').on('blur', function () {
         }
     });
 });
+
+
+function verificarDadosValidos() {
+    return dadosValidos;
+}
+
+
 
 function validarCPF(cpf) {
     cpf = cpf.replace(/[^\d]+/g, '');

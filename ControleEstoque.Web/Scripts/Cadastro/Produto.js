@@ -76,3 +76,9 @@ $(document)
     $('#txt_preco_custo,#txt_preco_venda').mask('#.##0,00', { reverse: true });
     $('#txt_quant_estoque').mask('00000');
 });
+
+
+
+function verificarDadosValidos() {
+    return true;
+}

@@ -13,7 +13,7 @@
     var url_ganhosAtual = '@Url.Action("GetGanhosMesAtualEAnoAtual", "Grafico")';
     $.post(url_ganhosAtual, function (response) {
         if (response) {
-         
+
             //Formatando o valor para o formato pt-br BRL
             var formatter = new Intl.NumberFormat('pt-BR', {
                 style: 'currency',
@@ -60,25 +60,26 @@
 
 <script>
 
-            var dadosEntradas;
-            var url_entradas = '@Url.Action("GetDadosEntradas", "Grafico")';
-            $.post(url_entradas, function (response) {
-                if (response && response.length > 0) {
-                    dadosEntrada = response;
-                }
-            })
+    var dadosEntradas;
+    var url_entradas = '@Url.Action("GetDadosEntradas", "Grafico")';
+    $.post(url_entradas, function (response) {
+        if (response && response.length > 0) {
+            dadosEntrada = response;
+        }
+    })
 
 
-            var dadosSaidas;
-            var url_saidas = '@Url.Action("GetDadosSaidas", "Grafico")';
-            $.post(url_saidas, function (response) {
-                if (response && response.length > 0) {
-                    dadosSaidas = response;
-                }
-            })
+
+    var dadosSaidas;
+    var url_saidas = '@Url.Action("GetDadosSaidas", "Grafico")';
+    $.post(url_saidas, function (response) {
+        if (response && response.length > 0) {
+            dadosSaidas = response;
+        }
+    })
 
 
-    
+
 
 
 </script>
@@ -86,70 +87,70 @@
 
 <script type="text/javascript">
 
-    jQuery(document).ready(function() {
-        setTimeout(function() {
+    jQuery(document).ready(function () {
+        setTimeout(function () {
 
 
 
-    google.charts.load('current', { 'packages': ['corechart'] });
-    google.charts.setOnLoadCallback(drawChart);
+            google.charts.load('current', { 'packages': ['corechart'] });
+            google.charts.setOnLoadCallback(drawChart);
 
-    function drawChart() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Mes/Ano');
-        data.addColumn('number', 'Entradas (Compras) R$');
-        data.addColumn('number', 'Saidas (Vendas) R$');
+            function drawChart() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Mes/Ano');
+                data.addColumn('number', 'Entradas (Compras) R$');
+                data.addColumn('number', 'Saidas (Vendas) R$');
 
-        for (var i in dadosEntrada) {
-            for (var j in dadosSaidas) {
+                for (var i in dadosEntrada) {
+                    for (var j in dadosSaidas) {
 
-                var entradaValor = dadosEntrada[i]["total"];
-                var saidaValor = dadosSaidas[j]["total"];
+                        var entradaValor = dadosEntrada[i]["total"];
+                        var saidaValor = dadosSaidas[j]["total"];
 
-                var dataConvertEntrada = parseJsonDate(dadosEntrada[i]["Data"]);
-                var dataConvertSaida = parseJsonDate(dadosSaidas[j]["Data"]);
+                        var dataConvertEntrada = parseJsonDate(dadosEntrada[i]["Data"]);
+                        var dataConvertSaida = parseJsonDate(dadosSaidas[j]["Data"]);
 
 
-                if (dataConvertEntrada == dataConvertSaida) {
-                    data.addRows([
-                      [dataConvertEntrada, entradaValor, saidaValor],
+                        if (dataConvertEntrada == dataConvertSaida) {
+                            data.addRows([
+                              [dataConvertEntrada, entradaValor, saidaValor],
 
-                    ]);
+                            ]);
+                        }
+                    }
                 }
+
+                //Deserilização da Data JSON
+                function parseJsonDate(jsonDate) {
+                    var offset = new Date().getTimezoneOffset() * 60000;
+                    var parts = /\/Date\((-?\d+)([+-]\d{2})?(\d{2})?.*/.exec(jsonDate);
+                    if (parts[2] == undefined) parts[2] = 0;
+                    if (parts[3] == undefined) parts[3] = 0;
+                    d = new Date(+parts[1] + offset + parts[2] * 3600000 + parts[3] * 60000);
+                    date = d.getDate() + 1;
+                    date = date < 10 ? "0" + date : date;
+                    mon = d.getMonth() + 1;
+                    mon = mon < 10 ? "0" + mon : mon;
+                    year = d.getFullYear();
+                    return (mon + "/" + year);
+                };
+
+                //Opções do Gráfico
+                var options = {
+                    title: 'Entradas (Compras) e Saídas (Vendas)',
+                    curveType: 'function',
+                    legend: { position: 'bottom' },
+                    series: {
+                        0: { color: '#d21625' },
+                        1: { color: '#16d265' },
+                    }
+                };
+
+
+                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                chart.draw(data, options);
             }
-        }
-
-        //Deserilização da Data JSON
-        function parseJsonDate(jsonDate) {
-            var offset = new Date().getTimezoneOffset() * 60000;
-            var parts = /\/Date\((-?\d+)([+-]\d{2})?(\d{2})?.*/.exec(jsonDate);
-            if (parts[2] == undefined) parts[2] = 0;
-            if (parts[3] == undefined) parts[3] = 0;
-            d = new Date(+parts[1] + offset + parts[2] * 3600000 + parts[3] * 60000);
-            date = d.getDate() + 1;
-            date = date < 10 ? "0" + date : date;
-            mon = d.getMonth() + 1;
-            mon = mon < 10 ? "0" + mon : mon;
-            year = d.getFullYear();
-            return (mon + "/" + year);
-        };
-
-        //Opções do Gráfico
-        var options = {
-            title: 'Entradas (Compras) e Saídas (Vendas)',
-            curveType: 'function',
-            legend: { position: 'bottom' },
-            series: {
-                0: { color: '#d21625' },
-                1: { color: '#16d265' },
-            }
-        };
-
-
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-        chart.draw(data, options);
-    }
 
         }, 1500);
     });
@@ -202,7 +203,7 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1"  id="TituloganhoAtualAno">Ganhos (Anual - @DateTime.Now.Year)</div>
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1" id="TituloganhoAtualAno">Ganhos (Anual - @DateTime.Now.Year)</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800" id="ganhoAtualAno"></div>
                             </div>
                             <div class="col-auto">
@@ -225,7 +226,7 @@
                                         <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
                                     </div>
                                     <div class="col">
-                                        
+
 
                                     </div>
                                 </div>

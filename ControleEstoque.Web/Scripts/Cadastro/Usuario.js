@@ -63,3 +63,9 @@ function preencher_linha_grid(param, linha) {
         .eq(2).html(param.Email);
 
 }
+
+
+
+function verificarDadosValidos() {
+    return true;
+}

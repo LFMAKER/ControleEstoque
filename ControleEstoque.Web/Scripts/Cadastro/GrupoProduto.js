@@ -42,3 +42,9 @@ function set_dados_grid(dados) {
     return '<td>' + dados.Nome + '</td>' +
            '<td>' + (dados.Ativo ? 'Sim' : 'Não') + '</td>';
 }
+
+
+
+function verificarDadosValidos() {
+    return true;
+}

@@ -91,3 +91,9 @@ function preencher_linha_grid(param, linha) {
 
 
 };
+
+
+
+function verificarDadosValidos() {
+    return true;
+}

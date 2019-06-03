@@ -447,7 +447,14 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
                             try
                             {
                                 ctx.Produtos.Attach(recuperado);
-                                recuperado.QuantEstoque = recuperado.QuantEstoque - produto.Value;
+                                if((recuperado.QuantEstoque - produto.Value) < 0)
+                                {
+                                    recuperado.QuantEstoque = 0;
+                                }else
+                                {
+                                    recuperado.QuantEstoque = recuperado.QuantEstoque - produto.Value;
+                                }
+                               
                                 ctx.Entry(recuperado).State = EntityState.Modified;
                                 ctx.SaveChanges();
 

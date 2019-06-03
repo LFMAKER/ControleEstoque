@@ -8,11 +8,7 @@ using System.Web.Mvc;
 
 namespace ControleEstoque.Web.Controllers
 {
-    /*
-     @todo Allow only the registration of a "Fornecedor" with the same CNPJ or CPF.
-         */
-
-
+  
     [Authorize(Roles = "Gerente,Administrativo,Operador")]
     public class CadFornecedorController : Controller
     {

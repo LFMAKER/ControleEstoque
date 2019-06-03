@@ -47,3 +47,8 @@ function preencher_linha_grid(param, linha) {
         .eq(1).html(param.Sigla).end()
         .eq(2).html(param.Ativo ? 'Sim' : 'Não');
 }
+
+
+function verificarDadosValidos() {
+    return true;
+}
