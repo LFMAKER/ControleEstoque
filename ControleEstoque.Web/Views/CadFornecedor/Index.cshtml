@@ -75,11 +75,11 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             @Html.Label("txt_num_documento", "CPF/CNPJ", new { @class = "control-label" })
             @Html.TextBox("txt_num_documento", null, new { @class = "form-control" })
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div id="container_razao_social">
                 @Html.Label("txt_razao_social", "Razão Social", new { @class = "control-label" })
                 @Html.TextBox("txt_razao_social", null, new { @class = "form-control" })
@@ -161,6 +161,7 @@
 @section Scripts{
     <script src="~/Scripts/bootstrap-select.js"></script>
     <script src="~/Scripts/Cadastro/Fornecedor.js"></script>
+
     <script>
 
         var titulo_pagina = '@ViewBag.Title';
