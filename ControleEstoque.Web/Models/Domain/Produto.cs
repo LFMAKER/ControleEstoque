@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using Rotativa;
 
 namespace ControleEstoque.Web.Models
 {

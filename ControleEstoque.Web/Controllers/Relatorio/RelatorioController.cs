@@ -1,6 +1,10 @@
-﻿using System;
+﻿using ControleEstoque.Web.Dal.Grafico;
+using ControleEstoque.Web.Models.Domain;
+using System;
+using Rotativa;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,22 +19,41 @@ namespace ControleEstoque.Web.Controllers.Relatorio
              */
 
 
-        public ActionResult Index()
+        public ActionResult RelatorioEntradasIndex()
         {
             return View();
         }
 
-        //protected FileContentResult ViewPdf(/*string pageTitle, string viewName, object model*/)
-        //{
-        //    // Render the view html to a string.
-        //    string htmlText = this.htmlViewRenderer.RenderViewToString();
 
-        //    // Let the html be rendered into a PDF document through iTextSharp.
-        //    byte[] buffer = standardPdfRenderer.Render("<");
+        //GetEntradasGraficoFiltro
+        [HttpPost]
+        public ActionResult RelatorioEntradasFiltro(DateTime txt_data_inicio, DateTime txt_data_fim, int cbx_tipo)
+        {
 
-        //    // Return the PDF as a binary stream to the client.
-        //    return File(buffer, "application/pdf", "file.pdf");
-        //}
+            if(cbx_tipo == 1)
+            {
+                var relatorioPDF = new ViewAsPdf
+                {
+                    ViewName = "RelatorioEntradasPDF",
+                    IsGrayScale = false,
+                    FileName = "RelatorioEntradasPDF.pdf",
+                    Model = EntradaESaidaGraficoDao.GetEntradasGraficoFiltro(txt_data_inicio, txt_data_fim)
+                };
+                return relatorioPDF;
+            }
+            return null;
+        }
+
+
+        public async Task<ActionResult> RelatorioEntradas()
+        {
+
+            List<EntradaGraficos> entradas = await EntradaESaidaGraficoDao.GetEntradasGrafico();
+            return View(entradas);
+        }
+
+
+
 
 
     }

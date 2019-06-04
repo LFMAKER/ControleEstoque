@@ -312,6 +312,26 @@
     <Compile Include="Models\ViewModel\UnidadeMedidaViewModel.cs" />
     <Compile Include="Models\ViewModel\UsuarioViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rotativa\ActionAsImage.cs" />
+    <Compile Include="Rotativa\ActionAsPdf.cs" />
+    <Compile Include="Rotativa\AsImageResultBase.cs" />
+    <Compile Include="Rotativa\AsPdfResultBase.cs" />
+    <Compile Include="Rotativa\AsResultBase.cs" />
+    <Compile Include="Rotativa\Extensions\ControllerContextExtensions.cs" />
+    <Compile Include="Rotativa\Options\Enums.cs" />
+    <Compile Include="Rotativa\Options\Margins.cs" />
+    <Compile Include="Rotativa\Options\OptionFlag.cs" />
+    <Compile Include="Rotativa\PartialViewAsImage.cs" />
+    <Compile Include="Rotativa\PartialViewAsPdf.cs" />
+    <Compile Include="Rotativa\RouteAsImage.cs" />
+    <Compile Include="Rotativa\RouteAsPdf.cs" />
+    <Compile Include="Rotativa\UrlAsImage.cs" />
+    <Compile Include="Rotativa\UrlAsPdf.cs" />
+    <Compile Include="Rotativa\ViewAsImage.cs" />
+    <Compile Include="Rotativa\ViewAsPdf.cs" />
+    <Compile Include="Rotativa\WkhtmlDriver.cs" />
+    <Compile Include="Rotativa\WkhtmltoimageDriver.cs" />
+    <Compile Include="Rotativa\WkhtmltopdfDriver.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-select.css" />
@@ -336,6 +356,10 @@
     <Content Include="Content\semantic.min.css" />
     <Content Include="Content\sweetalert2.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\inventory-analytics.js" />
     <Content Include="Scripts\inventory-analytics.min.js" />
@@ -369,6 +393,7 @@
     <Content Include="Scripts\Cadastro\Usuario.js" />
     <Content Include="Scripts\comum.js" />
     <None Include=".bin\node.cmd" />
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -413,8 +438,7 @@
     <Content Include="Views\Operacao\LancPerdaProduto.cshtml" />
     <Content Include="Views\Operacao\SaidaEstoque.cshtml" />
     <Content Include="Views\Operacao\Inventario.cshtml" />
-    <Content Include="Views\Relatorio\PosicaoEstoque.cshtml" />
-    <Content Include="Views\Relatorio\Ressuprimento.cshtml" />
+    <Content Include="Views\Relatorio\RelatorioEntradasIndex.cshtml" />
     <Content Include="Views\Conta\Login.cshtml" />
     <Content Include="Views\Shared\_Cadastro.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
@@ -427,6 +451,8 @@
     <Content Include="Views\OperEntradaProduto\Index.cshtml" />
     <Content Include="Views\OperSaidaProduto\Index.cshtml" />
     <Content Include="Views\Log\Index.cshtml" />
+    <Content Include="Views\Relatorio\RelatorioEntradasPDF.cshtml" />
+    <Content Include="Views\Shared\_Relatorios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APIServicos\GoogleSheets\TokensUsers\" />
