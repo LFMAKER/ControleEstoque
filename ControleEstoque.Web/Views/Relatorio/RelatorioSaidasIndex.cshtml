@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Relatório Saídas de Produtos";
+}
+
+<link href="~/Content/inventory-analytics.min.css" rel="stylesheet" />
+
+
+<body>
+    <div class="container" style="padding-top: 20px">
+        <h1>@ViewBag.Title</h1>
+        <br />
+
+        @using (Html.BeginForm("RelatorioSaidasFiltro", "Relatorio", FormMethod.Post))
+        {
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    @Html.TextBox("txt_data_inicio", null, new { @class = "form-control", type = "date", id = "txt_data_inicio" })
+                </div>
+                <p>até</p>
+                <div class="col-sm-4">
+                    @Html.TextBox("txt_data_fim", null, new { @class = "form-control", type = "date", id = "txt_data_fim" })
+                </div>
+                <div class="form-check-inline">
+                    <div class="custom-control custom-radio">
+                        @Html.RadioButton("cbx_tipo", 1, new { id = "cbx_pdf", @class = "custom-control-input" })
+                        @Html.Label("cbx_pdf", "PDF", new { @class = "custom-control-label" })
+                    </div>
+                    <div class="custom-control custom-radio" style="margin-left: 20px;">
+                        @Html.RadioButton("cbx_tipo", 2, new { id = "cbx_xlsx", @class = "custom-control-input" })
+                        @Html.Label("cbx_xlsx", "XLSX", new { @class = "custom-control-label" })
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <button type="submit" class="btn btn-success" id="filtrarOk">Gerar</button>
+                </div>
+
+            </div>
+        }
+
+    </div>
+</body>
