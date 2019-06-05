@@ -24,6 +24,7 @@ namespace ControleEstoque.Web
         void Application_Error(object sender, EventArgs e)
         {
             Exception ex = Server.GetLastError();
+            var serverError = Server.GetLastError() as HttpException;
 
             if (ex is HttpRequestValidationException)
             {
@@ -40,6 +41,16 @@ namespace ControleEstoque.Web
                 Response.End();
                 // gravar LOG
             }
+
+            if (serverError != null)
+            {
+                if (serverError.GetHttpCode() == 404)
+                {
+                    Server.ClearError();
+                    Response.Redirect("~/Error/PageNotFound");
+                }
+            }
+
         }
 
         //Usar o Cookie enviado no momento do login para preencher o GenericPrincipal

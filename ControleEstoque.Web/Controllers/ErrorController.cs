@@ -1,5 +1,4 @@
-﻿using ControleEstoque.Web.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,15 +6,18 @@ using System.Web.Mvc;
 
 namespace ControleEstoque.Web.Controllers
 {
-    [HandleError]
-    public class HomeController : Controller
+    public class ErrorController : Controller
     {
-        [Authorize]
+        // GET: Error
         public ActionResult Index()
         {
-       
             return View();
         }
-      
+
+        public ActionResult PageNotFound()
+        {
+            return View();
+        }
+
     }
 }
