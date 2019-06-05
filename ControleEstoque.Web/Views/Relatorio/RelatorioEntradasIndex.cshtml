@@ -14,19 +14,19 @@
         {
             <div class="form-group row">
                 <div class="col-sm-4">
-                    @Html.TextBox("txt_data_inicio", null, new { @class = "form-control", type = "date", id = "txt_data_inicio" })
+                    @Html.TextBox("txt_data_inicio", null, new { @class = "form-control", type = "date", id = "txt_data_inicio", @required = "required" })
                 </div>
                 <p>até</p>
                 <div class="col-sm-4">
-                    @Html.TextBox("txt_data_fim", null, new { @class = "form-control", type = "date", id = "txt_data_fim" })
+                    @Html.TextBox("txt_data_fim", null, new { @class = "form-control", type = "date", id = "txt_data_fim", @required = "required"})
                 </div>
                 <div class="form-check-inline">
                     <div class="custom-control custom-radio">
-                        @Html.RadioButton("cbx_tipo", 1, new { id = "cbx_pdf", @class = "custom-control-input" })
+                        @Html.RadioButton("cbx_tipo", 1, new { id = "cbx_pdf", @class = "custom-control-input", @required = "required" })
                         @Html.Label("cbx_pdf", "PDF", new { @class = "custom-control-label" })
                     </div>
                     <div class="custom-control custom-radio" style="margin-left: 20px;">
-                        @Html.RadioButton("cbx_tipo", 2, new { id = "cbx_xlsx", @class = "custom-control-input" })
+                        @Html.RadioButton("cbx_tipo", 2, new { id = "cbx_xlsx", @class = "custom-control-input", @required = "required" })
                         @Html.Label("cbx_xlsx", "XLSX", new { @class = "custom-control-label" })
                     </div>
                 </div>
