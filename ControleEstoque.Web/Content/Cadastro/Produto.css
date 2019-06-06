@@ -11,7 +11,7 @@
 }
 
 #cadastro {
-    width: 70%;
+    width: 90%;
     margin: 0 auto;
 }
 
@@ -25,4 +25,5 @@
 
 #cabecalho_grid {
     margin-bottom: 20px;
+    margin-left: 1px;
 }

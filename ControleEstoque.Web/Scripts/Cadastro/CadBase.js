@@ -110,24 +110,29 @@ $(document).on('click', '#btn_incluir', function () {
         if (result.value) {
             //Realizar POST 
             $.post(url, add_anti_forgery_token(param), function (response) {
-                if (response) {
+                if (response.OK == true) {
                     tr.remove();
                     var quant = $('#grid_cadastro > tbody > tr').length;
                     if (quant == 0) {
                         $('#grid_cadastro').addClass('invisivel');
                         $('#mensagem_grid').removeClass('invisivel');
                     }
-
-
+                    swalWithBootstrapButtons.fire(
+                        'Deletado!',
+                         titulo_pagina + ' foi deletado com sucesso.',
+                         'success'
+                         );
+                } else if (response.OK == false) {
+                    swalWithBootstrapButtons.fire(
+                    'Erro!',
+                     response.Resultado,
+                    'error'
+            )
                 }
             }).fail(function () {
                 swal('Aviso', 'Não foi possível excluir as informações. Tente novamente em instantes.', 'warning');
             })
-            swalWithBootstrapButtons.fire(
-             'Deletado!',
-             titulo_pagina + ' foi deletado com sucesso.',
-             'success'
-             )
+           
 
 
         } else if (

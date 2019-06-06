@@ -15,7 +15,7 @@ namespace ControleEstoque.Web.Migrations
 
         protected override void Seed(ControleEstoque.Web.Models.Context context)
         {
-            PopularBanco.Inserir();
+            //PopularBanco.Inserir();
         }
     }
 }

@@ -77,7 +77,21 @@ namespace ControleEstoque.Web.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult ExcluirProduto(int id)
         {
-            return Json(ProdutoDao.ExcluirPeloId(id));
+            string resultado = null;
+            bool Ok = false;
+
+
+            Ok = ProdutoDao.ExcluirPeloId(id);
+
+            if (Ok)
+            {
+                resultado = "OK";
+            }
+            else
+            {
+                resultado = "Esse Produto não pode ser excluído pois ele possui entradas e saídas, para excluí-lo você deve antes excluir todas as entradas e saídas desse produto.";
+            }
+            return Json(new { OK = Ok, Resultado = resultado });
         }
 
         [HttpPost]

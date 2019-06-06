@@ -51,7 +51,21 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         [ValidateAntiForgeryToken]
         public JsonResult ExcluirUnidadeMedida(int id)
         {
-            return Json(UnidadeMedidaDao.ExcluirPeloId(id));
+            string resultado = null;
+            bool Ok = false;
+
+
+            Ok = UnidadeMedidaDao.ExcluirPeloId(id);
+
+            if (Ok)
+            {
+                resultado = "OK";
+            }
+            else
+            {
+                resultado = "Não foi possível excluir essa Unidade de Medida.";
+            }
+            return Json(new { OK = Ok, Resultado = resultado });
         }
 
         [HttpPost]

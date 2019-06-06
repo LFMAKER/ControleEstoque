@@ -37,11 +37,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
             //ViewBag.ddl_perfil = new SelectList(PerfilDao.RecuperarLista(), "Id", "Nome");
 
             return View(lista);
-
-
-
         }
-
 
         [HttpPost]
         [Authorize(Roles = "Gerente, Desenvolvedor")]
@@ -63,7 +59,21 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         [ValidateAntiForgeryToken]
         public ActionResult ExcluirUsuario(int id)
         {
-            return Json(UsuarioDao.ExcluirPeloId(id));
+            string resultado = null;
+            bool Ok = false;
+
+
+            Ok = UsuarioDao.ExcluirPeloId(id);
+
+            if (Ok)
+            {
+                resultado = "OK";
+            }
+            else
+            {
+                resultado = "Não foi possível excluir esse Usuário.";
+            }
+            return Json(new { OK = Ok, Resultado = resultado });
         }
 
         [HttpPost]

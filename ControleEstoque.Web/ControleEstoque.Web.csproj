@@ -262,25 +262,9 @@
     <Compile Include="Dal\Operacao\EntradaProdutoDao.cs" />
     <Compile Include="Dal\Operacao\SaidaProdutoDao.cs" />
     <Compile Include="Dal\Relatorio\EntradaESaidaRelatorioDao.cs" />
-    <Compile Include="Migrations\201905191245118_Inicial.cs" />
-    <Compile Include="Migrations\201905191245118_Inicial.Designer.cs">
-      <DependentUpon>201905191245118_Inicial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905282253115_AddEmailUsuario.cs" />
-    <Compile Include="Migrations\201905282253115_AddEmailUsuario.Designer.cs">
-      <DependentUpon>201905282253115_AddEmailUsuario.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906012320240_tryfix.cs" />
-    <Compile Include="Migrations\201906012320240_tryfix.Designer.cs">
-      <DependentUpon>201906012320240_tryfix.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906012342494_tryfixProduto.cs" />
-    <Compile Include="Migrations\201906012342494_tryfixProduto.Designer.cs">
-      <DependentUpon>201906012342494_tryfixProduto.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906012345327_tryfixProduto2.cs" />
-    <Compile Include="Migrations\201906012345327_tryfixProduto2.Designer.cs">
-      <DependentUpon>201906012345327_tryfixProduto2.cs</DependentUpon>
+    <Compile Include="Migrations\201906060731083_AddBanco.cs" />
+    <Compile Include="Migrations\201906060731083_AddBanco.Designer.cs">
+      <DependentUpon>201906060731083_AddBanco.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Binders\EntradaSaidaProdutoViewModelModelBinder.cs" />
@@ -355,12 +339,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bulma.min.css" />
-    <Content Include="Content\Cadastro\Cidade.css" />
-    <Content Include="Content\Cadastro\Estado.css" />
     <Content Include="Content\Cadastro\Fornecedor.css" />
     <Content Include="Content\Cadastro\LocalArmazenamento.css" />
     <Content Include="Content\Cadastro\MarcaProduto.css" />
-    <Content Include="Content\Cadastro\Pais.css" />
     <Content Include="Content\Cadastro\Perfil.css" />
     <Content Include="Content\Cadastro\Produto.css" />
     <Content Include="Content\Cadastro\UnidadeMedida.css" />
@@ -492,20 +473,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201905191245118_Inicial.resx">
-      <DependentUpon>201905191245118_Inicial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905282253115_AddEmailUsuario.resx">
-      <DependentUpon>201905282253115_AddEmailUsuario.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906012320240_tryfix.resx">
-      <DependentUpon>201906012320240_tryfix.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906012342494_tryfixProduto.resx">
-      <DependentUpon>201906012342494_tryfixProduto.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906012345327_tryfixProduto2.resx">
-      <DependentUpon>201906012345327_tryfixProduto2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906060731083_AddBanco.resx">
+      <DependentUpon>201906060731083_AddBanco.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Linq;
 using VendasOsorioA.DAL;
@@ -81,10 +82,14 @@ namespace ControleEstoque.Web.Dal.Cadastro
                 ctx.SaveChanges();
                 ret = true;
             }
-            catch (System.Exception ex)
+            catch (DbUpdateException)
             {
-                throw;
+                ret = false;
             }
+            //Limpando qualquer Exception que tenha ficado gravado no Object do Entity
+            //Se não limpar, caso ocorra uma excessão na exclusão, ele sempre vai ficar persistindo 
+            //o erro, mesmo que o proximo objeto esteja sem nenhum problema.
+            ctx.DetachAllEntities();
             return ret;
         }
 

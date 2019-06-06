@@ -16,22 +16,22 @@ namespace ControleEstoque.Web.Dados
         {
 
 
-            Perfil perfil = new Perfil
-            {
-                Nome = "Gerente",
-                Ativo = true
-            };
-            PerfilDao.Salvar(perfil);
+            //Perfil perfil = new Perfil
+            //{
+            //    Nome = "Gerente",
+            //    Ativo = true
+            //};
+            //PerfilDao.Salvar(perfil);
 
 
-            Usuario user = new Usuario
-            {
-                Login = "admin",
-                Senha = Helpers.CriptoHelper.HashMD5("admin"),
-                Perfil = ctx.Perfis.Find(1)
+            //Usuario user = new Usuario
+            //{
+            //    Login = "admin",
+            //    Senha = Helpers.CriptoHelper.HashMD5("admin"),
+            //    Perfil = ctx.Perfis.Find(1)
 
-            };
-            UsuarioDao.Salvar(user);
+            //};
+            //UsuarioDao.Salvar(user);
 
 
 

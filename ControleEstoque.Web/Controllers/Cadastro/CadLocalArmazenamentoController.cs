@@ -51,7 +51,21 @@ namespace ControleEstoque.Web.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult ExcluirLocalArmazenamento(int id)
         {
-            return Json(LocalArmazenamentoDao.ExcluirPeloId(id));
+            string resultado = null;
+            bool Ok = false;
+
+
+            Ok = LocalArmazenamentoDao.ExcluirPeloId(id);
+
+            if (Ok)
+            {
+                resultado = "OK";
+            }
+            else
+            {
+                resultado = "Não foi possível excluir esse Local de Armazenamento.";
+            }
+            return Json(new { OK = Ok, Resultado = resultado });
         }
 
         [HttpPost]

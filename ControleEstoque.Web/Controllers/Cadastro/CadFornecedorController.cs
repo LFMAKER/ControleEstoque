@@ -51,7 +51,21 @@ namespace ControleEstoque.Web.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult ExcluirFornecedor(int id)
         {
-            return Json(FornecedorDao.ExcluirPeloId(id));
+            string resultado = null;
+            bool Ok = false;
+
+
+            Ok = FornecedorDao.ExcluirPeloId(id);
+
+            if (Ok)
+            {
+                resultado = "OK";
+            }
+            else
+            {
+                resultado = "Não foi possível excluir esse Fornecedor.";
+            }
+            return Json(new { OK = Ok, Resultado = resultado });
         }
 
         [HttpPost]

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -93,6 +94,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
         /// <returns></returns>
         public static bool ExcluirPeloId(int id)
         {
+            
             var ret = false;
             var existing = ctx.Produtos.Include("LocalArmazenamento").FirstOrDefault(x => x.Id == id);
             if (existing != null)
@@ -116,12 +118,21 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
 
                 ret = true;
             }
-            catch (System.Exception ex)
+            catch (DbUpdateException)
             {
-                throw;
+                ret = false;
             }
+
+            //Limpando qualquer Exception que tenha ficado gravado no Object do Entity
+            //Se não limpar, caso ocorra uma excessão na exclusão, ele sempre vai ficar persistindo 
+            //o erro, mesmo que o proximo objeto esteja sem nenhum problema.
+            ctx.DetachAllEntities();
             return ret;
         }
+
+
+
+
 
         /// <summary>
         /// Realiza o processo de salvar ou alterar um produto

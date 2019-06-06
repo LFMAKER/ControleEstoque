@@ -55,7 +55,21 @@ namespace ControleEstoque.Web.Controllers.Cadastro
         [ValidateAntiForgeryToken]
         public JsonResult ExcluirPerfil(int id)
         {
-            return Json(PerfilDao.ExcluirPeloId(id));
+            string resultado = null;
+            bool Ok = false;
+
+
+            Ok = PerfilDao.ExcluirPeloId(id);
+
+            if (Ok)
+            {
+                resultado = "OK";
+            }
+            else
+            {
+                resultado = "Não foi possível excluir esse Perfil.";
+            }
+            return Json(new { OK = Ok, Resultado = resultado });
         }
 
         [HttpPost]
