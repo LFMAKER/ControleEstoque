@@ -55,7 +55,7 @@ namespace ControleEstoque.Web.Controllers
                 else
                 {
                    
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Dashboard");
                 }
             }
             else
@@ -71,7 +71,7 @@ namespace ControleEstoque.Web.Controllers
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Dashboard");
         }
     }
 

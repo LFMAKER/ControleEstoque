@@ -24,12 +24,10 @@ namespace ControleEstoque.Web.Dal.Relatorio
                 var sql = "SELECT FORMAT (data, 'MM/yyyy') as data, SUM((preco_custo*quant)) as total " +
                 "from entrada_produto " +
                  "inner join produto on produto.id = entrada_produto.id_produto " +
-                 "WHERE(YEAR(data) BETWEEN " + dataInicio.Year + " and " + dataFim.Year + ") and" +
-                 "(MONTH(data) BETWEEN " + dataInicio.Month + " and " + dataFim.Month + ")" +
                   "GROUP BY FORMAT(data, 'MM/yyyy')";
 
                 entradas = ctx.Database.Connection.Query<EntradaGraficos>(sql).ToList();
-                entradas = entradas.OrderBy(x => x.Data).ToList();
+                entradas = entradas.Where(x => (x.Data >= dataInicio && x.Data <= dataFim)).OrderBy(x => x.Data).ToList();
 
             }
             return entradas;
@@ -48,12 +46,10 @@ namespace ControleEstoque.Web.Dal.Relatorio
                 var sql = "SELECT FORMAT (data, 'MM/yyyy') as data, SUM((preco_custo*quant)) as total " +
                 "from saida_produto " +
                  "inner join produto on produto.id = saida_produto.id_produto " +
-                 "WHERE(YEAR(data) BETWEEN " + dataInicio.Year + " and " + dataFim.Year + ") and" +
-                 "(MONTH(data) BETWEEN " + dataInicio.Month + " and " + dataFim.Month + ")" +
                   "GROUP BY FORMAT(data, 'MM/yyyy')";
 
                 saidas = ctx.Database.Connection.Query<SaidaGraficos>(sql).ToList();
-                saidas = saidas.OrderBy(x => x.Data).ToList();
+                saidas = saidas.Where(x => (x.Data >= dataInicio && x.Data <= dataFim)).OrderBy(x => x.Data).ToList();
 
             }
             return saidas;

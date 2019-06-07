@@ -251,7 +251,7 @@
     <Compile Include="Controllers\ContaController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\Grafico\GraficoController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\Operacao\OperEntradaProdutoController.cs" />
     <Compile Include="Controllers\Operacao\OperEntradaSaidaProdutoController.cs" />
     <Compile Include="Controllers\Operacao\OperSaidaProdutoController.cs" />
@@ -265,6 +265,14 @@
     <Compile Include="Migrations\201906060731083_AddBanco.cs" />
     <Compile Include="Migrations\201906060731083_AddBanco.Designer.cs">
       <DependentUpon>201906060731083_AddBanco.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906070713483_TestePreco.cs" />
+    <Compile Include="Migrations\201906070713483_TestePreco.Designer.cs">
+      <DependentUpon>201906070713483_TestePreco.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906070716070_TestePreco2.cs" />
+    <Compile Include="Migrations\201906070716070_TestePreco2.Designer.cs">
+      <DependentUpon>201906070716070_TestePreco2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Binders\EntradaSaidaProdutoViewModelModelBinder.cs" />
@@ -357,7 +365,9 @@
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
     <Content Include="Rotativa\wkhtmltoimage.exe" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
+    <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Scripts\Graficos\GraEntradaESaida.js" />
     <Content Include="Scripts\inventory-analytics.js" />
     <Content Include="Scripts\inventory-analytics.min.js" />
     <Content Include="Scripts\jquery-3.4.0.min.js" />
@@ -412,6 +422,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\semantic.min.js" />
     <Content Include="Scripts\sweetalert2.min.js" />
+    <Content Include="Scripts\tilt.jquery.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -424,9 +435,8 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\CadGrupoProduto\Index.cshtml" />
     <Content Include="Views\CadUsuario\Index.cshtml" />
     <Content Include="Views\Grafico\PerdaMes.cshtml" />
@@ -475,6 +485,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201906060731083_AddBanco.resx">
       <DependentUpon>201906060731083_AddBanco.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906070713483_TestePreco.resx">
+      <DependentUpon>201906070713483_TestePreco.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906070716070_TestePreco2.resx">
+      <DependentUpon>201906070716070_TestePreco2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

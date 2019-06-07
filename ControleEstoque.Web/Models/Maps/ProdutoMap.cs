@@ -18,9 +18,9 @@ namespace ControleEstoque.Web.Models
             //Definindo nome da coluna, tamanho e obrigatório
             Property(x => x.Nome).HasColumnName("nome").HasMaxLength(50).IsRequired();
             //Definindo nome da coluna, precisão e obrigatório
-            Property(x => x.PrecoCusto).HasColumnName("preco_custo").HasPrecision(7, 2).IsRequired();
+            Property(x => x.PrecoCusto).HasColumnName("preco_custo").IsRequired();
             //Definindo nome da coluna, precisão e obrigatório
-            Property(x => x.PrecoVenda).HasColumnName("preco_venda").HasPrecision(7, 2).IsRequired();
+            Property(x => x.PrecoVenda).HasColumnName("preco_venda").IsRequired();
             //Definindo nome da coluna, tamanho e obrigatório
             Property(x => x.QuantEstoque).HasColumnName("quant_estoque").IsRequired();
             //Definindo nome da coluna e obrigatório

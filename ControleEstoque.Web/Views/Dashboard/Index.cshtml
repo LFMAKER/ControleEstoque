@@ -57,27 +57,24 @@
 
 
 </script>
-
 <script>
-
-    var dadosEntradas;
-    var url_entradas = '@Url.Action("GetDadosEntradas", "Grafico")';
-    $.post(url_entradas, function (response) {
-        if (response && response.length > 0) {
-            dadosEntrada = response;
-        }
-    })
-
+        var dadosEntradas;
+        var url_entradas = '@Url.Action("GetDadosEntradas", "Grafico")';
+        $.post(url_entradas, function (response) {
+            if (response && response.length > 0) {
+                dadosEntrada = response;
+            }
+        })
 
 
-    var dadosSaidas;
-    var url_saidas = '@Url.Action("GetDadosSaidas", "Grafico")';
-    $.post(url_saidas, function (response) {
-        if (response && response.length > 0) {
-            dadosSaidas = response;
-        }
-    })
 
+        var dadosSaidas;
+        var url_saidas = '@Url.Action("GetDadosSaidas", "Grafico")';
+        $.post(url_saidas, function (response) {
+            if (response && response.length > 0) {
+                dadosSaidas = response;
+            }
+        })
 
 
 
@@ -85,7 +82,12 @@
 </script>
 
 
+
 <script type="text/javascript">
+
+
+
+
 
     jQuery(document).ready(function () {
         setTimeout(function () {
@@ -154,6 +156,140 @@
 
         }, 1500);
     });
+</script>
+
+<script>
+
+    function renderChart(entradas, saidas, labels) {
+        var ctx = document.getElementById("myChart").getContext('2d');
+
+        var gradientstrokeSaida = ctx.createLinearGradient(700, 0, 0, 0);
+        gradientstrokeSaida.addColorStop(0, '#e8023f');
+        gradientstrokeSaida.addColorStop(1, '#ff6a72');
+
+        var gradientfillSaida = ctx.createLinearGradient(700, 0, 0, 0);
+        gradientfillSaida.addColorStop(0, 'rgba(232,2,63,1)');
+        gradientfillSaida.addColorStop(1, 'rgba(255,106,114,1)');
+
+
+        var gradientstrokeEntrada = ctx.createLinearGradient(700, 0, 0, 0);
+        gradientstrokeEntrada.addColorStop(1, "#5272ce");
+        gradientstrokeEntrada.addColorStop(0, "#3B61D1");
+
+        const purple_orange_gradient = ctx.createLinearGradient(700, 0, 0, 0);
+        purple_orange_gradient.addColorStop(1, "#5272ce");
+        purple_orange_gradient.addColorStop(0, "#3B61D1");
+
+
+
+
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+
+                datasets: [
+               {
+                   label: 'Entradas',
+                   data: entradas,
+                   borderColor: gradientstrokeEntrada,
+                   backgroundColor: purple_orange_gradient,
+                   pointBorderColor: '#00000',
+                   pointBackgroundColor: "#ffffff",
+                   pointHoverBackgroundColor: gradientstrokeEntrada,
+                   pointHoverBorderColor: "#00000",
+               },
+               {
+                   label: 'Saídas',
+                   data: saidas,
+                   borderColor: gradientstrokeSaida,
+                   backgroundColor: gradientfillSaida,
+                   pointBorderColor: "#00000",
+                   pointBackgroundColor: "#ffffff",
+                   pointHoverBackgroundColor: gradientstrokeSaida,
+                   pointHoverBorderColor: "#00000",
+               },
+
+                ]
+
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            callback: function (value) {
+
+                                var formatter = new Intl.NumberFormat('pt-BR', {
+                                    style: 'currency',
+                                    currency: 'BRL',
+                                });
+
+                                return formatter.format(value);
+                            }
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
+
+    jQuery(document).ready(function () {
+        setTimeout(function () {
+
+            var labels = [];
+            var entradas = [];
+            var saidas = [];
+            for (var i in dadosEntrada) {
+                for (var j in dadosSaidas) {
+
+                    var entradaValor = dadosEntrada[i]["total"];
+                    var saidaValor = dadosSaidas[j]["total"];
+
+                    var dataConvertEntrada = parseJsonDate(dadosEntrada[i]["Data"]);
+                    var dataConvertSaida = parseJsonDate(dadosSaidas[j]["Data"]);
+
+
+
+                    if (dataConvertEntrada == dataConvertSaida) {
+                        labels.push(dataConvertEntrada.toString());
+                        entradas.push(entradaValor);
+                        saidas.push(saidaValor);
+                    }
+                }
+            }
+            console.log("LABELS");
+            console.log(labels);
+            console.log("----------");
+            console.log("ENTRADAS");
+            console.log(entradas);
+            console.log("----------");
+            console.log("ENTRADAS");
+            console.log(saidas);
+
+
+
+            renderChart(entradas, saidas, labels);
+
+        }, 1500);
+    });
+
+
+    function parseJsonDate(jsonDate) {
+        var offset = new Date().getTimezoneOffset() * 60000;
+        var parts = /\/Date\((-?\d+)([+-]\d{2})?(\d{2})?.*/.exec(jsonDate);
+        if (parts[2] == undefined) parts[2] = 0;
+        if (parts[3] == undefined) parts[3] = 0;
+        d = new Date(+parts[1] + offset + parts[2] * 3600000 + parts[3] * 60000);
+        date = d.getDate() + 1;
+        date = date < 10 ? "0" + date : date;
+        mon = d.getMonth() + 1;
+        mon = mon < 10 ? "0" + mon : mon;
+        year = d.getFullYear();
+        return (mon + "/" + year);
+    };
+
+
 </script>
 
 
@@ -286,29 +422,20 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks</div>
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col-auto">
-                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="progress progress-sm mr-2">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+
+                                <canvas id="myChart"></canvas>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
-
-
         </div>
 
+
     </div>
+
+</div>
 </div>
 @section Scripts{
     <script>

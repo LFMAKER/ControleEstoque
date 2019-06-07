@@ -8,7 +8,7 @@ using System.Web.Mvc;
 namespace ControleEstoque.Web.Controllers
 {
     [HandleError]
-    public class HomeController : Controller
+    public class DashboardController : Controller
     {
         [Authorize]
         public ActionResult Index()
