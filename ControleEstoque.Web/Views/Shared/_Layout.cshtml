@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-   <title>Inventory Analytics - @ViewBag.Title</title>
+    <title>Inventory Analytics - @ViewBag.Title</title>
 
     <!-- CSS-->
     <link href="~/Content/inventory-analytics.min.css" rel="stylesheet" />
@@ -293,7 +293,7 @@
     <script src="~/Scripts/Chart.min.js"></script>
 
 
-   <script>
+    <script>
        $(document).ready(function () {
            const ipAPI = 'https://api.ipify.org?format=json'
            return fetch(ipAPI)
@@ -301,12 +301,9 @@
              .then(data => $('#myIp').html('IP Público: ' + data.ip))
              .catch(() => {
                  $('#myIp').html('Não foi possível obter seu IP Público')
-
              })
-
        });
-
-   </script>
+    </script>
 
 </body>
 

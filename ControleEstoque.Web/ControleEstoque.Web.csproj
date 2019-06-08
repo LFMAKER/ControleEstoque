@@ -262,17 +262,9 @@
     <Compile Include="Dal\Operacao\EntradaProdutoDao.cs" />
     <Compile Include="Dal\Operacao\SaidaProdutoDao.cs" />
     <Compile Include="Dal\Relatorio\EntradaESaidaRelatorioDao.cs" />
-    <Compile Include="Migrations\201906060731083_AddBanco.cs" />
-    <Compile Include="Migrations\201906060731083_AddBanco.Designer.cs">
-      <DependentUpon>201906060731083_AddBanco.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906070713483_TestePreco.cs" />
-    <Compile Include="Migrations\201906070713483_TestePreco.Designer.cs">
-      <DependentUpon>201906070713483_TestePreco.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906070716070_TestePreco2.cs" />
-    <Compile Include="Migrations\201906070716070_TestePreco2.Designer.cs">
-      <DependentUpon>201906070716070_TestePreco2.cs</DependentUpon>
+    <Compile Include="Migrations\201906071939388_CriarBanco.cs" />
+    <Compile Include="Migrations\201906071939388_CriarBanco.Designer.cs">
+      <DependentUpon>201906071939388_CriarBanco.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Binders\EntradaSaidaProdutoViewModelModelBinder.cs" />
@@ -367,7 +359,7 @@
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
-    <Content Include="Scripts\Graficos\GraEntradaESaida.js" />
+    <Content Include="Scripts\Dashboard\Dashboard.js" />
     <Content Include="Scripts\inventory-analytics.js" />
     <Content Include="Scripts\inventory-analytics.min.js" />
     <Content Include="Scripts\jquery-3.4.0.min.js" />
@@ -483,14 +475,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201906060731083_AddBanco.resx">
-      <DependentUpon>201906060731083_AddBanco.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906070713483_TestePreco.resx">
-      <DependentUpon>201906070713483_TestePreco.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906070716070_TestePreco2.resx">
-      <DependentUpon>201906070716070_TestePreco2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906071939388_CriarBanco.resx">
+      <DependentUpon>201906071939388_CriarBanco.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

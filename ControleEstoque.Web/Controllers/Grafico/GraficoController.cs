@@ -26,23 +26,15 @@ namespace ControleEstoque.Web.Controllers
         }
 
         [Authorize]
-        public async Task<JsonResult> GetDadosEntradas()
+        public async Task<JsonResult> GetDadosEntradasESaidas()
         {
             List<EntradaGraficos> entradasResult = new List<EntradaGraficos>();
             entradasResult = await EntradaESaidaGraficoDao.GetEntradasGrafico();
 
-            return Json(entradasResult);
-        }
-
-
-
-        [Authorize]
-        public async Task<JsonResult> GetDadosSaidas()
-        {
             List<SaidaGraficos> saidasResult = new List<SaidaGraficos>();
             saidasResult = await EntradaESaidaGraficoDao.GetSaidasGrafico();
 
-            return Json(saidasResult);
+            return Json( new {Entradas = entradasResult, Saidas = saidasResult });
         }
 
 

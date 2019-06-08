@@ -148,31 +148,24 @@ namespace ControleEstoque.Web.Dal.Cadastro
         }
 
 
-        public static bool AtualizarCapacidadeAtual(LocalArmazenamento la, int quantidade, string acao = "", int recuperarProdutoPorId = 0)
+        public static bool AtualizarCapacidadeAtual(int idLocal = 0, int quantidade = 0, string acao = "")
         {
-            Produto produtoRecuperado = null;
-            if(recuperarProdutoPorId != 0)
+
+            LocalArmazenamento la = null;
+            if (idLocal != 0)
             {
-                produtoRecuperado = ctx.Produtos.Find(recuperarProdutoPorId);
-                la = produtoRecuperado.LocalArmazenamento;
+                la = ctx.LocaisArmazenamentos.Find(idLocal);
             }
-
-
-            var existing = ctx.LocaisArmazenamentos.FirstOrDefault(x => x.Id == la.Id);
-            la.Nome = existing.Nome;
-            la.CapacidadeTotal = existing.CapacidadeTotal;
+       
             if (acao.Equals("Cadastrar"))
             {
-                la.CapacidadeAtual = quantidade + existing.CapacidadeAtual;
+                la.CapacidadeAtual+= quantidade;
             }
             else if (acao.Equals("Remover"))
             {
-                la.CapacidadeAtual =  existing.CapacidadeAtual - quantidade;
+                la.CapacidadeAtual -= quantidade;
             }
-
-
-            la.Ativo = existing.Ativo;
-            ctx.Entry(existing).State = EntityState.Modified;
+            ctx.Entry(la).State = EntityState.Modified;
             ctx.SaveChanges();
             return true;
         }

@@ -94,7 +94,8 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
         /// <returns></returns>
         public static bool ExcluirPeloId(int id)
         {
-            
+
+            int idLocalReservado = 0;
             var ret = false;
             var existing = ctx.Produtos.Include("LocalArmazenamento").FirstOrDefault(x => x.Id == id);
             if (existing != null)
@@ -106,21 +107,37 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
             {
                 //TODO: Tentar AtualizarCapacidadeAtual depois de remover o produto
 
-                LocalArmazenamentoDao.AtualizarCapacidadeAtual(existing.LocalArmazenamento, existing.QuantEstoque, "Remover", id);
+                
                 existing = ctx.Produtos.Include("LocalArmazenamento").FirstOrDefault(x => x.Id == id);
                 if (existing != null)
                 {
                     ctx.Entry(existing).State = EntityState.Detached;
+                    existing.LocalArmazenamento = ctx.LocaisArmazenamentos.Find(existing.IdLocalArmazenamento);
+                    existing.MarcaProduto = ctx.MarcasProdutos.Find(existing.IdMarca);
+                    existing.Fornecedor = ctx.Fornecedores.Find(existing.IdFornecedor);
+                    existing.GrupoProduto = ctx.GruposProdutos.Find(existing.IdGrupo);
+                    existing.UnidadeMedida = ctx.UnidadesMedida.Find(existing.IdUnidadeMedida);
                 }
+                
+
+
+                idLocalReservado = existing.IdLocalArmazenamento;
                 ctx.Produtos.Attach(existing);
                 ctx.Entry(existing).State = EntityState.Deleted;
                 ctx.SaveChanges();
 
                 ret = true;
+               
+
             }
             catch (DbUpdateException)
             {
                 ret = false;
+            }
+
+            if (ret)
+            {
+                LocalArmazenamentoDao.AtualizarCapacidadeAtual(idLocalReservado, existing.QuantEstoque, "Remover");
             }
 
             //Limpando qualquer Exception que tenha ficado gravado no Object do Entity
@@ -170,7 +187,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
             ctx.SaveChanges();
 
             //Atualizando CapacidadeAtual LocalArmazenamento
-            LocalArmazenamentoDao.AtualizarCapacidadeAtual(p.LocalArmazenamento, p.QuantEstoque, "Cadastrar");
+            LocalArmazenamentoDao.AtualizarCapacidadeAtual(p.IdLocalArmazenamento, p.QuantEstoque, "Cadastrar");
             return true;
         }
 
@@ -315,6 +332,9 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
                 .Where(x => x.Id == id)
                 .FirstOrDefault();
 
+            recuperado.LocalArmazenamento = ctx.LocaisArmazenamentos.Find(recuperado.IdLocalArmazenamento);
+
+
             int capacidadeLivre = recuperado.LocalArmazenamento.CapacidadeTotal - recuperado.LocalArmazenamento.CapacidadeAtual;
             return capacidadeLivre;
 
@@ -352,6 +372,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
         public static string SalvarPedido(DateTime data, Dictionary<int, int> produtos, string nomeTabela, bool entrada)
         {
             var ret = "";
+            int idLocalArmazenamento = 0;
 
             try
             {
@@ -412,11 +433,13 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
 
                             Produto recuperado = ctx.Produtos.Find(produto.Key);
 
-                            var existingProduto = ctx.Produtos.FirstOrDefault(x => x.Id == produto.Key);
+                            var existingProduto = ctx.Produtos.Include("LocalArmazenamento").FirstOrDefault(x => x.Id == produto.Key);
                             if (existingProduto != null)
                             {
                                 ctx.Entry(existingProduto).State = EntityState.Detached;
                             }
+
+                            idLocalArmazenamento = existingProduto.IdLocalArmazenamento;
 
                             try
                             {
@@ -424,6 +447,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
                                 recuperado.QuantEstoque = recuperado.QuantEstoque + produto.Value;
                                 ctx.Entry(recuperado).State = EntityState.Modified;
                                 ctx.SaveChanges();
+                                LocalArmazenamentoDao.AtualizarCapacidadeAtual(idLocalArmazenamento, produto.Value, "Cadastrar");
 
                             }
                             catch (System.Exception ex)
@@ -449,11 +473,13 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
 
                             Produto recuperado = ctx.Produtos.Find(produto.Key);
 
-                            var existingProduto = ctx.Produtos.FirstOrDefault(x => x.Id == produto.Key);
+                            var existingProduto = ctx.Produtos.Include("LocalArmazenamento").FirstOrDefault(x => x.Id == produto.Key);
                             if (existingProduto != null)
                             {
                                 ctx.Entry(existingProduto).State = EntityState.Detached;
                             }
+
+                            idLocalArmazenamento = existingProduto.IdLocalArmazenamento;
 
                             try
                             {
@@ -468,6 +494,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
                                
                                 ctx.Entry(recuperado).State = EntityState.Modified;
                                 ctx.SaveChanges();
+                                LocalArmazenamentoDao.AtualizarCapacidadeAtual(idLocalArmazenamento, produto.Value, "Remover");
 
                             }
                             catch (System.Exception ex)
@@ -495,10 +522,18 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
             try
             {
                 if (tipo.Equals("entrada"))
-                {
+                {   
                     var EntradaRecuperada = ctx.EntradasProdutos.Find(id);
                     ctx.EntradasProdutos.Remove(EntradaRecuperada);
                     ctx.SaveChanges();
+
+                   
+                    var existingProduto = ctx.Produtos.FirstOrDefault(x => x.Id == EntradaRecuperada.IdProduto);
+                    if (existingProduto != null)
+                    {
+                        ctx.Entry(existingProduto).State = EntityState.Detached;
+                    }
+
                     return true;
                 }else if (tipo.Equals("saida"))
                 {

@@ -43,8 +43,8 @@ function get_dados_form() {
         Id: $('#id_cadastro').val(),
         Codigo: $('#txt_codigo').val(),
         Nome: $('#txt_nome').val(),
-        PrecoCusto: $('#txt_preco_custo').val(),
-        PrecoVenda: $('#txt_preco_venda').val(),
+        PrecoCusto: $('#txt_preco_custo').val().replace(".","").replace(",",""),
+        PrecoVenda: $('#txt_preco_venda').val().replace(".", "").replace(",", ""),
         QuantEstoque: $('#txt_quant_estoque').val(),
         IdUnidadeMedida: $('#ddl_unidade_medida').val(),
         IdGrupo: $('#ddl_grupo').val(),
@@ -77,7 +77,10 @@ $(document)
     $('#txt_quant_estoque').mask('00000');
 });
 
-
+$(document).on('click', '#btn_incluir', function () {
+    $('#txt_preco_custo,#txt_preco_venda').mask('#.##0,00', { reverse: true });
+    $('#txt_quant_estoque').mask('00000');
+})
 
 function verificarDadosValidos() {
     return true;

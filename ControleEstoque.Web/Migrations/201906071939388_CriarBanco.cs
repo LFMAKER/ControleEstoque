@@ -3,7 +3,7 @@ namespace ControleEstoque.Web.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddBanco : DbMigration
+    public partial class CriarBanco : DbMigration
     {
         public override void Up()
         {
@@ -28,8 +28,8 @@ namespace ControleEstoque.Web.Migrations
                         id = c.Int(nullable: false, identity: true),
                         codigo = c.String(nullable: false, maxLength: 10),
                         nome = c.String(nullable: false, maxLength: 50),
-                        preco_custo = c.Decimal(nullable: false, precision: 7, scale: 2),
-                        preco_venda = c.Decimal(nullable: false, precision: 7, scale: 2),
+                        preco_custo = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        preco_venda = c.Decimal(nullable: false, precision: 18, scale: 2),
                         quant_estoque = c.Int(nullable: false),
                         IdUnidadeMedida = c.Int(nullable: false),
                         IdGrupo = c.Int(nullable: false),
