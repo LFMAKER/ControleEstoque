@@ -22,7 +22,7 @@ namespace ControleEstoque.Web.Models.Maps
             Property(x => x.Id).HasColumnName("id").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             //Definindo nome da tabela, tamanho e obrigatório
-            Property(x => x.Nome).HasColumnName("nome").HasMaxLength(50).IsRequired();
+            Property(x => x.Nome).HasColumnName("nome").HasMaxLength(200).IsRequired();
             //Definindo nome da tabela e obrigatório
             Property(x => x.Ativo).HasColumnName("ativo").IsRequired();
 

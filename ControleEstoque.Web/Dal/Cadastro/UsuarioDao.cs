@@ -284,7 +284,27 @@ namespace ControleEstoque.Web.Dal.Cadastro
             return true;
         }
 
+        public static bool VerificarLoginEId(Usuario p)
+        {
+            var result = ctx.Usuarios.FirstOrDefault(x => x.Login.Equals(p.Login) && x.Id == p.Id);
+            if (result == null)
+            {
+                return false;
+            }
 
+            return true;
+        }
+
+        public static bool VerificarEmailEId(Usuario p)
+        {
+            var result = ctx.Usuarios.FirstOrDefault(x => x.Email.Equals(p.Email) && x.Id == p.Id);
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
 
 
     }

@@ -144,6 +144,37 @@ namespace ControleEstoque.Web.Dal.Cadastro
         }
 
 
+        public static bool VerificarNumDocumento(Fornecedor p)
+        {
+            var result = ctx.Fornecedores.FirstOrDefault(x => x.NumDocumento.Equals(p.NumDocumento));
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool VerificarNumDocumentoEId(Fornecedor p)
+        {
+            var result = ctx.Fornecedores.FirstOrDefault(x => x.NumDocumento.Equals(p.NumDocumento) && x.Id == p.Id);
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+
+
+
+
+
+
+
+
 
     }
 }

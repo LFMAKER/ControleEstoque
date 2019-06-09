@@ -59,7 +59,7 @@ function get_dados_form() {
 function preencher_linha_grid(param, linha) {
     linha
         .eq(0).html(param.Nome).end()
-        .eq(1).html(param.Login)
+        .eq(1).html(param.Login).end()
         .eq(2).html(param.Email);
 
 }

@@ -12,6 +12,7 @@ namespace ControleEstoque.Web.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Preencha o nome.")]
+        [MaxLength(200, ErrorMessage = "O nome deve ter no máximo 200 caracteres!")]
         public string Nome { get; set; }
         public int CapacidadeTotal { get; set; }
         public int CapacidadeAtual { get; set; }

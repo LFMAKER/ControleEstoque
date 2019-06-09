@@ -18,7 +18,7 @@ namespace ControleEstoque.Web.Models
         public string Codigo { get; set; }
 
         [Required(ErrorMessage = "Preencha o nome.")]
-        [MaxLength(50, ErrorMessage = "O nome pode ter no máximo 50 caracteres.")]
+        [MaxLength(200, ErrorMessage = "O nome pode ter no máximo 200 caracteres.")]
         public string Nome { get; set; }
 
         [Required(ErrorMessage = "Preencha o preço de custo.")]

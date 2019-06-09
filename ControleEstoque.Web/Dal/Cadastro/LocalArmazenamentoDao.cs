@@ -191,6 +191,32 @@ namespace ControleEstoque.Web.Dal.Cadastro
         }
 
 
+        public static bool VerificarNome(LocalArmazenamento p)
+        {
+            var result = ctx.LocaisArmazenamentos.FirstOrDefault(x => x.Nome.Equals(p.Nome));
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        public static bool VerificarNomeEId(LocalArmazenamento p)
+        {
+            var result = ctx.LocaisArmazenamentos.FirstOrDefault(x => x.Nome.Equals(p.Nome) && x.Id == p.Id);
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+
+
 
     }
 }

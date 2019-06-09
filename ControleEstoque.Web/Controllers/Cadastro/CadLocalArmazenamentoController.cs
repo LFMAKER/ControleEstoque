@@ -85,15 +85,25 @@ namespace ControleEstoque.Web.Controllers
             {
                 try
                 {
-                    var id = LocalArmazenamentoDao.Salvar(model);
-                    if (id > 0)
+
+                    if (!LocalArmazenamentoDao.VerificarNome(model) || LocalArmazenamentoDao.VerificarNomeEId(model))
                     {
-                        idSalvo = id.ToString();
+                        var id = LocalArmazenamentoDao.Salvar(model);
+                        if (id > 0)
+                        {
+                            idSalvo = id.ToString();
+                        }
+                        else
+                        {
+                            resultado = "ERRO";
+                        }
+
                     }
                     else
                     {
-                        resultado = "ERRO";
+                        resultado = "Não foi possível cadastrar esse local de armazenamento pois já existe outro local de armazenamento com o mesmo Nome.";
                     }
+
                 }
                 catch (Exception ex)
                 {

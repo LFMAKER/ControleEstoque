@@ -102,7 +102,9 @@ namespace ControleEstoque.Web.Controllers.Cadastro
                 {
                     try
                     {
-                        if ((!UsuarioDao.VerificarLogin(model) && !UsuarioDao.VerificarEmail(model)) || UsuarioDao.VerificarNomeEmailEId(model))
+                        if ((!UsuarioDao.VerificarLogin(model) && !UsuarioDao.VerificarEmail(model)) 
+                            || (UsuarioDao.VerificarLoginEId(model) || UsuarioDao.VerificarEmailEId(model)) 
+                            || UsuarioDao.VerificarNomeEmailEId(model))
                         {
 
                             if (model.Senha == _senhaPadrao)
@@ -122,7 +124,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
                             }
                         }else
                         {
-                            resultado = "Não é possível cadastrar um usuário com o mesmo login ou e-mail.";
+                            resultado = "Não foi possível cadastrar esse usuário pois já existe outro usuário com o mesmo Login ou E-mail.";
                         }
 
                     }

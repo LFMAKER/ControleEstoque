@@ -135,6 +135,29 @@ namespace ControleEstoque.Web.Dal.Cadastro
         }
 
 
+        public static bool VerificarNome(GrupoProduto p)
+        {
+            var result = ctx.GruposProdutos.FirstOrDefault(x => x.Nome.Equals(p.Nome));
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        public static bool VerificarNomeEId(GrupoProduto p)
+        {
+            var result = ctx.GruposProdutos.FirstOrDefault(x => x.Nome.Equals(p.Nome) && x.Id == p.Id);
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
 
 
     }

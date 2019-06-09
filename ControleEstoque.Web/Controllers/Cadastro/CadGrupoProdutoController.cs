@@ -13,7 +13,7 @@ namespace ControleEstoque.Web.Controllers
     {
         private const int _quantMaxLinhasPorPagina = 5;
 
-        
+
         public ActionResult Index()
         {
 
@@ -87,14 +87,24 @@ namespace ControleEstoque.Web.Controllers
             {
                 try
                 {
-                    var id = GrupoProdutoDao.Salvar(model);
-                    if (id > 0)
+
+                    if (!GrupoProdutoDao.VerificarNome(model)  || GrupoProdutoDao.VerificarNomeEId(model))
                     {
-                        idSalvo = id.ToString();
+
+                        var id = GrupoProdutoDao.Salvar(model);
+                        if (id > 0)
+                        {
+                            idSalvo = id.ToString();
+                        }
+                        else
+                        {
+                            resultado = "ERRO";
+                        }
+
                     }
                     else
                     {
-                        resultado = "ERRO";
+                        resultado = "Não foi possível cadastrar esse grupo de produtos pois já existe outro grupo de produtos com o mesmo Nome.";
                     }
 
 
@@ -107,7 +117,7 @@ namespace ControleEstoque.Web.Controllers
 
             return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo });
         }
-        
+
 
 
     }

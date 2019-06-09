@@ -16,9 +16,11 @@ namespace ControleEstoque.Web.Models
             //Definindo nome da coluna, tamanho e obrigatório
             Property(x => x.Login).HasColumnName("login").HasMaxLength(50).IsRequired();
             //Definindo nome da coluna, tamanho e obrigatório
-            Property(x => x.Senha).HasColumnName("senha").HasMaxLength(32).IsRequired();
+            Property(x => x.Senha).HasColumnName("senha").HasMaxLength(50).IsRequired();
             //Definindo nome da coluna, tamanho e obrigatório
-            Property(x => x.Nome).HasColumnName("nome").HasMaxLength(100).IsRequired();
+            Property(x => x.Nome).HasColumnName("nome").HasMaxLength(200).IsRequired();
+            //Definindo o nome da coluna, tamanho e obrigatório
+            Property(x => x.Email).HasColumnName("email").HasMaxLength(200).IsRequired();
             //Defininando nome da coluna e obrigatório
             Property(x => x.IdPerfil).HasColumnName("id_perfil").IsRequired();
             //Definindo a FK

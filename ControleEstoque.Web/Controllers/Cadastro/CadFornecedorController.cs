@@ -85,15 +85,28 @@ namespace ControleEstoque.Web.Controllers
             {
                 try
                 {
-                    var id = FornecedorDao.Salvar(model);
-                    if (id > 0)
+
+                    if (!FornecedorDao.VerificarNumDocumento(model) || FornecedorDao.VerificarNumDocumentoEId(model))
                     {
-                        idSalvo = id.ToString();
+                        var id = FornecedorDao.Salvar(model);
+                        if (id > 0)
+                        {
+                            idSalvo = id.ToString();
+                        }
+                        else
+                        {
+                            resultado = "ERRO";
+                        }
                     }
                     else
                     {
-                        resultado = "ERRO";
+                        resultado = "Não foi possível cadastrar esse fornecedor pois já existe outro fornecedor com o mesmo CPF ou CNPJ.";
                     }
+
+
+
+
+                   
                 }
                 catch (Exception ex)
                     {

@@ -149,6 +149,51 @@ namespace ControleEstoque.Web.Dal.Cadastro
             return true;
         }
 
+        public static bool VerificarSigla(UnidadeMedida p)
+        {
+            var result = ctx.UnidadesMedida.FirstOrDefault(x => x.Sigla.Equals(p.Sigla));
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        public static bool VerificarNomeSiglaEId(UnidadeMedida p)
+        {
+            var result = ctx.UnidadesMedida.FirstOrDefault(x => x.Nome.Equals(p.Nome) && x.Sigla.Equals(p.Sigla) && x.Id == p.Id);
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        public static bool VerificarNomeEId(UnidadeMedida p)
+        {
+            var result = ctx.UnidadesMedida.FirstOrDefault(x => x.Nome.Equals(p.Nome) && x.Id == p.Id);
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool VerificarSiglaEId(UnidadeMedida p)
+        {
+            var result = ctx.UnidadesMedida.FirstOrDefault(x => x.Sigla.Equals(p.Sigla) && x.Id == p.Id);
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
 
 
     }

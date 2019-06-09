@@ -14,7 +14,7 @@ namespace ControleEstoque.Web.Models
             //Definindo nome da coluna e auto increment
             Property(x => x.Id).HasColumnName("id").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             //Definindo nome da coluna, tamanho e obrigatório
-            Property(x => x.Nome).HasColumnName("nome").HasMaxLength(30).IsRequired();
+            Property(x => x.Nome).HasColumnName("nome").HasMaxLength(200).IsRequired();
             //Definindo nome da coluna, tamanho e obrigatório
             Property(x => x.Sigla).HasColumnName("sigla").HasMaxLength(3).IsRequired();
             //Definindo nome da coluna e obrigatório

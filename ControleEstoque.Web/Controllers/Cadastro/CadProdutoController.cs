@@ -16,7 +16,7 @@ namespace ControleEstoque.Web.Controllers
 
         public ActionResult Index()
         {
-  
+
             ViewBag.ListaTamPag = new SelectList(new int[] { _quantMaxLinhasPorPagina, 10, 15, 20 }, _quantMaxLinhasPorPagina);
             ViewBag.QuantMaxLinhasPorPagina = _quantMaxLinhasPorPagina;
             ViewBag.PaginaAtual = 1;
@@ -187,17 +187,27 @@ namespace ControleEstoque.Web.Controllers
                              * esteja utilizando uma abordagem em AJAX.
                              * */
 
-                            var id = ProdutoDao.Salvar(model);
-                            //Se o id for maior que 0 significa que ocorreu tudo certo
-                            if (id > 0)
+                            if (!ProdutoDao.VerificarCodigo(model) || ProdutoDao.VerificarCodigoEId(model))
                             {
-                                idSalvo = id.ToString();
+                                var id = ProdutoDao.Salvar(model);
+                                //Se o id for maior que 0 significa que ocorreu tudo certo
+                                if (id > 0)
+                                {
+                                    idSalvo = id.ToString();
+                                }
+                                else
+                                {
+                                    /*Aparentemente ocorreu um erro no processo de Salvar*/
+                                    resultado = "ERRO";
+                                }
                             }
                             else
                             {
-                                /*Aparentemente ocorreu um erro no processo de Salvar*/
-                                resultado = "ERRO";
+                                resultado = "Não foi possível cadastrar esse produto pois já existe outro produto com o mesmo Código.";
                             }
+
+
+
                         }
                         catch (Exception ex) //Uma exception foi detectada
                         {
@@ -211,7 +221,8 @@ namespace ControleEstoque.Web.Controllers
                             resultado = "ERRO";
                         }
                     }
-                }else
+                }
+                else
                 {
                     resultado = "O Local de Armazenamento selecionado não possui espaço suficiente para isso, " +
                         " • Capacidade Atual é " + capacidadeAtual + "  • Capacidade Total é " + capacidadeTotal +

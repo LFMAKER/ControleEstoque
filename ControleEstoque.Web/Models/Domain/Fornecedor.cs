@@ -12,10 +12,10 @@ namespace ControleEstoque.Web.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Preencha o nome.")]
-        [MaxLength(60, ErrorMessage = "O nome pode ter no máximo 60 caracteres.")]
+        [MaxLength(200, ErrorMessage = "O nome pode ter no máximo 200 caracteres.")]
         public string Nome { get; set; }
 
-        [MaxLength(100, ErrorMessage = "A razão social pode ter no máximo 100 caracteres.")]
+        [MaxLength(200, ErrorMessage = "A razão social pode ter no máximo 200 caracteres.")]
         public string RazaoSocial { get; set; }
 
         [MaxLength(20, ErrorMessage = "O número do documento pode ter no máximo 20 caracteres.")]
@@ -33,7 +33,7 @@ namespace ControleEstoque.Web.Models
         public string Contato { get; set; }
 
         [Required(ErrorMessage = "Preencha o logradouro.")]
-        [MaxLength(100, ErrorMessage = "O logradouro do endereço pode ter no máximo 100 caracteres.")]
+        [MaxLength(200, ErrorMessage = "O logradouro do endereço pode ter no máximo 200 caracteres.")]
         public string Logradouro { get; set; }
 
         [Required(ErrorMessage = "Preencha o numero.")]

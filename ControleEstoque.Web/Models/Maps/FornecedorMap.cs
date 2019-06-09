@@ -15,9 +15,9 @@ namespace ControleEstoque.Web.Models
             Property(x => x.Id).HasColumnName("id").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             //Definindo Nome, tamanho e Obrigatório
-            Property(x => x.Nome).HasColumnName("nome").HasMaxLength(60).IsRequired();
+            Property(x => x.Nome).HasColumnName("nome").HasMaxLength(200).IsRequired();
             //Definindo Nome, tamanho e Opcional
-            Property(x => x.RazaoSocial).HasColumnName("razao_social").HasMaxLength(100).IsOptional();
+            Property(x => x.RazaoSocial).HasColumnName("razao_social").HasMaxLength(200).IsOptional();
             //Definindo Nome, tamanho e Opcional
             Property(x => x.NumDocumento).HasColumnName("num_documento").HasMaxLength(20).IsOptional();
             //Definindo Nome e Obrigatório
@@ -27,7 +27,7 @@ namespace ControleEstoque.Web.Models
             //Definindo Nome, tamanho e Obrigatório
             Property(x => x.Contato).HasColumnName("contato").HasMaxLength(60).IsRequired();
             //Definindo Nome, tamanho e Obrigatório
-            Property(x => x.Logradouro).HasColumnName("logradouro").HasMaxLength(100).IsRequired();
+            Property(x => x.Logradouro).HasColumnName("logradouro").HasMaxLength(200).IsRequired();
             //Definindo Nome, tamanho e Obrigatório
             Property(x => x.Numero).HasColumnName("numero").HasMaxLength(20).IsRequired();
             //Definindo Nome, tamanho e Opcional

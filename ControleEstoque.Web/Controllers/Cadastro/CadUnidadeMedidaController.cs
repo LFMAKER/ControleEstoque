@@ -86,19 +86,31 @@ namespace ControleEstoque.Web.Controllers.Cadastro
             {
                 try
                 {
-                    var id = UnidadeMedidaDao.Salvar(model);
-                    if (id > 0)
+                  
+                    if ((!UnidadeMedidaDao.VerificarNome(model) && !UnidadeMedidaDao.VerificarSigla(model)) 
+                        || (UnidadeMedidaDao.VerificarNomeEId(model) || UnidadeMedidaDao.VerificarSiglaEId(model)) 
+                        || UnidadeMedidaDao.VerificarNomeSiglaEId(model))
                     {
-                        idSalvo = id.ToString();
+                        var id = UnidadeMedidaDao.Salvar(model);
+                        if (id > 0)
+                        {
+                            idSalvo = id.ToString();
+                        }
+                        else
+                        {
+                            resultado = "ERRO";
+                        }
+
                     }
                     else
                     {
-                        resultado = "ERRO";
+                        resultado = "Não foi possível cadastrar essa unidade de medida pois já existe outra unidade de medida com o mesmo Nome ou Sigla.";
                     }
+
                 }
                 catch (Exception ex)
                 {
-                    resultado = "ERRO";
+                    resultado = "ERRO: a sigla deve ter no máximo 3 caracteres.";
                 }
             }
 

@@ -325,6 +325,32 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
         }
 
 
+        public static bool VerificarCodigo(Produto p)
+        {
+            var result = ctx.Produtos.FirstOrDefault(x => x.Codigo.Equals(p.Codigo));
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        public static bool VerificarCodigoEId(Produto p)
+        {
+            var result = ctx.Produtos.FirstOrDefault(x => x.Codigo.Equals(p.Codigo) && x.Id == p.Id);
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+
+
         public static int RecuperarCapacidadeLivreArmazenamentoProduto(int? id)
         {
             Produto recuperado = ctx.Produtos.AsNoTracking()

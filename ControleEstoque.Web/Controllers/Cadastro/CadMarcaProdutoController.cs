@@ -41,7 +41,7 @@ namespace ControleEstoque.Web.Controllers
         public JsonResult RecuperarMarcaProduto(int id)
         {
             //return Json(false);
-           return Json(MarcaProdutoDao.RecuperarPeloId(id));
+            return Json(MarcaProdutoDao.RecuperarPeloId(id));
         }
 
         [HttpPost]
@@ -83,15 +83,25 @@ namespace ControleEstoque.Web.Controllers
             {
                 try
                 {
-                    var id = MarcaProdutoDao.Salvar(model);
-                    if (id > 0)
+                    if (!MarcaProdutoDao.VerificarNome(model) || MarcaProdutoDao.VerificarNomeEId(model))
                     {
-                        idSalvo = id.ToString();
+                        var id = MarcaProdutoDao.Salvar(model);
+                        if (id > 0)
+                        {
+                            idSalvo = id.ToString();
+                        }
+                        else
+                        {
+                            resultado = "ERRO";
+                        }
+
                     }
                     else
                     {
-                        resultado = "ERRO";
+                        resultado = "Não foi possível cadastrar essa marca de produtos pois já existe outra marca de produtos com o mesmo Nome.";
                     }
+
+
                 }
                 catch (Exception ex)
                 {
