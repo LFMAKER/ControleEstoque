@@ -26,6 +26,12 @@
         }
         <p class="lead">Hoje é @day - @DateTime.Now.Day de @mes</p>
         <p class="lead">Você logou com o @host</p>
+        <button class="btn btn-warning" id="Autenticar">Autenticar Google  <span class="badge badge-light" id="mensagem_autenticar"></span></button>
+        <p class="lead"><strong>ATENÇÃO:</strong>A Autenticação no Google deverá sempre ser realizada com a conta abaixo:</p>
+        <p class="lead">
+            <strong>E-MAIL:</strong> inventoryanalyticsadm@gmail.com  | <strong>SENHA:</strong> inventoryadm
+        </p>
+
 
         <!-- Content Row -->
         <div class="row">
@@ -153,6 +159,7 @@
 </div>
 <script>
     var urlGanhosAtual = '@Url.Action("GetGanhosMesAtualEAnoAtual", "Grafico")';
-    var urlEntradasESaidas = '@Url.Action("GetDadosEntradasESaidas", "Grafico")'; 
+    var urlEntradasESaidas = '@Url.Action("GetDadosEntradasESaidas", "Grafico")';
+    var urlAutenticar = '@Url.Action("AutenticarGoogle", "Log")';
 </script>
     

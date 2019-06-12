@@ -3,7 +3,7 @@ namespace ControleEstoque.Web.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class CriarBanco : DbMigration
+    public partial class CriarInicio : DbMigration
     {
         public override void Up()
         {
@@ -27,7 +27,7 @@ namespace ControleEstoque.Web.Migrations
                     {
                         id = c.Int(nullable: false, identity: true),
                         codigo = c.String(nullable: false, maxLength: 10),
-                        nome = c.String(nullable: false, maxLength: 50),
+                        nome = c.String(nullable: false, maxLength: 200),
                         preco_custo = c.Decimal(nullable: false, precision: 18, scale: 2),
                         preco_venda = c.Decimal(nullable: false, precision: 18, scale: 2),
                         quant_estoque = c.Int(nullable: false),
@@ -55,13 +55,13 @@ namespace ControleEstoque.Web.Migrations
                 c => new
                     {
                         id = c.Int(nullable: false, identity: true),
-                        nome = c.String(nullable: false, maxLength: 60),
-                        razao_social = c.String(maxLength: 100),
+                        nome = c.String(nullable: false, maxLength: 200),
+                        razao_social = c.String(maxLength: 200),
                         num_documento = c.String(maxLength: 20),
                         tipo = c.Int(nullable: false),
                         telefone = c.String(nullable: false, maxLength: 20),
                         contato = c.String(nullable: false, maxLength: 60),
-                        logradouro = c.String(nullable: false, maxLength: 100),
+                        logradouro = c.String(nullable: false, maxLength: 200),
                         numero = c.String(nullable: false, maxLength: 20),
                         complemento = c.String(maxLength: 100),
                         cep = c.String(nullable: false, maxLength: 10),
@@ -78,7 +78,7 @@ namespace ControleEstoque.Web.Migrations
                 c => new
                     {
                         id = c.Int(nullable: false, identity: true),
-                        nome = c.String(nullable: false, maxLength: 50),
+                        nome = c.String(nullable: false, maxLength: 200),
                         ativo = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.id);
@@ -88,7 +88,7 @@ namespace ControleEstoque.Web.Migrations
                 c => new
                     {
                         id = c.Int(nullable: false, identity: true),
-                        nome = c.String(nullable: false, maxLength: 50),
+                        nome = c.String(nullable: false, maxLength: 200),
                         CapacidadeTotal = c.Int(nullable: false),
                         CapacidadeAtual = c.Int(nullable: false),
                         ativo = c.Boolean(nullable: false),
@@ -100,7 +100,7 @@ namespace ControleEstoque.Web.Migrations
                 c => new
                     {
                         id = c.Int(nullable: false, identity: true),
-                        nome = c.String(nullable: false, maxLength: 50),
+                        nome = c.String(nullable: false, maxLength: 200),
                         ativo = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.id);
@@ -110,7 +110,7 @@ namespace ControleEstoque.Web.Migrations
                 c => new
                     {
                         id = c.Int(nullable: false, identity: true),
-                        nome = c.String(nullable: false, maxLength: 30),
+                        nome = c.String(nullable: false, maxLength: 200),
                         sigla = c.String(nullable: false, maxLength: 3),
                         ativo = c.Boolean(nullable: false),
                     })
@@ -121,7 +121,7 @@ namespace ControleEstoque.Web.Migrations
                 c => new
                     {
                         id = c.Int(nullable: false, identity: true),
-                        nome = c.String(nullable: false, maxLength: 20),
+                        nome = c.String(nullable: false, maxLength: 200),
                         ativo = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.id);
@@ -146,9 +146,9 @@ namespace ControleEstoque.Web.Migrations
                     {
                         id = c.Int(nullable: false, identity: true),
                         login = c.String(nullable: false, maxLength: 50),
-                        senha = c.String(nullable: false, maxLength: 32),
-                        nome = c.String(nullable: false, maxLength: 100),
-                        Email = c.String(nullable: false),
+                        senha = c.String(nullable: false, maxLength: 50),
+                        nome = c.String(nullable: false, maxLength: 200),
+                        email = c.String(nullable: false, maxLength: 200),
                         id_perfil = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.id)

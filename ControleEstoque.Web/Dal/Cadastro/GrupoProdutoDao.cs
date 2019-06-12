@@ -1,5 +1,6 @@
 ﻿using ControleEstoque.Web.Models;
 using Dapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
@@ -81,6 +82,10 @@ namespace ControleEstoque.Web.Dal.Cadastro
                 ret = true;
             }
             catch (DbUpdateException)
+            {
+                ret = false;
+            }
+            catch (InvalidOperationException)
             {
                 ret = false;
             }

@@ -61,6 +61,17 @@ jQuery(document).ready(function () {
 });
 
 
+$(document).on('click', '#Autenticar', function () {
+
+    var url_autenticar = urlAutenticar;
+    $.post(url_autenticar, function (response) {
+        if (response.Status) {
+            $('#mensagem_autenticar').html("Autenticado com Sucesso  ");
+        }
+    });
+
+});
+
 
 
 //Gráficos Google Charts

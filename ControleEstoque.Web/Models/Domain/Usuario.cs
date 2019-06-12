@@ -27,6 +27,11 @@ namespace ControleEstoque.Web.Models
         public int IdPerfil { get; set; }
         public Perfil Perfil { get; set; }
 
+        public override string ToString()
+        {
+            return "Id: " + Id + " | Login: " + Login + " | Senha: " + Senha
+                + " | Nome: " + Nome + " | E-mail: " + Email + " | IdPerfil: " + IdPerfil;
+        }
 
     }
 }

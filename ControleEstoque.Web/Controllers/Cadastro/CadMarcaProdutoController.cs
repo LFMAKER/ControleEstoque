@@ -109,6 +109,16 @@ namespace ControleEstoque.Web.Controllers
                 }
             }
 
+
+            if (resultado.Equals("OK"))
+            {
+                APIServicos.GoogleSheets.GoogleSheetsAPI
+                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
+                                        .MontarLog(User.Identity.Name.ToString(), "Cadastrar Marca Produto", "BAIXA", model),
+                                        User.Identity.Name.ToString()
+                                      );
+            }
+
             return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo });
         }
     }

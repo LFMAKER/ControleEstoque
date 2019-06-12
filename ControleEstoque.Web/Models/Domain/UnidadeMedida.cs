@@ -21,6 +21,12 @@ namespace ControleEstoque.Web.Models
 
         public bool Ativo { get; set; }
 
-       
+
+        public override string ToString()
+        {
+            return "Id: " + Id + " | Nome: " + Nome + " | Sigla: " + Sigla + " | Ativo: " + Ativo;
+        }
+
+
     }
 }

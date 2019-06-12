@@ -55,9 +55,10 @@ namespace ControleEstoque.Web.Controllers
         {
             string resultado = null;
             bool Ok = false;
-
+            GrupoProduto logData = GrupoProdutoDao.RecuperarPeloId(id);
 
             Ok = GrupoProdutoDao.ExcluirPeloId(id);
+
 
             if (Ok)
             {
@@ -67,6 +68,27 @@ namespace ControleEstoque.Web.Controllers
             {
                 resultado = "Não foi possível excluir esse Grupo de Produto.";
             }
+
+
+            if (resultado.Equals("OK"))
+            {
+                APIServicos.GoogleSheets.GoogleSheetsAPI
+                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
+                                        .MontarLog(User.Identity.Name.ToString(), "Excluir Grupo Produto", "ALTA", logData),
+                                        User.Identity.Name.ToString()
+                                      );
+            }
+            else
+            {
+                APIServicos.GoogleSheets.GoogleSheetsAPI
+                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
+                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Excluir Grupo Produto", "EXTREMA", logData),
+                                                       User.Identity.Name.ToString()
+                                                     );
+            }
+
+
+
             return Json(new { OK = Ok, Resultado = resultado });
         }
 
@@ -113,6 +135,15 @@ namespace ControleEstoque.Web.Controllers
                 {
                     resultado = "ERRO";
                 }
+            }
+
+            if (resultado.Equals("OK"))
+            {
+                APIServicos.GoogleSheets.GoogleSheetsAPI
+                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
+                                        .MontarLog(User.Identity.Name.ToString(), "Cadastrar Grupo Produto", "BAIXA", model),
+                                        User.Identity.Name.ToString()
+                                      );
             }
 
             return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo });

@@ -65,6 +65,13 @@ namespace ControleEstoque.Web.Models
 
         public bool Ativo { get; set; }
 
-      
+        public override string ToString()
+        {
+            return "Id: " + Id + " | Nome: " + Nome + " | Razão Social: " + RazaoSocial + " | Número Documento: " + NumDocumento +
+                   " | Tipo Pessoa: " + Tipo + " | Telefone: " + Telefone + " | Contato: " + Contato + " | Logradouro: " + Logradouro +
+                   " | CEP: " + Cep + " | Numero: " + Numero + " | Complemento: " + Complemento + " | Bairro: " + Bairro +
+                   " | Cidade: " + Cidade + " | Estado: " + Estado + " | País: " + Pais + " | Ativo: " + Ativo;
+        }
+
     }
 }

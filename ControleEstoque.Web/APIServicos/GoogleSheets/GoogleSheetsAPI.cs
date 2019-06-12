@@ -9,7 +9,6 @@ using System.IO;
 using System.Threading;
 using ControleEstoque.Web.Models;
 using System.Web;
-using System.IO;
 using static Google.Apis.Sheets.v4.SheetsService;
 using Newtonsoft.Json;
 
@@ -29,14 +28,14 @@ namespace ControleEstoque.Web.APIServicos.GoogleSheets
          */
 
 
-        static string[] Scopes = { SheetsService.Scope.Spreadsheets  };
+        static string[] Scopes = { SheetsService.Scope.Spreadsheets };
         static string ApplicationName = "Inventory Analytics";
         static string[] testeScope = { SheetsService.Scope.Spreadsheets };
         public static UserCredential credential;
-        
+
         public static bool AutenticarGoogle(string userLogado = null)
         {
-            
+
 
             bool result = false;
             //Credencial do Desenvolvedor - Isso não está relacionado ao usuário do sistema
@@ -72,64 +71,49 @@ namespace ControleEstoque.Web.APIServicos.GoogleSheets
             if (AutenticarGoogle(userLogado))
             {
 
-            //var File = System.Web.Hosting.HostingEnvironment.MapPath("~/credentials.json");
+                // Criando Google Sheets API service.
+                var service = new SheetsService(new BaseClientService.Initializer()
+                {
+                    HttpClientInitializer = credential,
+                    ApplicationName = ApplicationName,
+                });
 
-            ////Autenticando no Google API
-            //using (var stream =
-            //    new FileStream(File, FileMode.Open, FileAccess.Read))
-            //{
-            //    string caminho = Path.Combine(HttpContext.Current.Server.MapPath("~/API/GoogleSheets/"), "token.json");
-            //    credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-            //        GoogleClientSecrets.Load(stream).Secrets,
-            //        Scopes,
-            //        "user",
-            //        CancellationToken.None,
-            //        new FileDataStore(caminho, true)).Result;
-            //    Console.WriteLine("Credential file saved to: " + caminho);
-            //}
-
-            // Criando Google Sheets API service.
-            var service = new SheetsService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
-
-            // Define request parameters.
-            String spreadsheetId = "1GpvsT6-nEdueW-uFnWI6h7Gt38Bh4fjbcrVaDkqnUWs";
-            String range = "Class Data!A2:F";
-            SpreadsheetsResource.ValuesResource.GetRequest request =
-                    service.Spreadsheets.Values.Get(spreadsheetId, range);
+                // Define request parameters.
+                String spreadsheetId = "1GpvsT6-nEdueW-uFnWI6h7Gt38Bh4fjbcrVaDkqnUWs";
+                String range = "Class Data!A2:F";
+                SpreadsheetsResource.ValuesResource.GetRequest request =
+                        service.Spreadsheets.Values.Get(spreadsheetId, range);
 
                 ValueRange response = request.Execute();
-            IList<IList<Object>> values = response.Values;
-            if (values != null && values.Count > 0)
-            {
-
-                foreach (var row in values)
+                IList<IList<Object>> values = response.Values;
+                if (values != null && values.Count > 0)
                 {
-                    //Cria um usuário Log e adiciona os values do response, após adiciona em uma List<Log>
-                    Log r = new Log
+
+                    foreach (var row in values)
                     {
-                        Uuario = (string)row[0],
-                        Operacao = (string)row[1],
-                        Ip = (string)row[2],
-                        MacAddress = (string)row[3],
-                        Criticidade = (string)row[4],
-                        DataOperacao = (string)row[5]
+                        //Cria um usuário Log e adiciona os values do response, após adiciona em uma List<Log>
+                        Log r = new Log
+                        {
+                            Uuario = (string)row[0],
+                            Operacao = (string)row[1],
+                            Ip = (string)row[2],
+                            MacAddress = (string)row[3],
+                            Criticidade = (string)row[4],
+                            DataOperacao = (string)row[5]
 
-                    };
-                    LogsFounded.Add(r);//Adicionando os resultado na Lista
+                        };
+                        LogsFounded.Add(r);//Adicionando os resultado na Lista
 
+                    }
                 }
+                else
+                {
+                    LogsFounded = null;//O response.Values está vazio, logo a lista será null
+                }
+
+                return LogsFounded;//Retornando uma List<Log> com todos os resultados ou null caso vazio.
             }
             else
-            {
-                LogsFounded = null;//O response.Values está vazio, logo a lista será null
-            }
-
-            return LogsFounded;//Retornando uma List<Log> com todos os resultados ou null caso vazio.
-            }else
             {
                 LogsFounded = null;
                 return LogsFounded;
@@ -138,58 +122,56 @@ namespace ControleEstoque.Web.APIServicos.GoogleSheets
 
 
         }
-        public static void RequestLogsGravar(List<IList<object>> data)
+        public static void RequestLogsGravar(List<IList<object>> data, string userLogado)
         {
-            UserCredential credential;
 
-            //Localizando o arquivo credentials.json, necessário para autenticar
-            //e definindo ele como uma variavel do hosting, para permitir o uso no FileStream.
-            var File = System.Web.Hosting.HostingEnvironment.MapPath("~/credentials.json");
-
-            //Autenticando no Google API
-            using (var stream =
-                new FileStream(File, FileMode.Open, FileAccess.Read))
+            if (AutenticarGoogle(userLogado))
             {
-                string credPath = "token.json";
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + credPath);
+                // Criando um Google Sheets API service.
+                var service = new SheetsService(new BaseClientService.Initializer()
+                {
+                    HttpClientInitializer = credential,
+                    ApplicationName = ApplicationName,
+                });
+
+                // Define request parameters.
+                string spreadsheetId = "1GpvsT6-nEdueW-uFnWI6h7Gt38Bh4fjbcrVaDkqnUWs";
+                string range = "Class Data!A2:G";
+
+                //Montando ValueRange
+                var dataValueRange = new ValueRange();
+                dataValueRange.Range = range;
+                dataValueRange.Values = data;
+
+
+                var request = service.Spreadsheets.Values.Append(dataValueRange, spreadsheetId, range);
+                //Montando InsertDataOption e ValueInputOption
+                request.InsertDataOption = SpreadsheetsResource.ValuesResource.AppendRequest.InsertDataOptionEnum.INSERTROWS;
+                request.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
+
+                //Executando a API
+                AppendValuesResponse response = request.Execute();
+
+                /*
+                 A API Permite retornar o response em JSON
+                 */
             }
 
+        }
 
-            // Criando um Google Sheets API service.
-            var service = new SheetsService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
-
-            // Define request parameters.
-            string spreadsheetId = "1GpvsT6-nEdueW-uFnWI6h7Gt38Bh4fjbcrVaDkqnUWs";
-            string range = "Class Data!A2:F";
-            
-            //Montando ValueRange
-            var dataValueRange = new ValueRange();
-            dataValueRange.Range = range;
-            dataValueRange.Values = data;
-
-
-            var request = service.Spreadsheets.Values.Append(dataValueRange, spreadsheetId, range);
-            //Montando InsertDataOption e ValueInputOption
-            request.InsertDataOption = SpreadsheetsResource.ValuesResource.AppendRequest.InsertDataOptionEnum.INSERTROWS;
-            request.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
-         
-            //Executando a API
-            AppendValuesResponse response = request.Execute();
-
-            /*
-             A API Permite retornar o response em JSON
-             */
-
+        public static List<IList<Object>> MontarLog(string user, string acao, string criticidade, object data)
+        {
+            List<IList<Object>> objNewRecords = new List<IList<Object>>();
+            IList<Object> obj = new List<Object>();
+            obj.Add(user);
+            obj.Add(acao);
+            obj.Add((string)Log.IpUsuario());
+            obj.Add((string)Log.MacAddressUsuario());
+            obj.Add(criticidade);
+            obj.Add((string)DateTime.Now.ToString());
+            obj.Add(data.ToString());
+            objNewRecords.Add(obj);
+            return objNewRecords;
         }
 
 

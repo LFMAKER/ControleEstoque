@@ -262,21 +262,9 @@
     <Compile Include="Dal\Operacao\EntradaProdutoDao.cs" />
     <Compile Include="Dal\Operacao\SaidaProdutoDao.cs" />
     <Compile Include="Dal\Relatorio\EntradaESaidaRelatorioDao.cs" />
-    <Compile Include="Migrations\201906071939388_CriarBanco.cs" />
-    <Compile Include="Migrations\201906071939388_CriarBanco.Designer.cs">
-      <DependentUpon>201906071939388_CriarBanco.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906081931081_testeLength.cs" />
-    <Compile Include="Migrations\201906081931081_testeLength.Designer.cs">
-      <DependentUpon>201906081931081_testeLength.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906090202576_AddMaxLe.cs" />
-    <Compile Include="Migrations\201906090202576_AddMaxLe.Designer.cs">
-      <DependentUpon>201906090202576_AddMaxLe.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906090219510_FinalAdd.cs" />
-    <Compile Include="Migrations\201906090219510_FinalAdd.Designer.cs">
-      <DependentUpon>201906090219510_FinalAdd.cs</DependentUpon>
+    <Compile Include="Migrations\201906120044392_CriarInicio.cs" />
+    <Compile Include="Migrations\201906120044392_CriarInicio.Designer.cs">
+      <DependentUpon>201906120044392_CriarInicio.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Binders\EntradaSaidaProdutoViewModelModelBinder.cs" />
@@ -486,17 +474,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201906071939388_CriarBanco.resx">
-      <DependentUpon>201906071939388_CriarBanco.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906081931081_testeLength.resx">
-      <DependentUpon>201906081931081_testeLength.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906090202576_AddMaxLe.resx">
-      <DependentUpon>201906090202576_AddMaxLe.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906090219510_FinalAdd.resx">
-      <DependentUpon>201906090219510_FinalAdd.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906120044392_CriarInicio.resx">
+      <DependentUpon>201906120044392_CriarInicio.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

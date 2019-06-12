@@ -47,6 +47,12 @@ namespace ControleEstoque.Web.Models
 
         public bool Ativo { get; set; }
 
+        public override string ToString()
+        {
+            return "Id: " + Id + " | Código: " + Codigo + " | Nome: " + Nome + " | Preço Custo: " + PrecoCusto + " | Preço Venda: " + PrecoVenda + 
+                " | Quantidade Estoque: " + QuantEstoque + " | IdUnidadeMedida: " + IdUnidadeMedida + " | IdGrupoProduto: " + IdGrupo +
+                " | IdMarcaProduto: " + IdMarca + " | IdFornecedor: " + IdFornecedor + " | Ativo: " + Ativo;
+        }
 
     }
 }
