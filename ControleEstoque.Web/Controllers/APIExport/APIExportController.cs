@@ -9,7 +9,6 @@ namespace ControleEstoque.Web.Controllers.APIExport
 {
     public class ApiExportController : Controller
     {
-        // GET: ApiExport
         public ActionResult Index()
         {
             return View();
