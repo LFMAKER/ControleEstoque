@@ -346,6 +346,10 @@
     <Content Include="Content\Cadastro\UnidadeMedida.css" />
     <Content Include="Content\Cadastro\Usuario.css" />
     <Content Include="Content\Cadastro\GrupoProduto.css" />
+    <Content Include="Content\IBMWatson\base.0.0.4.css" />
+    <Content Include="Content\IBMWatson\chat.0.0.4.css" />
+    <Content Include="Content\IBMWatson\css.css" />
+    <Content Include="Content\IBMWatson\default.0.0.4.css" />
     <Content Include="Content\inventory-analytics.css" />
     <Content Include="Content\inventory-analytics.min.css" />
     <Content Include="Content\mdb.min.css" />
@@ -359,6 +363,7 @@
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\Dashboard\Dashboard.js" />
+    <Content Include="Scripts\IBMWatson\ibm.chat.0.0.4.js" />
     <Content Include="Scripts\inventory-analytics.js" />
     <Content Include="Scripts\inventory-analytics.min.js" />
     <Content Include="Scripts\jquery-3.4.0.min.js" />
@@ -453,6 +458,7 @@
     <Content Include="Views\Relatorio\RelatorioSaidasIndex.cshtml" />
     <Content Include="Views\Relatorio\RelatorioSaidasPDF.cshtml" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
+    <Content Include="Views\Dashboard\IBM.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APIServicos\GoogleSheets\TokensUsers\" />
