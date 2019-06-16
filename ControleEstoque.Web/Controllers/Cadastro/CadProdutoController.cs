@@ -79,7 +79,7 @@ namespace ControleEstoque.Web.Controllers
         {
             string resultado = null;
             bool Ok = false;
-
+            Produto logData = ProdutoDao.RecuperarPeloId(id);
 
             Ok = ProdutoDao.ExcluirPeloId(id);
 
@@ -91,6 +91,27 @@ namespace ControleEstoque.Web.Controllers
             {
                 resultado = "Esse Produto não pode ser excluído pois ele possui entradas e saídas, para excluí-lo você deve antes excluir todas as entradas e saídas desse produto.";
             }
+
+            if (resultado.Equals("OK"))
+            {
+                APIServicos.GoogleSheets.GoogleSheetsAPI
+                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
+                                        .MontarLog(User.Identity.Name.ToString(), "Excluir Produto", "ALTA", logData),
+                                        User.Identity.Name.ToString()
+                                      );
+            }
+            else
+            {
+                APIServicos.GoogleSheets.GoogleSheetsAPI
+                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
+                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Excluir Produto", "EXTREMA", logData),
+                                                       User.Identity.Name.ToString()
+                                                     );
+            }
+
+
+
+
             return Json(new { OK = Ok, Resultado = resultado });
         }
 
@@ -251,6 +272,24 @@ namespace ControleEstoque.Web.Controllers
              * 
              * 
              * */
+
+            if (resultado.Equals("OK"))
+            {
+                APIServicos.GoogleSheets.GoogleSheetsAPI
+                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
+                                        .MontarLog(User.Identity.Name.ToString(), "Cadastrar Produtos", "BAIXA", model),
+                                        User.Identity.Name.ToString()
+                                      );
+            }
+            else
+            {
+                APIServicos.GoogleSheets.GoogleSheetsAPI
+                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
+                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Cadastrar Produtos", "BAIXA", model),
+                                                       User.Identity.Name.ToString()
+                                                     );
+            }
+
             return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo });
         }
     }

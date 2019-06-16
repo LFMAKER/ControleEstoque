@@ -53,6 +53,7 @@ namespace ControleEstoque.Web.Controllers
         {
             string resultado = null;
             bool Ok = false;
+            LocalArmazenamento logData = LocalArmazenamentoDao.RecuperarPeloId(id);
 
 
             Ok = LocalArmazenamentoDao.ExcluirPeloId(id);
@@ -65,6 +66,26 @@ namespace ControleEstoque.Web.Controllers
             {
                 resultado = "Não foi possível excluir esse Local de Armazenamento.";
             }
+
+
+            if (resultado.Equals("OK"))
+            {
+                APIServicos.GoogleSheets.GoogleSheetsAPI
+                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
+                                        .MontarLog(User.Identity.Name.ToString(), "Excluir Local de Armazenamento", "ALTA", logData),
+                                        User.Identity.Name.ToString()
+                                      );
+            }
+            else
+            {
+                APIServicos.GoogleSheets.GoogleSheetsAPI
+                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
+                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Excluir  Local de Armazenamento", "EXTREMA", logData),
+                                                       User.Identity.Name.ToString()
+                                                     );
+            }
+
+
             return Json(new { OK = Ok, Resultado = resultado });
         }
 
@@ -102,13 +123,29 @@ namespace ControleEstoque.Web.Controllers
                     else
                     {
                         resultado = "Não foi possível cadastrar esse local de armazenamento pois já existe outro local de armazenamento com o mesmo Nome.";
-                    }
-
+                    }       
                 }
                 catch (Exception ex)
                 {
                     resultado = "ERRO";
                 }
+            }
+
+            if (resultado.Equals("OK"))
+            {
+                APIServicos.GoogleSheets.GoogleSheetsAPI
+                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
+                                        .MontarLog(User.Identity.Name.ToString(), "Cadastrar Local de Armazenamento", "BAIXA", model),
+                                        User.Identity.Name.ToString()
+                                      );
+            }
+            else
+            {
+                APIServicos.GoogleSheets.GoogleSheetsAPI
+                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
+                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Cadastrar Local de Armazenamento", "BAIXA", model),
+                                                       User.Identity.Name.ToString()
+                                                     );
             }
 
             return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo });

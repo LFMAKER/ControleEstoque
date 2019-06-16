@@ -1,5 +1,6 @@
 ﻿using ControleEstoque.Web.Models;
 using Dapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
@@ -86,6 +87,10 @@ namespace ControleEstoque.Web.Dal.Cadastro
             {
                 ret = false;
             }
+            catch (InvalidOperationException)
+            {
+                ret = false;
+            }
             //Limpando qualquer Exception que tenha ficado gravado no Object do Entity
             //Se não limpar, caso ocorra uma excessão na exclusão, ele sempre vai ficar persistindo 
             //o erro, mesmo que o proximo objeto esteja sem nenhum problema.
@@ -132,7 +137,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
             }
             catch (System.Exception ex)
             {
-                throw;
+                return false;
             }
             return true;
         }

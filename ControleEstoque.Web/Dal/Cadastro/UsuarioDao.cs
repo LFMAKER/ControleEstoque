@@ -97,6 +97,10 @@ namespace ControleEstoque.Web.Dal.Cadastro
 
                     ret = false;
                 }
+                catch (InvalidOperationException)
+                {
+                    ret = false;
+                }
 
             }
 
@@ -185,7 +189,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
             }
             catch (System.Exception ex)
             {
-                throw;
+                return false;
             }
             return true;
         }

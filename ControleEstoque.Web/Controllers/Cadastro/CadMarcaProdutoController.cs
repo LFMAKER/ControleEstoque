@@ -51,7 +51,7 @@ namespace ControleEstoque.Web.Controllers
         {
             string resultado = null;
             bool Ok = false;
-
+            MarcaProduto logData = MarcaProdutoDao.RecuperarPeloId(id);
 
             Ok = MarcaProdutoDao.ExcluirPeloId(id);
 
@@ -63,6 +63,26 @@ namespace ControleEstoque.Web.Controllers
             {
                 resultado = "Não foi possível excluir essa Marca de Produto.";
             }
+
+            if (resultado.Equals("OK"))
+            {
+                APIServicos.GoogleSheets.GoogleSheetsAPI
+                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
+                                        .MontarLog(User.Identity.Name.ToString(), "Excluir Marca de Produtos", "ALTA", logData),
+                                        User.Identity.Name.ToString()
+                                      );
+            }
+            else
+            {
+                APIServicos.GoogleSheets.GoogleSheetsAPI
+                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
+                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Marca de Produtos", "EXTREMA", logData),
+                                                       User.Identity.Name.ToString()
+                                                     );
+            }
+
+
+
             return Json(new { OK = Ok, Resultado = resultado });
         }
 
@@ -114,9 +134,17 @@ namespace ControleEstoque.Web.Controllers
             {
                 APIServicos.GoogleSheets.GoogleSheetsAPI
                     .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                        .MontarLog(User.Identity.Name.ToString(), "Cadastrar Marca Produto", "BAIXA", model),
+                                        .MontarLog(User.Identity.Name.ToString(), "Cadastrar Marca de Produtos", "BAIXA", model),
                                         User.Identity.Name.ToString()
                                       );
+            }
+            else
+            {
+                APIServicos.GoogleSheets.GoogleSheetsAPI
+                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
+                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Cadastrar Marca de Produtos", "BAIXA", model),
+                                                       User.Identity.Name.ToString()
+                                                     );
             }
 
             return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo });

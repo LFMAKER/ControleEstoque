@@ -134,7 +134,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
             }
             catch (System.Exception ex)
             {
-                throw;
+                return false;
             }
             return true;
         }
