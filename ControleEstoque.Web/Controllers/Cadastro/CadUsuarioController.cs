@@ -148,6 +148,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
                         }
 
                     }
+                    #pragma warning disable 0168
                     catch (Exception ex)
                     {
                         resultado = "ERRO";

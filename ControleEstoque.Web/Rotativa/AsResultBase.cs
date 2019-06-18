@@ -189,8 +189,10 @@ namespace Rotativa
 
             var fileContent = this.CallTheDriver(context);
 
+            #pragma warning disable CS0618 // Type or member is obsolete
             if (string.IsNullOrEmpty(this.SaveOnServerPath) == false)
             {
+            #pragma warning disable CS0618 // Type or member is obsolete
                 File.WriteAllBytes(this.SaveOnServerPath, fileContent);
             }
 

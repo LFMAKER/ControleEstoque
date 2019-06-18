@@ -123,8 +123,9 @@ namespace ControleEstoque.Web.Controllers
                     else
                     {
                         resultado = "Não foi possível cadastrar esse local de armazenamento pois já existe outro local de armazenamento com o mesmo Nome.";
-                    }       
+                    }
                 }
+                #pragma warning disable 0168
                 catch (Exception ex)
                 {
                     resultado = "ERRO";

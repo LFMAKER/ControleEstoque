@@ -230,6 +230,7 @@ namespace ControleEstoque.Web.Controllers
 
 
                         }
+                        #pragma warning disable 0168
                         catch (Exception ex) //Uma exception foi detectada
                         {
                             /*Como o sistema está utilizando uma abordagem em AJAX,

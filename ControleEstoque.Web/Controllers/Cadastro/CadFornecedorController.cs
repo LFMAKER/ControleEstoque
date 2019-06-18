@@ -122,6 +122,7 @@ namespace ControleEstoque.Web.Controllers
                         resultado = "Não foi possível cadastrar esse fornecedor pois já existe outro fornecedor com o mesmo CPF ou CNPJ.";
                     }
                 }
+                #pragma warning disable 0168
                 catch (Exception ex)
                 {
                     resultado = "ERRO";

@@ -48,6 +48,7 @@ namespace ControleEstoque.Web.Models
 
                 };
             }
+            #pragma warning disable 0168
             catch (System.Exception ex)
             {
                 throw;

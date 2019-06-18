@@ -187,6 +187,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                 ctx.Entry(um).State = EntityState.Modified;
                 ctx.SaveChanges();
             }
+            #pragma warning disable 0168
             catch (System.Exception ex)
             {
                 return false;
