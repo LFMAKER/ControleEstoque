@@ -27,7 +27,7 @@
         <p class="lead">Hoje é @day - @DateTime.Now.Day de @mes</p>
         <p class="lead">Você logou com o @host</p>
         <button class="btn btn-warning" id="Autenticar">Autenticar Google  <span class="badge badge-light" id="mensagem_autenticar"></span></button>
-        <p class="lead"><strong>ATENÇÃO:</strong>A Autenticação no Google deverá sempre ser realizada com a conta abaixo:</p>
+        <p class="lead" style="padding-top:10px;"><strong>ATENÇÃO:</strong>A Autenticação no Google deverá sempre ser realizada com a conta abaixo:</p>
         <p class="lead">
             <strong>E-MAIL:</strong> inventoryanalyticsadm@gmail.com  | <strong>SENHA:</strong> inventoryadm
         </p>
@@ -36,7 +36,7 @@
         <!-- Content Row -->
         <div class="row">
 
-            <!-- Earnings (Monthly) Card Example -->
+            <!-- Lucro (Mensal) -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2" id="CardganhoAtualMes">
                     <div class="card-body">
@@ -54,7 +54,7 @@
                 </div>
             </div>
 
-            <!-- Earnings (Monthly) Card Example -->
+            <!-- Lucro (Anual) -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-success shadow h-100 py-2" id="CardganhoAtualAno">
                     <div class="card-body">
@@ -71,9 +71,9 @@
                 </div>
             </div>
 
-            <!-- Earnings (Monthly) Card Example -->
+            <!-- Dólar Hoje -->
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
+                <div class="card border-left-purple shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
@@ -96,28 +96,39 @@
                 </div>
             </div>
 
-            <!-- Pending Requests Card Example -->
+
+            <!-- IBM Watson -->
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card border-left-dark shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Requests</div>
-                            </div>
+                                <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">IBM Watson Assistant</div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <a class="h5 mb-0 mr-3 font-weight-bold text-white btn btn-dark" id="watsonbutton" href="@Url.Action("IBM", "Dashboard")">Conversar</a>
+                                    </div>
+                                    <div class="col">
 
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-brain fa-2x text-gray-300"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            
         </div>
 
         <!--Segunda Linha do Dashboard-->
         <div class="row">
 
-            <!-- Earnings (Monthly) Card Example -->
+            <!-- Entradas e Saídas (Anual) -->
             <div class="col-xl-6 col-md-12 mb-8">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">

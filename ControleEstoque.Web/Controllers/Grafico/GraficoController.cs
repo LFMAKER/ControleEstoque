@@ -74,16 +74,8 @@ namespace ControleEstoque.Web.Controllers
             return Json( new {ResultadoMes = resultadoMes, ResultadoAno = resultadoAno });
         }
 
-        [Authorize]
-        public JsonResult GetQuantidadeProdutos()
-        {
-
-            int quantidade =  ProdutoDao.RecuperarQuantidade();
-
-            return Json(new { Resultado = quantidade});
-        }
-
-
+      
+      
 
     }
 }

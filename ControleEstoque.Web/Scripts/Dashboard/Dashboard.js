@@ -71,9 +71,6 @@ jQuery(document).ready(function () {
     });
 
     
-    //Fazer ainda
-    var url_quantidade_produtos 
-
 
 });
 

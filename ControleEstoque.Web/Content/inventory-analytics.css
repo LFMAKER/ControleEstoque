@@ -10894,6 +10894,12 @@ a:focus {
   border-left: 0.25rem solid #5a5c69 !important;
 }
 
+.border-left-purple {
+  border-left: 0.25rem solid #3b61d1 !important;
+}
+
+
+
 .border-bottom-dark {
   border-bottom: 0.25rem solid #5a5c69 !important;
 }
