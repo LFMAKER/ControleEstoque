@@ -58,6 +58,22 @@ jQuery(document).ready(function () {
 
     });
 
+
+    var formatter = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+    });
+
+
+    var url_dolar = 'http://economia.awesomeapi.com.br/USD-BRL/1?format=json';
+    $.get(url_dolar, function (response) {
+        $('#dolar').html(formatter.format(response[0].ask));
+    });
+
+    //Fazer ainda
+    var url_quantidade_produtos 
+
+
 });
 
 

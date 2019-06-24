@@ -1,5 +1,6 @@
 ﻿using ControleEstoque.Web.Dal.Grafico;
 using ControleEstoque.Web.Models;
+using ControleEstoque.Web.Models.Dal.Cadastro;
 using ControleEstoque.Web.Models.Domain;
 using System;
 using System.Collections.Generic;
@@ -73,8 +74,16 @@ namespace ControleEstoque.Web.Controllers
             return Json( new {ResultadoMes = resultadoMes, ResultadoAno = resultadoAno });
         }
 
+        [Authorize]
+        public JsonResult GetQuantidadeProdutos()
+        {
 
-     
+            int quantidade =  ProdutoDao.RecuperarQuantidade();
+
+            return Json(new { Resultado = quantidade});
+        }
+
+
 
     }
 }
