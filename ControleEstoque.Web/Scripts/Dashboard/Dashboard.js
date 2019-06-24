@@ -70,6 +70,7 @@ jQuery(document).ready(function () {
         $('#dolar').html(formatter.format(response[0].ask));
     });
 
+    
     //Fazer ainda
     var url_quantidade_produtos 
 
