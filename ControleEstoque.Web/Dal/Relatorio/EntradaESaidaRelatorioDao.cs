@@ -16,6 +16,7 @@ namespace ControleEstoque.Web.Dal.Relatorio
         {
             List<EntradaGraficos> entradas = new List<EntradaGraficos>();
 
+        
 
             using (var ctx = new Context())
             {

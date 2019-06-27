@@ -239,7 +239,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\APIExport\APIExportController.cs" />
+    <Compile Include="Controllers\APIExport\APIExportInventoryController.cs" />
     <Compile Include="Controllers\Cadastro\CadFornecedorController.cs" />
     <Compile Include="Controllers\Cadastro\CadGrupoProdutoController.cs" />
     <Compile Include="Controllers\Cadastro\CadLocalArmazenamentoController.cs" />

@@ -11,6 +11,11 @@ namespace ControleEstoque.Web
         {
             config.MapHttpAttributeRoutes();
 
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+            config.Formatters.Add(config.Formatters.JsonFormatter);
+
+
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
