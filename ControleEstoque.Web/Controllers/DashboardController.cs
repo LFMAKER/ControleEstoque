@@ -23,5 +23,13 @@ namespace ControleEstoque.Web.Controllers
         {
             return View();
         }
+
+
+        [Authorize]
+        public ActionResult APIDOC()
+        {
+            return View();
+        }
+
     }
 }

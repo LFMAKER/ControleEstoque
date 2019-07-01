@@ -262,10 +262,6 @@
     <Compile Include="Dal\Operacao\EntradaProdutoDao.cs" />
     <Compile Include="Dal\Operacao\SaidaProdutoDao.cs" />
     <Compile Include="Dal\Relatorio\EntradaESaidaRelatorioDao.cs" />
-    <Compile Include="Migrations\201906120044392_CriarInicio.cs" />
-    <Compile Include="Migrations\201906120044392_CriarInicio.Designer.cs">
-      <DependentUpon>201906120044392_CriarInicio.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Binders\EntradaSaidaProdutoViewModelModelBinder.cs" />
     <Compile Include="Dal\Cadastro\FornecedorDao.cs" />
@@ -459,6 +455,7 @@
     <Content Include="Views\Relatorio\RelatorioSaidasPDF.cshtml" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\Dashboard\IBM.cshtml" />
+    <Content Include="Views\Dashboard\APIDOC.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APIServicos\GoogleSheets\TokensUsers\" />
@@ -478,11 +475,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201906120044392_CriarInicio.resx">
-      <DependentUpon>201906120044392_CriarInicio.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

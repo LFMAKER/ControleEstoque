@@ -114,22 +114,17 @@ namespace ControleEstoque.Web.Controllers.APIExport
 
         }
 
-        [Route("Usuarios/{apikey}")]
-        public IHttpActionResult GetUsuarios(string apikey)
+        [Route("Usuarios")]
+        public IHttpActionResult GetUsuarios()
         {
 
-            if (apikey != null)
+            List<Usuario> lista = UsuarioDao.RecuperarLista();
+            if (lista != null)
             {
-
-                List<Usuario> lista = UsuarioDao.RecuperarLista();
-                if (lista != null)
-                {
-                    return Ok(lista);
-                }
-                return NotFound();
+                return Ok(lista);
             }
+            return NotFound();
 
-            return Unauthorized();
         }
 
 
