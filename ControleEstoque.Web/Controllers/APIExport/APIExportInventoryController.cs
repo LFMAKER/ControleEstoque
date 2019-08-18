@@ -11,11 +11,13 @@ using System.Web.Http;
 
 namespace ControleEstoque.Web.Controllers.APIExport
 {
-    [RoutePrefix("api/export")]
+    [RoutePrefix("api")]
     public class APIExportInventoryController : ApiController
     {
 
+ 
         [Route("Fornecedores")]
+        [AllowAnonymous]
         public IHttpActionResult GetFornecedores()
         {
 

@@ -262,6 +262,10 @@
     <Compile Include="Dal\Operacao\EntradaProdutoDao.cs" />
     <Compile Include="Dal\Operacao\SaidaProdutoDao.cs" />
     <Compile Include="Dal\Relatorio\EntradaESaidaRelatorioDao.cs" />
+    <Compile Include="Migrations\201908152244524_CriarBanco.cs" />
+    <Compile Include="Migrations\201908152244524_CriarBanco.Designer.cs">
+      <DependentUpon>201908152244524_CriarBanco.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Binders\EntradaSaidaProdutoViewModelModelBinder.cs" />
     <Compile Include="Dal\Cadastro\FornecedorDao.cs" />
@@ -393,6 +397,7 @@
     <Content Include="Scripts\comum.js" />
     <None Include=".bin\node.cmd" />
     <Content Include="App_Browsers\qt.browser" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -459,7 +464,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APIServicos\GoogleSheets\TokensUsers\" />
-    <Folder Include="App_Data\" />
     <Folder Include="Images\" />
     <Folder Include="Scripts\Operacao\" />
     <Folder Include="Views\ApiExport\" />
@@ -475,6 +479,11 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201908152244524_CriarBanco.resx">
+      <DependentUpon>201908152244524_CriarBanco.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

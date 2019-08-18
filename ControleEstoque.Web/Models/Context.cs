@@ -13,7 +13,7 @@ namespace ControleEstoque.Web.Models
     {
 
         //String de conexao com o BD
-        public Context() : base("InventoryAnalytics")
+        public Context() : base("principal")
         {
             Configuration.LazyLoadingEnabled = false;
         }
