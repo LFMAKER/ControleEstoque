@@ -312,5 +312,52 @@ namespace ControleEstoque.Web.Dal.Cadastro
         }
 
 
+        public static string GerarESalvarKey(string login)
+        {
+
+            Usuario u = ctx.Usuarios.Include("Key").Where(x => x.Login.Equals(login)).FirstOrDefault();
+            if(u.Key != null)
+            {
+                var keyCodigo = u.Key.Codigo;
+                var keyRecuperada = ctx.Keys.Where(x => x.Codigo.Equals(keyCodigo)).FirstOrDefault();
+                keyRecuperada.Ativada = false;
+                ctx.Entry(keyRecuperada).State = EntityState.Modified;
+                ctx.SaveChanges();
+            }
+
+            string apiKey = Guid.NewGuid().ToString();
+            KeyControle KeyObj = new KeyControle();
+            KeyObj.Codigo = apiKey;
+            KeyObj.CriadaEm = DateTime.Now;
+            KeyObj.QuantidadeDeChamadas = 0;
+            KeyObj.UltimoUso = DateTime.Now;
+            KeyObj.Ativada = true;
+            ctx.Keys.Add(KeyObj);
+            ctx.SaveChanges();
+
+          
+            u.Key = ctx.Keys.Where(x => x.Codigo.Equals(KeyObj.Codigo)).FirstOrDefault();
+            ctx.Entry(u).State = EntityState.Modified;
+            ctx.SaveChanges();
+
+
+            return apiKey;
+        }
+
+        public static string KeyAtual(string login)
+        {
+            Usuario u = ctx.Usuarios.Include("Key").Where(x => x.Login.Equals(login)).FirstOrDefault();
+            if(u.Key != null)
+            {
+                var key = u.Key.Codigo;
+                return key;
+            }
+            return "Não possui Key";
+           
+
+        }
+
+
+
     }
 }

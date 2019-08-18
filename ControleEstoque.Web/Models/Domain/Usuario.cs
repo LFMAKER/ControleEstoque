@@ -1,11 +1,12 @@
 ﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
-
+using ControleEstoque.Web.Models.Domain;
 namespace ControleEstoque.Web.Models
 {
     public class Usuario
@@ -26,6 +27,7 @@ namespace ControleEstoque.Web.Models
         public string Email {get;set; }
         public int IdPerfil { get; set; }
         public Perfil Perfil { get; set; }
+        public KeyControle Key { get; set; }
 
         public override string ToString()
         {

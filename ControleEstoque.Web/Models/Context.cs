@@ -48,6 +48,7 @@ namespace ControleEstoque.Web.Models
         public DbSet<SaidaProduto> SaidasProdutos { get; set; }
         public DbSet<UnidadeMedida> UnidadesMedida { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<KeyControle> Keys { get; set; }
 
 
         public void DetachAllEntities()

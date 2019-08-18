@@ -1,16 +1,32 @@
 ﻿
 @{
     ViewBag.Title = "API-DOC";
+
 }
 
 
-
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
 
 
 
 <div class="container mx-auto"><br />
     <h1>API</h1>
     <br /><br />
+    
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">KEY</span>Chave de Acesso API</h5>
+                <p class="card-text">Essa Chave é utilizada para autenticação das apis abaixo. Ela é única para cada usuário.</p>
+                <div class="form-group">
+                    <input type="text" id="key" class="form-control" value="@ViewBag.KeyAtual" disabled>
+                </div>
+                <a class="btn btn-primary btn-gerar" id="btn-gerar" style="color: white" role="button">Gerar Nova Key</a>
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         
@@ -20,9 +36,9 @@
                     <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">GET</span>Fornecedores</h5>
                     <p class="card-text">Retorna uma lista de fornecedores em JSON.</p>
                     <div class="form-group">
-                        <input type="text" id="disabledTextInput" class="form-control" value="http://localhost:51846/api/export/Fornecedores" disabled>
+                        <input type="text" id="fornecedores" class="form-control" value="http://localhost:51846/api/Fornecedores/@ViewBag.KeyAtual" disabled>
                     </div>
-                    <a href="http://localhost:51846/api/export/Fornecedores" target="_blank" class="btn btn-primary">Testar</a>
+                    <a href="http://localhost:51846/api/Fornecedores/@ViewBag.KeyAtual" target="_blank" class="btn btn-primary">Testar</a>
                 </div>
             </div>
         </div>
@@ -33,9 +49,9 @@
                     <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">GET</span>Unidades de Medida</h5>
                     <p class="card-text">Retorna uma lista de unidades de medida em JSON.</p>
                     <div class="form-group">
-                        <input type="text" id="disabledTextInput" class="form-control" value="http://localhost:51846/api/export/UnidadesMedida" disabled>
+                        <input type="text" id="unidadesMedida" class="form-control" value="http://localhost:51846/api/UnidadesMedida/@ViewBag.KeyAtual" disabled>
                     </div>
-                    <a href="http://localhost:51846/api/export/UnidadesMedida" target="_blank" class="btn btn-primary">Testar</a>
+                    <a href="http://localhost:51846/api/UnidadesMedida/@ViewBag.KeyAtual" target="_blank" class="btn btn-primary">Testar</a>
                 </div>
             </div>
         </div>
@@ -46,9 +62,9 @@
                     <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">GET</span>Grupos de Produtos</h5>
                     <p class="card-text">Retorna uma lista de grupos de produto em JSON.</p>
                     <div class="form-group">
-                        <input type="text" id="disabledTextInput" class="form-control" value="http://localhost:51846/api/export/GruposProduto" disabled>
+                        <input type="text" id="GruposProduto" class="form-control" value="http://localhost:51846/api/GruposProduto/@ViewBag.KeyAtual" disabled>
                     </div>
-                    <a href="http://localhost:51846/api/export/GruposProduto" target="_blank" class="btn btn-primary">Testar</a>
+                    <a href="http://localhost:51846/api/GruposProduto/@ViewBag.KeyAtual" target="_blank" class="btn btn-primary">Testar</a>
                 </div>
             </div>
         </div>
@@ -58,9 +74,9 @@
                     <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">GET</span>Locais de Armazenamento</h5>
                     <p class="card-text">Retorna uma lista de locais de armazenamento em JSON.</p>
                     <div class="form-group">
-                        <input type="text" id="disabledTextInput" class="form-control" value="http://localhost:51846/api/export/LocaisArmazenamento" disabled>
+                        <input type="text" id="LocaisArmazenamento" class="form-control" value="http://localhost:51846/api/LocaisArmazenamento/@ViewBag.KeyAtual" disabled>
                     </div>
-                    <a href="http://localhost:51846/api/export/LocaisArmazenamento" target="_blank" class="btn btn-primary">Testar</a>
+                    <a href="http://localhost:51846/api/LocaisArmazenamento/@ViewBag.KeyAtual" target="_blank" class="btn btn-primary">Testar</a>
                 </div>
             </div>
         </div>
@@ -68,11 +84,11 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">GET</span>Marcas de Produto</h5>
-                    <p class="card-text">Retorna uma lista de fornecedores em JSON.</p>
+                    <p class="card-text">Retorna uma lista de Marcas de Produto em JSON.</p>
                     <div class="form-group">
-                        <input type="text" id="disabledTextInput" class="form-control" value="http://localhost:51846/api/export/MarcasProduto" disabled>
+                        <input type="text" id="marcasProduto" class="form-control" value="http://localhost:51846/api/MarcasProduto/@ViewBag.KeyAtual" disabled>
                     </div>
-                    <a href="http://localhost:51846/api/export/MarcasProduto" target="_blank" class="btn btn-primary">Testar</a>
+                    <a href="http://localhost:51846/api/MarcasProduto/@ViewBag.KeyAtual" target="_blank" class="btn btn-primary">Testar</a>
                 </div>
             </div>
         </div>
@@ -82,9 +98,9 @@
                     <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">GET</span>Perfis de Usuário</h5>
                     <p class="card-text">Retorna uma lista de perfis de usuário em JSON.</p>
                     <div class="form-group">
-                        <input type="text" id="disabledTextInput" class="form-control" value="http://localhost:51846/api/export/Perfis" disabled>
+                        <input type="text" id="perfis" class="form-control" value="http://localhost:51846/api/Perfis/@ViewBag.KeyAtual" disabled>
                     </div>
-                    <a href="http://localhost:51846/api/export/Perfis" target="_blank" class="btn btn-primary">Testar</a>
+                    <a href="http://localhost:51846/api/Perfis/@ViewBag.KeyAtual" target="_blank" class="btn btn-primary">Testar</a>
                 </div>
             </div>
         </div>
@@ -94,9 +110,9 @@
                     <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">GET</span>Produtos</h5>
                     <p class="card-text">Retorna uma lista de produtos em JSON.</p>
                     <div class="form-group">
-                        <input type="text" id="disabledTextInput" class="form-control" value="http://localhost:51846/api/export/Produtos" disabled>
+                        <input type="text" id="produtos" class="form-control" value="http://localhost:51846/api/Produtos/@ViewBag.KeyAtual" disabled>
                     </div>
-                    <a href="http://localhost:51846/api/export/Produtos" target="_blank" class="btn btn-primary">Testar</a>
+                    <a href="http://localhost:51846/api/Produtos/@ViewBag.KeyAtual" target="_blank" class="btn btn-primary">Testar</a>
                 </div>
             </div>
         </div>
@@ -107,9 +123,9 @@
                     <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">GET</span>Usuários</h5>
                     <p class="card-text">Retorna uma lista de produtos em JSON.</p>
                     <div class="form-group">
-                        <input type="text" id="disabledTextInput" class="form-control" value="http://localhost:51846/api/export/Usuarios" disabled>
+                        <input type="text" id="usuarios" class="form-control" value="http://localhost:51846/api/Usuarios/@ViewBag.KeyAtual" disabled>
                     </div>
-                    <a href="http://localhost:51846/api/export/Usuarios" target="_blank" class="btn btn-primary">Testar</a>
+                    <a href="http://localhost:51846/api/Usuarios/@ViewBag.KeyAtual" target="_blank" class="btn btn-primary">Testar</a>
                 </div>
             </div>
         </div>
@@ -119,3 +135,30 @@
 
 </div>
 
+
+<script>
+
+    $(document).on('click', '#btn-gerar', function () {
+        var url = '@Url.Action("APIResult", "Dashboard")';
+        var antigaKey = $('#key').val();
+    $.post(url, function (response) {
+        if (response) {
+            console.log(response);
+            $('#key').val(response.apiKey);
+            $('#fornecedores').val("http://localhost:51846/api/Fornecedores/" + response.apiKey);
+            $('#unidadesMedida').val("http://localhost:51846/api/UnidadesMedida/" + response.apiKey);
+            $('#fornecedores').val("http://localhost:51846/api/Fornecedores/" + response.apiKey);
+            $('#fornecedores').val("http://localhost:51846/api/Fornecedores/" + response.apiKey);
+            $('#fornecedores').val("http://localhost:51846/api/Fornecedores/" + response.apiKey);
+            $('#fornecedores').val("http://localhost:51846/api/Fornecedores/" + response.apiKey);
+           
+            
+        }
+
+    })
+     .fail(function () {
+         swal('Aviso', 'Não foi possível recuperar as informações. Tente novamente em instantes.', 'warning');
+     });
+})
+
+</script>
