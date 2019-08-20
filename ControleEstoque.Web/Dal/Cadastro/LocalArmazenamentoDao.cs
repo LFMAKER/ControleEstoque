@@ -118,7 +118,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
             ctx.SaveChanges();
             return ret;
         }
-        //TODO: Construir um método para atualizar o armazenamento 
+        //TODO: Verificar possivel delete de armazenamento não permitido
         public static bool Cadastrar(LocalArmazenamento la)
         {
             //la.CapacidadeAtual = la.CapacidadeTotal;

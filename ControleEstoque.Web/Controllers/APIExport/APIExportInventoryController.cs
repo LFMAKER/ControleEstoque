@@ -14,20 +14,42 @@ namespace ControleEstoque.Web.Controllers.APIExport
     [RoutePrefix("api")]
     public class APIExportInventoryController : ApiController
     {
+        //TODO: CONSTRUIR API PARA IMPLEMENTAR COM O FLUTTER
+        //CADA ITEM DEVER TER:
+        /*
+         Create 
+         Edit
+         Delete
+         List
+             */
 
- 
+
+        [HttpPost]
         [Route("Fornecedores")]
         [AllowAnonymous]
-        public IHttpActionResult GetFornecedores()
+        public IHttpActionResult GetFornecedores(string key)
         {
 
-            List<Fornecedor> lista = FornecedorDao.RecuperarLista();
-            if (lista != null)
+            var listaKeys = UsuarioDao.ListarKeysControle();
+            bool autenticado = false;
+            foreach (var ikey in listaKeys)
             {
-                return Ok(lista);
+                if (key.Equals(ikey.Codigo))
+                {
+                    autenticado = true;
+                }
             }
 
-            return NotFound();
+            if (autenticado)
+            {
+                List<Fornecedor> lista = FornecedorDao.RecuperarLista();
+                if (lista != null)
+                {
+                    return Ok(lista);
+                }
+            }
+
+            return Unauthorized();
 
         }
 

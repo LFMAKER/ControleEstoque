@@ -18,8 +18,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
         private static Context ctx = SingletonContext.GetInstance();
 
 
-        //TODO: Realizar o controle da exception de uma exclusão de produtos com relação
-
+        
         /// <summary>
         /// Retorna a quantidade de produtos 
         /// </summary>
@@ -105,7 +104,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
 
             try
             {
-                //TODO: Tentar AtualizarCapacidadeAtual depois de remover o produto
+             
 
                 
                 existing = ctx.Produtos.Include("LocalArmazenamento").FirstOrDefault(x => x.Id == id);
@@ -384,8 +383,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
         }
 
 
-        //EM CONSTRUÇÂO--------------------------------------------------------------------
-        //TODO:  Construir Entrada e saída de produtos
+       
 
 
         public static string SalvarPedidoEntrada(DateTime data, Dictionary<int, int> produtos)
@@ -399,7 +397,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
         }
 
 
-        //TODO: Verificar se o método funciona, atualizarCapacidadeAtual, verificar JS no Front da Entrada
+       
         public static string SalvarPedido(DateTime data, Dictionary<int, int> produtos, string nomeTabela, bool entrada)
         {
             var ret = "";

@@ -187,7 +187,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
                 ctx.Entry(um).State = EntityState.Modified;
                 ctx.SaveChanges();
             }
-            #pragma warning disable 0168
+#pragma warning disable 0168
             catch (System.Exception ex)
             {
                 return false;
@@ -316,7 +316,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
         {
 
             Usuario u = ctx.Usuarios.Include("Key").Where(x => x.Login.Equals(login)).FirstOrDefault();
-            if(u.Key != null)
+            if (u.Key != null)
             {
                 var keyCodigo = u.Key.Codigo;
                 var keyRecuperada = ctx.Keys.Where(x => x.Codigo.Equals(keyCodigo)).FirstOrDefault();
@@ -335,7 +335,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
             ctx.Keys.Add(KeyObj);
             ctx.SaveChanges();
 
-          
+
             u.Key = ctx.Keys.Where(x => x.Codigo.Equals(KeyObj.Codigo)).FirstOrDefault();
             ctx.Entry(u).State = EntityState.Modified;
             ctx.SaveChanges();
@@ -347,17 +347,21 @@ namespace ControleEstoque.Web.Dal.Cadastro
         public static string KeyAtual(string login)
         {
             Usuario u = ctx.Usuarios.Include("Key").Where(x => x.Login.Equals(login)).FirstOrDefault();
-            if(u.Key != null)
+            if (u.Key != null)
             {
                 var key = u.Key.Codigo;
                 return key;
             }
             return "Não possui Key";
-           
 
+
+        }
+        public static List<KeyControle> ListarKeysControle(){
+            List<KeyControle> list = ctx.Keys.ToList();
+            return list;
         }
 
 
 
-    }
+}
 }
