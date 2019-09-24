@@ -68,22 +68,7 @@ namespace ControleEstoque.Web.Controllers
             }
 
 
-            if (resultado.Equals("OK"))
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                        .MontarLog(User.Identity.Name.ToString(), "Excluir Local de Armazenamento", "ALTA", logData),
-                                        User.Identity.Name.ToString()
-                                      );
-            }
-            else
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Excluir  Local de Armazenamento", "EXTREMA", logData),
-                                                       User.Identity.Name.ToString()
-                                                     );
-            }
+          
 
 
             return Json(new { OK = Ok, Resultado = resultado });
@@ -132,22 +117,7 @@ namespace ControleEstoque.Web.Controllers
                 }
             }
 
-            if (resultado.Equals("OK"))
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                        .MontarLog(User.Identity.Name.ToString(), "Cadastrar Local de Armazenamento", "BAIXA", model),
-                                        User.Identity.Name.ToString()
-                                      );
-            }
-            else
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Cadastrar Local de Armazenamento", "BAIXA", model),
-                                                       User.Identity.Name.ToString()
-                                                     );
-            }
+          
 
             return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo });
         }

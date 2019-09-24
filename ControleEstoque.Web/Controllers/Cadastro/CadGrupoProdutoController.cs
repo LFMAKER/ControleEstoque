@@ -1,4 +1,5 @@
-﻿using ControleEstoque.Web.Dal.Cadastro;
+﻿using ControleEstoque.Web.Dal;
+using ControleEstoque.Web.Dal.Cadastro;
 using ControleEstoque.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -69,24 +70,7 @@ namespace ControleEstoque.Web.Controllers
                 resultado = "Não foi possível excluir esse Grupo de Produto.";
             }
 
-
-            if (resultado.Equals("OK"))
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                        .MontarLog(User.Identity.Name.ToString(), "Excluir Grupo de Produtos", "ALTA", logData),
-                                        User.Identity.Name.ToString()
-                                      );
-            }
-            else
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Excluir Grupo de Produtos", "EXTREMA", logData),
-                                                       User.Identity.Name.ToString()
-                                                     );
-            }
-
+          
 
 
             return Json(new { OK = Ok, Resultado = resultado });
@@ -138,22 +122,7 @@ namespace ControleEstoque.Web.Controllers
                 }
             }
 
-            if (resultado.Equals("OK"))
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                        .MontarLog(User.Identity.Name.ToString(), "Cadastrar Grupo de Produtos", "BAIXA", model),
-                                        User.Identity.Name.ToString()
-                                      );
-            }
-            else
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Cadastrar Grupo de Produtos", "BAIXA", model),
-                                                       User.Identity.Name.ToString()
-                                                     );
-            }
+           
 
             return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo });
         }

@@ -71,22 +71,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
                 resultado = "Não foi possível excluir esse Perfil.";
             }
 
-            if (resultado.Equals("OK"))
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                        .MontarLog(User.Identity.Name.ToString(), "Excluir Perfil de Usuário", "ALTA", logData),
-                                        User.Identity.Name.ToString()
-                                      );
-            }
-            else
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Excluir Perfil de Usuário", "EXTREMA", logData),
-                                                       User.Identity.Name.ToString()
-                                                     );
-            }
+           
 
 
 
@@ -138,22 +123,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
                 }
             }
 
-            if (resultado.Equals("OK"))
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                        .MontarLog(User.Identity.Name.ToString(), "Cadastrar Perfil de Usuário", "BAIXA", model),
-                                        User.Identity.Name.ToString()
-                                      );
-            }
-            else
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Cadastrar Perfil de Usuário", "BAIXA", model),
-                                                       User.Identity.Name.ToString()
-                                                     );
-            }
+          
 
             return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo });
         }

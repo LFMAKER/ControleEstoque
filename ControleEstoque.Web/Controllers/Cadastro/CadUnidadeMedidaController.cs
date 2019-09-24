@@ -68,22 +68,6 @@ namespace ControleEstoque.Web.Controllers.Cadastro
 
 
 
-            if (resultado.Equals("OK"))
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                        .MontarLog(User.Identity.Name.ToString(), "Excluir Unidade de Medida", "ALTA", logData),
-                                        User.Identity.Name.ToString()
-                                      );
-            }
-            else
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Excluir Unidade de Medida", "EXTREMA", logData),
-                                                       User.Identity.Name.ToString()
-                                                     );
-            }
 
 
             return Json(new { OK = Ok, Resultado = resultado });
@@ -137,24 +121,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
             }
 
 
-            if (resultado.Equals("OK"))
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                        .MontarLog(User.Identity.Name.ToString(), "Cadastrar Unidade de Medida", "BAIXA", model),
-                                        User.Identity.Name.ToString()
-                                      );
-            }
-            else
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Cadastrar Unidade de Medida", "BAIXA", model),
-                                                       User.Identity.Name.ToString()
-                                                     );
-            }
-
-
+         
 
             return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo });
         }

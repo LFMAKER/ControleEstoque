@@ -74,23 +74,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
                 resultado = "Não foi possível excluir esse Usuário.";
             }
 
-            if (resultado.Equals("OK"))
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                        .MontarLog(User.Identity.Name.ToString(), "Excluir Usuário", "ALTA", logData),
-                                        User.Identity.Name.ToString()
-                                      );
-            }
-            else
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Excluir Usuário", "EXTREMA", logData),
-                                                       User.Identity.Name.ToString()
-                                                     );
-            }
-
+          
 
 
             return Json(new { OK = Ok, Resultado = resultado });
@@ -156,22 +140,7 @@ namespace ControleEstoque.Web.Controllers.Cadastro
                 }
             }
 
-            if (resultado.Equals("OK"))
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                        .MontarLog(User.Identity.Name.ToString(), "Cadastrar Usuário", "BAIXA", model),
-                                        User.Identity.Name.ToString()
-                                      );
-            }
-            else
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Cadastrar Usuário", "BAIXA", model),
-                                                       User.Identity.Name.ToString()
-                                                     );
-            }
+           
 
             return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo });
         }

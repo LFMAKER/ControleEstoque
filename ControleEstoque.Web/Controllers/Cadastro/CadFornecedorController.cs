@@ -1,6 +1,8 @@
-﻿using ControleEstoque.Web.Dal.Cadastro;
+﻿using ControleEstoque.Web.Dal;
+using ControleEstoque.Web.Dal.Cadastro;
 using ControleEstoque.Web.Models;
 using ControleEstoque.Web.Models.Dal.Cadastro;
+using ControleEstoque.Web.Models.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,23 +68,7 @@ namespace ControleEstoque.Web.Controllers
                 resultado = "Não foi possível excluir esse Fornecedor.";
             }
 
-            if (resultado.Equals("OK"))
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                        .MontarLog(User.Identity.Name.ToString(), "Excluir Fornecedor", "ALTA", logData),
-                                        User.Identity.Name.ToString()
-                                      );
-            }
-            else
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Excluir Fornecedor", "EXTREMA", logData),
-                                                       User.Identity.Name.ToString()
-                                                     );
-            }
-
+           
 
             return Json(new { OK = Ok, Resultado = resultado });
         }
@@ -129,25 +115,8 @@ namespace ControleEstoque.Web.Controllers
                 }
             }
 
-            if (resultado.Equals("OK"))
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                    .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                        .MontarLog(User.Identity.Name.ToString(), "Cadastrar Fornecedor", "BAIXA", model),
-                                        User.Identity.Name.ToString()
-                                      );
-            }
-            else
-            {
-                APIServicos.GoogleSheets.GoogleSheetsAPI
-                                   .RequestLogsGravar(APIServicos.GoogleSheets.GoogleSheetsAPI
-                                                       .MontarLog(User.Identity.Name.ToString(), "ERRO: Cadastrar Fornecedor", "BAIXA", model),
-                                                       User.Identity.Name.ToString()
-                                                     );
-            }
 
-
-
+         
             return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo });
         }
     }
