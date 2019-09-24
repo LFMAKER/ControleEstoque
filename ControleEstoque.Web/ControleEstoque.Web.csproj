@@ -261,7 +261,6 @@
     <Compile Include="Controllers\Operacao\OperSaidaProdutoController.cs" />
     <Compile Include="Controllers\Relatorio\RelatorioController.cs" />
     <Compile Include="Dados\PopularBanco.cs" />
-    <Compile Include="Dal\ControleApisDao.cs" />
     <Compile Include="Dal\Grafico\EntradaESaidaGraficoDao.cs" />
     <Compile Include="Dal\Operacao\EntradaProdutoDao.cs" />
     <Compile Include="Dal\Operacao\SaidaProdutoDao.cs" />
