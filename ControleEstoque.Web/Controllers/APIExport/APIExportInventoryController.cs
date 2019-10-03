@@ -14,15 +14,7 @@ namespace ControleEstoque.Web.Controllers.APIExport
     [RoutePrefix("api")]
     public class APIExportInventoryController : ApiController
     {
-        //TODO: CONSTRUIR API PARA IMPLEMENTAR COM O FLUTTER
-        //CADA ITEM DEVER TER:
-        /*
-         Create 
-         Edit
-         Delete
-         List
-             */
-
+        
 
         [HttpPost]
         [Route("Fornecedores")]
@@ -153,8 +145,14 @@ namespace ControleEstoque.Web.Controllers.APIExport
 
 
 
+        [HttpPost]
+        [Route("Autenticar")]
+        public IHttpActionResult Autenticar(Usuario user)
+        {
 
+            var ret = UsuarioDao.ValidarUsuario(user.Login, user.Senha);
+            return Ok(ret);
 
-
+        }
     }
 }
