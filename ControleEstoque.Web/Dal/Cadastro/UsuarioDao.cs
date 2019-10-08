@@ -9,6 +9,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 using VendasOsorioA.DAL;
 
 namespace ControleEstoque.Web.Dal.Cadastro
@@ -28,6 +29,14 @@ namespace ControleEstoque.Web.Dal.Cadastro
             Usuario ret = null;
             senha = CriptoHelper.HashMD5(senha);
             ret = ctx.Usuarios.Where(x => x.Login.Equals(login) && x.Senha.Equals(senha)).FirstOrDefault();
+            return ret;
+        }
+
+        public static async Task<Usuario> ValidarUsuarioAPI(string login, string senha)
+        {
+            Usuario ret = null;
+            senha = CriptoHelper.HashMD5(senha);
+            ret = await ctx.Usuarios.Include("Key").Where(x => x.Login.Equals(login) && x.Senha.Equals(senha)).FirstOrDefaultAsync();
             return ret;
         }
 

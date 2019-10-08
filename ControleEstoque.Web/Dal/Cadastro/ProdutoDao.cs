@@ -61,7 +61,7 @@ namespace ControleEstoque.Web.Models.Dal.Cadastro
             }
             else
             {
-                ret = ctx.Produtos.AsNoTracking().OrderBy(x => x.Nome).ToList();
+                ret = ctx.Produtos.AsNoTracking().Include("UnidadeMedida").Include("GrupoProduto").Include("MarcaProduto").Include("Fornecedor").Include("LocalArmazenamento").OrderBy(x => x.Nome).ToList();
             }
 
             return ret;
