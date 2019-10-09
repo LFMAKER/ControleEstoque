@@ -27,7 +27,7 @@ namespace ControleEstoque.Web.Models
         public string Email {get;set; }
         public int IdPerfil { get; set; }
         public Perfil Perfil { get; set; }
-        public KeyControle Key { get; set; }
+        public KeyControle KeyC { get; set; }
 
         public override string ToString()
         {

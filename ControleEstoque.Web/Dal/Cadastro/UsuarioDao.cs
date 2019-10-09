@@ -36,7 +36,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
         {
             Usuario ret = null;
             senha = CriptoHelper.HashMD5(senha);
-            ret = await ctx.Usuarios.Include("Key").Where(x => x.Login.Equals(login) && x.Senha.Equals(senha)).FirstOrDefaultAsync();
+            ret = await ctx.Usuarios.Include("KeyC").Include("Perfil").Where(x => x.Login.Equals(login) && x.Senha.Equals(senha)).FirstOrDefaultAsync();
             return ret;
         }
 
@@ -324,10 +324,10 @@ namespace ControleEstoque.Web.Dal.Cadastro
         public static string GerarESalvarKey(string login)
         {
 
-            Usuario u = ctx.Usuarios.Include("Key").Where(x => x.Login.Equals(login)).FirstOrDefault();
-            if (u.Key != null)
+            Usuario u = ctx.Usuarios.Include("KeyC").Where(x => x.Login.Equals(login)).FirstOrDefault();
+            if (u.KeyC != null)
             {
-                var keyCodigo = u.Key.Codigo;
+                var keyCodigo = u.KeyC.Codigo;
                 var keyRecuperada = ctx.Keys.Where(x => x.Codigo.Equals(keyCodigo)).FirstOrDefault();
                 keyRecuperada.Ativada = false;
                 ctx.Entry(keyRecuperada).State = EntityState.Modified;
@@ -345,7 +345,7 @@ namespace ControleEstoque.Web.Dal.Cadastro
             ctx.SaveChanges();
 
 
-            u.Key = ctx.Keys.Where(x => x.Codigo.Equals(KeyObj.Codigo)).FirstOrDefault();
+            u.KeyC = ctx.Keys.Where(x => x.Codigo.Equals(KeyObj.Codigo)).FirstOrDefault();
             ctx.Entry(u).State = EntityState.Modified;
             ctx.SaveChanges();
 
@@ -355,10 +355,10 @@ namespace ControleEstoque.Web.Dal.Cadastro
 
         public static string KeyAtual(string login)
         {
-            Usuario u = ctx.Usuarios.Include("Key").Where(x => x.Login.Equals(login)).FirstOrDefault();
-            if (u.Key != null)
+            Usuario u = ctx.Usuarios.Include("KeyC").Where(x => x.Login.Equals(login)).FirstOrDefault();
+            if (u.KeyC != null)
             {
-                var key = u.Key.Codigo;
+                var key = u.KeyC.Codigo;
                 return key;
             }
             return "Não possui Key";
