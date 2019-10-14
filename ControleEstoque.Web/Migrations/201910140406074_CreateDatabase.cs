@@ -3,7 +3,7 @@ namespace ControleEstoque.Web.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class CriarBanco : DbMigration
+    public partial class CreateDatabase : DbMigration
     {
         public override void Up()
         {
@@ -163,20 +163,20 @@ namespace ControleEstoque.Web.Migrations
                         nome = c.String(nullable: false, maxLength: 200),
                         email = c.String(nullable: false, maxLength: 200),
                         id_perfil = c.Int(nullable: false),
-                        Key_Id = c.Int(),
+                        KeyC_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.id)
-                .ForeignKey("dbo.KeyControles", t => t.Key_Id)
+                .ForeignKey("dbo.KeyControles", t => t.KeyC_Id)
                 .ForeignKey("dbo.perfil", t => t.id_perfil)
                 .Index(t => t.id_perfil)
-                .Index(t => t.Key_Id);
+                .Index(t => t.KeyC_Id);
             
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.usuario", "id_perfil", "dbo.perfil");
-            DropForeignKey("dbo.usuario", "Key_Id", "dbo.KeyControles");
+            DropForeignKey("dbo.usuario", "KeyC_Id", "dbo.KeyControles");
             DropForeignKey("dbo.saida_produto", "id_produto", "dbo.produto");
             DropForeignKey("dbo.entrada_produto", "id_produto", "dbo.produto");
             DropForeignKey("dbo.produto", "IdUnidadeMedida", "dbo.unidade_medida");
@@ -184,7 +184,7 @@ namespace ControleEstoque.Web.Migrations
             DropForeignKey("dbo.produto", "IdLocalArmazenamento", "dbo.local_armazenamento");
             DropForeignKey("dbo.produto", "IdGrupo", "dbo.grupo_produto");
             DropForeignKey("dbo.produto", "IdFornecedor", "dbo.fornecedor");
-            DropIndex("dbo.usuario", new[] { "Key_Id" });
+            DropIndex("dbo.usuario", new[] { "KeyC_Id" });
             DropIndex("dbo.usuario", new[] { "id_perfil" });
             DropIndex("dbo.saida_produto", new[] { "id_produto" });
             DropIndex("dbo.produto", new[] { "IdLocalArmazenamento" });

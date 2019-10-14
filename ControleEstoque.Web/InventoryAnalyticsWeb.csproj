@@ -265,13 +265,9 @@
     <Compile Include="Dal\Operacao\EntradaProdutoDao.cs" />
     <Compile Include="Dal\Operacao\SaidaProdutoDao.cs" />
     <Compile Include="Dal\Relatorio\EntradaESaidaRelatorioDao.cs" />
-    <Compile Include="Migrations\201909241946316_CriarBanco.cs" />
-    <Compile Include="Migrations\201909241946316_CriarBanco.Designer.cs">
-      <DependentUpon>201909241946316_CriarBanco.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910092024303_ChangeAttributeKey.cs" />
-    <Compile Include="Migrations\201910092024303_ChangeAttributeKey.Designer.cs">
-      <DependentUpon>201910092024303_ChangeAttributeKey.cs</DependentUpon>
+    <Compile Include="Migrations\201910140406074_CreateDatabase.cs" />
+    <Compile Include="Migrations\201910140406074_CreateDatabase.Designer.cs">
+      <DependentUpon>201910140406074_CreateDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Binders\EntradaSaidaProdutoViewModelModelBinder.cs" />
@@ -489,11 +485,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909241946316_CriarBanco.resx">
-      <DependentUpon>201909241946316_CriarBanco.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910092024303_ChangeAttributeKey.resx">
-      <DependentUpon>201910092024303_ChangeAttributeKey.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910140406074_CreateDatabase.resx">
+      <DependentUpon>201910140406074_CreateDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -511,13 +504,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51846</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:12000/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:12000/</IISAppRootUrl>
+          <IISUrl>http://localhost:51846/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
