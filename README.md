@@ -1,3 +1,6 @@
+RELEASE: http://inventoryanalytics.me
+Atenção: Não utilizar relatórios, o servidor IIS ainda não foi configurado para permitir execução de arquivos .exe - A biblioteca de relatórios faz uso de alguns.
+
 # Inventory Control and Product Statistics(ENG)
 This is a project focused on developing a stock control.
 The creation of this project is focused only on learning.
