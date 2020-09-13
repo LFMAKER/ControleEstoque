@@ -1,0 +1,32 @@
+os: osx 
+language: generic 
+before_script: 
+ - brew update 
+ - brew install --HEAD usbmuxd 
+ - brew unlink usbmuxd 
+ - brew link usbmuxd 
+ - brew install --HEAD libimobiledevice 
+ - brew install ideviceinstaller 
+ - brew install ios-deploy 
+ - git clone https://github.com/flutter/flutter.git -b beta --depth 1 
+script: 
+ - flutter/bin/flutter build ios --debug --no-codesign
+cache: 
+  directories: 
+  - $HOME/.pub-cache
+before_deploy: 
+  - pushd build/ios/iphoneos 
+  - mkdir Payload 
+  - cd Payload 
+  - ln -s ../Runner.app 
+  - cd .. 
+  - zip -r app.ipa Payload 
+  - popd
+deploy:
+  provider: releases
+  api_key:
+    secure: M+mIv+lPGy+olgXlI/2WuIOONrXVx9Itac6gnf7baxdjiEy3c6rculzEeHAhOwjJ3gbfiCS/xCtzDJWoC16eXnxh9y3nfuBOvK0Iy+dWFArdJrwwzXYUzKqKQgQ0RdukgmcOXcC+Y7DBHH1dNmdiodqdBqN43lFY7e8vNWzJfYK+sLJ60SSlZIwy/Dx9mJmS/05/6NPE5OPNUOADSjanmGF/Gjowhl37v0UKucJXasil5yu355TRXmOSLeI9IASsVsc5kFNIOG2/PQmk1KR+EfZ+3gskSCMMqN69RnMdGz2WL+zOYHSMQ9D3xNClVdlHlTamMDUj6pgXpaXrUqr5JlKYYhO4NjBxJWBukFcS6zx7EGJYDcYMzv1moY4268igpb+IEiJaS9imk2kJAmITfCKITsf+bHk3pul4Fe5e4RkTV6AYe0I48eJ1xGD7yy3QVs9FFeS1LYjH7CgANOs9NxDYMVG2ETNtFsu6sFCREBHwWUZhbPa/TLbTwBIWqUwY/lb5thRV8cboCbjsuXeJd/v7DUmqjT4eCJWx4l8P7z2p1Kx8CfWQLGssv5P49SBUeKDY1IdrikG2WCEPrUmJeIDFDECVcwL8hbYRLI5pa42HgMJ9yyAK6OlZMBzsBsZhTkRuzTKdZu6APIM2ZDKqTN3YK9FUK1TSOKin0e7D290=
+  skip_cleanup: true #important or your built app would be deleted  
+  file: build/ios/iphoneos/app.ipa
+  on:
+    repo: LFMAKER/InventoryAnalyticsApp

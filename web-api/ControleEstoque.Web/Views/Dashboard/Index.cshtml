@@ -1,0 +1,173 @@
+﻿@using System.Net;
+@{
+    ViewBag.Title = "Inicio";
+}
+
+<script src="~/Scripts/loader.js"></script>
+<script src="~/Scripts/jquery-3.4.0.min.js"></script>
+<script src="~/Scripts/Dashboard/Dashboard.js"></script>
+
+
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Olá, @User.Identity.Name</h1>
+        @{
+            //Data
+            var culture = new System.Globalization.CultureInfo("pt-PT");
+            var day = culture.DateTimeFormat.GetDayName(DateTime.Today.DayOfWeek);
+            var mes = culture.DateTimeFormat.GetMonthName(DateTime.Today.Month);
+
+            //PC NAME
+            string host = Dns.GetHostName();
+
+
+
+        }
+        <p class="lead">Hoje é @day - @DateTime.Now.Day de @mes</p>
+        <p class="lead">Você logou com o @host</p>
+      
+        <br />  <br /><br />
+
+
+        <!-- Content Row -->
+        <div class="row">
+
+            <!-- Lucro (Mensal) -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2" id="CardganhoAtualMes">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="TituloganhoAtualMes">Lucro (Mensal - @mes)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="ganhoAtualMes"></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lucro (Anual) -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2" id="CardganhoAtualAno">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1" id="TituloganhoAtualAno">Lucro (Anual - @DateTime.Now.Year)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="ganhoAtualAno"></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dólar Hoje -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-purple shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Dólar Hoje</div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="dolar"></div>
+                                    </div>
+                                    <div class="col">
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- IBM Watson -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-dark shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">IBM Watson Assistant</div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <a class="h5 mb-0 mr-3 font-weight-bold text-white btn btn-dark" id="watsonbutton" href="@Url.Action("IBM", "Dashboard")">Conversar</a>
+                                    </div>
+                                    <div class="col">
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-brain fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+
+        <!--Segunda Linha do Dashboard-->
+        <div class="row">
+
+            <!-- Entradas e Saídas (Anual) -->
+            <div class="col-xl-6 col-md-12 mb-8">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Entradas e Saídas (Anual)</div>
+                                <div class="" id="curve_chart" style="width: 515px; height: 400px"></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-6 col-md-12 mb-8">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Entradas e Saídas</div>
+                                
+                                <canvas id="myChart"></canvas>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+<script>
+    var urlGanhosAtual = '@Url.Action("GetGanhosMesAtualEAnoAtual", "Grafico")';
+    var urlEntradasESaidas = '@Url.Action("GetDadosEntradasESaidas", "Grafico")';
+    var urlAutenticar = '@Url.Action("AutenticarGoogle", "Log")';
+</script>
+    

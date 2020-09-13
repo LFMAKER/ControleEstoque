@@ -1,0 +1,161 @@
+﻿
+@{
+    ViewBag.Title = "API-DOC";
+
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<div class="container mx-auto"><br />
+    <h1>API</h1>
+    <br /><br />
+    
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">KEY</span>Chave de Acesso API</h5>
+                <p class="card-text">Essa Chave é utilizada para autenticação das apis abaixo. Ela é única para cada usuário.</p>
+                <div class="form-group">
+                    <input type="text" id="key" class="form-control" value="@ViewBag.KeyAtual" disabled>
+                </div>
+                <a class="btn btn-primary btn-gerar" id="btn-gerar" style="color: white" role="button">Gerar Nova Key</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        
+        <div class="col-sm-6 pt-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">POST</span>Fornecedores</h5>
+                    <p class="card-text">Retorna uma lista de fornecedores em JSON.</p>
+                    <div class="form-group">
+                        <input type="text" id="fornecedores" class="form-control" value="http://localhost:51846/api/Fornecedores?key=@ViewBag.KeyAtual" disabled>
+                    </div>
+                    <a href="http://localhost:51846/api/Fornecedores?key=@ViewBag.KeyAtual" tarPOST="_blank" class="btn btn-primary">Testar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 pt-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">POST</span>Unidades de Medida</h5>
+                    <p class="card-text">Retorna uma lista de unidades de medida em JSON.</p>
+                    <div class="form-group">
+                        <input type="text" id="unidadesMedida" class="form-control" value="http://localhost:51846/api/UnidadesMedida?key=@ViewBag.KeyAtual" disabled>
+                    </div>
+                    <a href="http://localhost:51846/api/UnidadesMedida?key=@ViewBag.KeyAtual" tarPOST="_blank" class="btn btn-primary">Testar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 pt-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">POST</span>Grupos de Produtos</h5>
+                    <p class="card-text">Retorna uma lista de grupos de produto em JSON.</p>
+                    <div class="form-group">
+                        <input type="text" id="GruposProduto" class="form-control" value="http://localhost:51846/api/GruposProduto?key=@ViewBag.KeyAtual" disabled>
+                    </div>
+                    <a href="http://localhost:51846/api/GruposProduto?key=@ViewBag.KeyAtual" tarPOST="_blank" class="btn btn-primary">Testar</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 pt-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">POST</span>Locais de Armazenamento</h5>
+                    <p class="card-text">Retorna uma lista de locais de armazenamento em JSON.</p>
+                    <div class="form-group">
+                        <input type="text" id="LocaisArmazenamento" class="form-control" value="http://localhost:51846/api/LocaisArmazenamento?key=@ViewBag.KeyAtual" disabled>
+                    </div>
+                    <a href="http://localhost:51846/api/LocaisArmazenamento?key=@ViewBag.KeyAtual" tarPOST="_blank" class="btn btn-primary">Testar</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 pt-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">POST</span>Marcas de Produto</h5>
+                    <p class="card-text">Retorna uma lista de Marcas de Produto em JSON.</p>
+                    <div class="form-group">
+                        <input type="text" id="marcasProduto" class="form-control" value="http://localhost:51846/api/MarcasProduto?key=@ViewBag.KeyAtual" disabled>
+                    </div>
+                    <a href="http://localhost:51846/api/MarcasProduto?key=@ViewBag.KeyAtual" tarPOST="_blank" class="btn btn-primary">Testar</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 pt-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">POST</span>Perfis de Usuário</h5>
+                    <p class="card-text">Retorna uma lista de perfis de usuário em JSON.</p>
+                    <div class="form-group">
+                        <input type="text" id="perfis" class="form-control" value="http://localhost:51846/api/Perfis?key=@ViewBag.KeyAtual" disabled>
+                    </div>
+                    <a href="http://localhost:51846/api/Perfis?key=@ViewBag.KeyAtual" tarPOST="_blank" class="btn btn-primary">Testar</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 pt-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">POST</span>Produtos</h5>
+                    <p class="card-text">Retorna uma lista de produtos em JSON.</p>
+                    <div class="form-group">
+                        <input type="text" id="produtos" class="form-control" value="http://localhost:51846/api/Produtos?key=@ViewBag.KeyAtual" disabled>
+                    </div>
+                    <a href="http://localhost:51846/api/Produtos?key=@ViewBag.KeyAtual" tarPOST="_blank" class="btn btn-primary">Testar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 pt-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><span class="badge badge-pill badge-secondary mr-2">POST</span>Usuários</h5>
+                    <p class="card-text">Retorna uma lista de produtos em JSON.</p>
+                    <div class="form-group">
+                        <input type="text" id="usuarios" class="form-control" value="http://localhost:51846/api/Usuarios?key=@ViewBag.KeyAtual" disabled>
+                    </div>
+                    <a href="http://localhost:51846/api/Usuarios?key=@ViewBag.KeyAtual" tarPOST="_blank" class="btn btn-primary">Testar</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+    $(document).on('click', '#btn-gerar', function () {
+        var url = '@Url.Action("APIResult", "Dashboard")';
+        var antigaKey = $('#key').val();
+    $.post(url, function (response) {
+        if (response) {
+            console.log(response);
+            $('#key').val(response.apiKey);
+            $('#fornecedores').val("http://localhost:51846/api/Fornecedores?key=" + response.apiKey);
+            $('#unidadesMedida').val("http://localhost:51846/api/UnidadesMedida?key=" + response.apiKey);
+            $('#GruposProduto').val("http://localhost:51846/api/GruposProduto?key=" + response.apiKey);
+            $('#LocaisArmazenamento').val("http://localhost:51846/api/LocaisArmazenamento?key=" + response.apiKey);
+            $('#marcasProduto').val("http://localhost:51846/api/MarcasProduto?key=" + response.apiKey);
+            $('#perfis').val("http://localhost:51846/api/Perfis?key=" + response.apiKey);
+            $('#produtos').val("http://localhost:51846/api/Produtos?key=" + response.apiKey);
+            $('#usuarios').val("http://localhost:51846/api/Usuarios?key=" + response.apiKey);
+            
+        }
+
+    })
+     .fail(function () {
+         swal('Aviso', 'Não foi possível recuperar as informações. Tente novamente em instantes.', 'warning');
+     });
+})
+
+</script>

@@ -1,0 +1,77 @@
+﻿
+@model List<ControleEstoque.Web.Models.GrupoProduto>
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+    ViewBag.Title = "Grupo de Produtos";
+    ViewBag.Lista = Model;
+
+}
+
+@section Styles {
+    <link href="~/Content/Cadastro/GrupoProduto.css" rel="stylesheet" />
+    <link href="~/Content/inventory-analytics.min.css" rel="stylesheet" />
+}
+@section TituloGrid {
+    <th>Nome</th>
+    <th style="width: 100px;">Ativo</th>
+    <th style="width: 130px;">Ação</th>
+}
+@section LinhaGrid {
+    @{
+        var linha = 0;
+        foreach (var item in Model)
+        {
+            linha++;
+            if (linha <= ViewBag.QuantMaxLinhasPorPagina)
+            {
+                var ativo = (item.Ativo ? "Sim" : "Não");
+
+                <tr data-id="@item.Id">
+                    <td>@item.Nome</td>
+                    <td>@ativo</td>
+                    <td>
+                        <a class="btn btn-primary btn-alterar btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                        <a class="btn btn-danger btn-excluir btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+}
+@section CamposCadastro{
+    <div class="form-group row">
+        @Html.Label("txt_nome", "Nome", new { @class = "col-md-3 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBox("txt_nome", null, new { @class = "form-control" })
+            <small id="caixa-texto" class="form-text text-muted"></small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-auto my-1">
+            <div class="custom-control custom-checkbox mb-3 ">
+                @Html.CheckBox("cbx_ativo", new { @class = "custom-control-input " })
+                @Html.Label("cbx_ativo", "Ativo", new { @class = " mb-2 custom-control-label" })
+                <small id="caixa" class="form-text text-muted"></small>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts{
+    <script src="~/Scripts/Cadastro/GrupoProduto.js"></script>
+    <script>
+        //Passando todos valores do Razor para o JS GrupoProduto
+        var titulo_pagina = '@ViewBag.Title';
+        var url_exclusao = '@Url.Action("ExcluirGrupoProduto", "CadGrupoProduto")';
+        var url_confirmar = '@Url.Action("SalvarGrupoProduto", "CadGrupoProduto")';
+        var url_page_click = '@Url.Action("GrupoProdutoPagina", "CadGrupoProduto")';
+        var url_alterar = '@Url.Action("RecuperarGrupoProduto", "CadGrupoProduto")';
+        var url_ddl_tam_pag = '@Url.Action("GrupoProdutoPagina", "CadGrupoProduto")';
+        var url_filtro_change = '@Url.Action("GrupoProdutoPagina", "CadGrupoProduto")';
+
+
+    </script>
+}

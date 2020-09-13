@@ -1,0 +1,46 @@
+﻿@model List<ControleEstoque.Web.Models.Domain.EntradaGraficos>
+
+@{
+    Layout = "~/Views/Shared/_Relatorios.cshtml";
+    ViewBag.Title = "RelatorioEntradasPDF";
+    var tamanho = Model.Count;
+}
+
+<div class="container" style="padding-top: 50px;">
+    <h2 align="center">Relatório Entradas</h2>
+    <br />
+    <br />
+
+    @if (tamanho > 0)
+    {
+        <table class="table">
+            <tr>
+                <th>Data</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Data.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                       @item.total.ToString("C3")
+                    </td>
+
+                </tr>
+            }
+           
+        </table>
+        <p class="lead">Relatório emitido em @DateTime.Now por @User.Identity.Name</p>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            Nenhum dado disponível.
+        </div>
+
+    }
+
+</div>

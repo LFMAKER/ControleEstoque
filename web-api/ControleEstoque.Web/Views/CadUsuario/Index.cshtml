@@ -1,0 +1,101 @@
+﻿
+@model List<ControleEstoque.Web.Models.Usuario>
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+    ViewBag.Title = "Usuários";
+    ViewBag.Lista = Model;
+
+}
+@section Styles {
+    <link href="~/Content/Cadastro/Usuario.css" rel="stylesheet" />
+    <link href="~/Content/inventory-analytics.min.css" rel="stylesheet" />
+}
+
+@section TituloGrid {
+    <th>Nome</th>
+    <th>Login</th>
+    <th>E-mail</th>
+    <th style="width: 150px;">Ação</th>
+}
+
+@section LinhaGrid {
+    @{
+        var linha = 0;
+        foreach (var item in Model)
+        {
+            linha++;
+            if (linha <= ViewBag.QuantMaxLinhasPorPagina)
+            {
+
+
+                <tr data-id="@item.Id">
+                    <td>@item.Nome</td>
+                    <td>@item.Login</td>
+                    <td>@item.Email</td>
+                    <td>
+                        <a class="btn btn-primary btn-alterar btn-sm btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                        <a class="btn btn-danger btn-excluir btn-sm btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+}
+
+@section CamposCadastro{
+    <div class="form-group row">
+        @Html.Label("txt_nome", "Nome", new { @class = "col-md-3 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBox("txt_nome", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.Label("txt_login", "Login", new { @class = "col-md-3 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBox("txt_login", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.Label("txt_email", "E-mail", new { @class = "col-md-3 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBox("txt_email", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.Label("txt_senha", "Senha", new { @class = "col-md-3 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBox("txt_senha", null, new { @class = "form-control", type = "password" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-8">
+            @Html.Label("ddl_perfil", "Perfil", new { @class = "control-label" })
+            @Html.DropDownList("ddl_perfil", new SelectList(ViewBag.Perfis, "Id", "Nome"), "--SELECIONE--", new { @class = "form-control", @id = "ddl_perfil" })
+        </div>
+    </div>
+
+}
+
+@section Scripts{
+    <script src="~/Scripts/Cadastro/Usuario.js"></script>
+    <script>
+        //Passando todos valores do Razor para o JS GrupoProduto
+        var titulo_pagina = '@ViewBag.Title';
+        var url_exclusao = '@Url.Action("ExcluirUsuario", "CadUsuario")';
+        var url_confirmar = '@Url.Action("SalvarUsuario", "CadUsuario")';
+        var url_page_click = '@Url.Action("UsuarioPagina", "CadUsuario")';
+        var url_alterar = '@Url.Action("RecuperarUsuario", "CadUsuario")';
+        var url_ddl_tam_pag = '@Url.Action("UsuarioPagina", "CadUsuario")';
+        var senha_padrao = '@ViewBag.SenhaPadrao';
+        var url_filtro_change = '@Url.Action("UsuarioPagina", "CadUsuario")';
+
+
+        $("#ddl_perfil option:first").attr('selected', 'selected');
+
+    </script>
+}

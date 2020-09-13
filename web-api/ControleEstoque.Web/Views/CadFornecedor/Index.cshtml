@@ -1,0 +1,179 @@
+﻿@model List<ControleEstoque.Web.Models.Fornecedor>
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+    ViewBag.Title = "Fornecedores";
+    ViewBag.Lista = Model;
+}
+@section Styles {
+    <link href="~/Content/bootstrap-select.css" rel="stylesheet" />
+    <link href="~/Content/Cadastro/Fornecedor.css" rel="stylesheet" />
+    <style>
+        .dialogo > .modal-dialog {
+            width: 700px !important;
+        }
+
+        .modal-body {
+            height: 550px;
+            overflow-y: scroll;
+        }
+    </style>
+    <link href="~/Content/inventory-analytics.min.css" rel="stylesheet" />
+}
+@section TituloGrid {
+    <th>Nome</th>
+    <th>Telefone</th>
+    <th>Contato</th>
+    <th>Ativo</th>
+    <th style="width: 150px;">Ação</th>
+}
+@section LinhaGrid {
+    @{
+        var linha = 0;
+        foreach (var item in Model)
+        {
+            linha++;
+            if (linha <= ViewBag.QuantMaxLinhasPorPagina)
+            {
+                var ativo = (item.Ativo ? "Sim" : "Não");
+
+                <tr data-id="@item.Id">
+                    <td>@item.Nome</td>
+                    <td style="width: 150px;">@item.Telefone</td>
+                    <td style="width: 200px;">@item.Contato</td>
+                    <td style="width: 150px;">@ativo</td>
+                    <td>
+                        <a class="btn btn-primary btn-alterar btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                        <a class="btn btn-danger btn-excluir btn-sm" style="color: white" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+}
+
+
+@section CamposCadastro {
+    <div class="row">
+        <div class="col-md-9">
+            @Html.Label("txt_nome", "Nome", new { @class = "control-label" })
+            @Html.TextBox("txt_nome", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-check-inline" style="margin-top:20px; margin-bottom: 20px;">
+        <div class="custom-control custom-radio">
+            @Html.RadioButton("cbx_pessoa", (int)ControleEstoque.Web.Models.TipoPessoa.Juridica, new { id = "cbx_pessoa_juridica", @class = "custom-control-input" })
+            @Html.Label("cbx_pessoa_juridica", "Pessoa Jurídica", new { @class = "custom-control-label" })
+        </div>
+        <div class="custom-control custom-radio" style="margin-left: 20px;">
+            @Html.RadioButton("cbx_pessoa", (int)ControleEstoque.Web.Models.TipoPessoa.Fisica, new { id = "cbx_pessoa_fisica", @class = "custom-control-input" })
+            @Html.Label("cbx_pessoa_fisica", "Pessoa Física", new { @class = "custom-control-label" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            @Html.Label("txt_num_documento", "CPF/CNPJ", new { @class = "control-label" })
+            @Html.TextBox("txt_num_documento", null, new { @class = "form-control" })
+        </div>
+        <div class="col-md-6">
+            <div id="container_razao_social">
+                @Html.Label("txt_razao_social", "Razão Social", new { @class = "control-label" })
+                @Html.TextBox("txt_razao_social", null, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.Label("txt_telefone", "Telefone", new { @class = "control-label" })
+            @Html.TextBox("txt_telefone", null, new { @class = "form-control" })
+        </div>
+        <div class="col-md-8">
+            @Html.Label("txt_contato", "Contato", new { @class = "control-label" })
+            @Html.TextBox("txt_contato", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row" style="margin-top: 15px">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">Endereço</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            @Html.Label("txt_cep", "CEP", new { @class = "control-label" })
+                            @Html.TextBox("txt_cep", null, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-9">
+                            @Html.Label("txt_logradouro", "Logradouro", new { @class = "control-label" })
+                            @Html.TextBox("txt_logradouro", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            @Html.Label("txt_numero", "Número", new { @class = "control-label" })
+                            @Html.TextBox("txt_numero", null, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-7">
+                            @Html.Label("txt_complemento", "Complemento", new { @class = "control-label" })
+                            @Html.TextBox("txt_complemento", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            @Html.Label("txt_bairro", "Bairro", new { @class = "control-label" })
+                            @Html.TextBox("txt_bairro", null, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-7">
+                            @Html.Label("txt_cidade", "Cidade", new { @class = "control-label" })
+                            @Html.TextBox("txt_cidade", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            @Html.Label("txt_estado", "Estado", new { @class = "control-label" })
+                            @Html.TextBox("txt_estado", null, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-7">
+                            @Html.Label("txt_pais", "Pais", new { @class = "control-label" })
+                            @Html.TextBox("txt_pais", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="custom-control custom-checkbox mb-3 ">
+                @Html.CheckBox("cbx_ativo", new { @class = "custom-control-input " })
+                @Html.Label("cbx_ativo", "Ativo", new { @class = " mb-2 custom-control-label" })
+                <small id="caixa" class="form-text text-muted"></small>
+            </div>
+        </div>
+    </div>
+
+}
+@section Scripts{
+    <script src="~/Scripts/bootstrap-select.js"></script>
+    <script src="~/Scripts/Cadastro/Fornecedor.js"></script>
+
+    <script>
+
+        var titulo_pagina = '@ViewBag.Title';
+        var url_exclusao = '@Url.Action("ExcluirFornecedor", "CadFornecedor")';
+        var url_confirmar = '@Url.Action("SalvarFornecedor", "CadFornecedor")';
+        var url_page_click = '@Url.Action("FornecedorPagina", "CadFornecedor")';
+        var url_alterar = '@Url.Action("RecuperarFornecedor", "CadFornecedor")';
+        var url_ddl_tam_pag = '@Url.Action("FornecedorPagina", "CadFornecedor")';
+        var url_filtro_change = '@Url.Action("FornecedorPagina", "CadFornecedor")';
+        var url_listar_estados = '@Url.Action("RecuperarEstadosDoPais", "CadEstado")';
+        var url_listar_cidades = '@Url.Action("RecuperarCidadesDoEstado", "CadCidade")';
+
+    </script>
+
+}
