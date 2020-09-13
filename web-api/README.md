@@ -10,6 +10,7 @@
 
 
 # Road Map
+- Remove IBM Watson Deprecated
 - Migrate to Node.JS and React.JS
 - Structure the project with DDD
 
@@ -25,15 +26,6 @@
 - [Google Graphs](https://developers.google.com/chart/)
 - [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
 - [Chats.js](https://www.chartjs.org/)
-- [IBM Watson Assistant](https://www.ibm.com/cloud/watson-assistant/)
-
-# © Copyrigth 
-Although the project is public, any copy will result in a lawsuit. All rights to this project are restricted to Leonardo Oliveira.
-
-# Do you want to use any part of the code?
-Feel free to create an issue related to the reason, be a pleasure and give permission for some part of the code.
-
-
 
 # Controle Estoque e Estatísticas de Produtos(PT-BR)
 Esse é um projeto com foco no desenvolvimento de um controle de estoque.
@@ -51,10 +43,3 @@ A criação desse projeto é focada apenas no aprendizado.
 - [Google Graphs](https://developers.google.com/chart/)
 - [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
 - [Chats.js](https://www.chartjs.org/)
-- [IBM Watson Assistant](https://www.ibm.com/cloud/watson-assistant/)
-
-# © Direitos Autorais 
-Embora o projeto seja público, qualquer cópia resultará em uma ação judicial. Todos os direitos deste projeto estão restritos a Leonardo Oliveira.
-
-# Deseja utilizar alguma parte do código?
-Sinta-se livre para criar uma issue relatando sobre o motivo, será um prazer ajudar e te dar permissão para alguma parte do código.
