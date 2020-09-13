@@ -50,8 +50,6 @@ Esse é um projeto com foco no desenvolvimento de um controle de estoque e a cri
 - [Entity Framework](https://docs.microsoft.com/pt-br/ef/)
 - [Javascript (Jquery)](https://api.jquery.com/)
 - [AJAX](https://api.jquery.com/category/ajax/)
-- [IIS](https://docs.microsoft.com/en-us/iis/get-started/whats-new-in-iis-10-version-1709/new-features-introduced-in-iis-10-1709)
-- [Crystal Reports](https://www.crystalreports.com/)
 - [Google Graphs](https://developers.google.com/chart/)
 - [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
 - [Chats.js](https://www.chartjs.org/)
