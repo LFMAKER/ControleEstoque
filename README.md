@@ -9,11 +9,17 @@
 ![InventoryAnalytics](https://i.imgur.com/2LhzHt9.png)
 
 
-# Road Map
+# 🗺️ Road Map WEB
 - Remove IBM Watson Deprecated
-- Migrate to Node.JS and React.JS
-- Structure the project with DDD
+- Migrate to Node.JS and Next.JS ⚛️
 
+
+# 🗺️ Road Map Mobile 
+- Migrate to React Native ⚛️ CLI or Expo.
+
+
+
+### WEB
 # Technologies and Frameworks
 - [.NET Framework 4.5.2](https://docs.microsoft.com/en-us/dotnet/framework/)
 - [C#](https://docs.microsoft.com/en-us/dotnet/csharp/)
@@ -26,6 +32,12 @@
 - [Google Graphs](https://developers.google.com/chart/)
 - [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
 - [Chats.js](https://www.chartjs.org/)
+
+### Mobile
+# Technologies and Frameworks
+- [Flutter](https://flutter.dev/)
+- [Firebase](https://firebase.google.com/)
+
 
 # Controle Estoque e Estatísticas de Produtos(PT-BR)
 Esse é um projeto com foco no desenvolvimento de um controle de estoque.
