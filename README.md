@@ -1,8 +1,6 @@
 <h1 align="center">Welcome to InventoryAnalytics 📦📈</h1>
 <p align="center">
-  <p>This is a project focused on developing a stock control.<p/>
-  <p>The creation of this project is focused only on learning.<p/>
-  
+  This is a project focused on developing a stock control and the creation of this project is focused only on learning.
 </p>
 
 
