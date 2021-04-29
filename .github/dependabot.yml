@@ -1,0 +1,30 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "08:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: EntityFramework
+    versions:
+    - "> 6.1.3"
+  - dependency-name: Google.Apis.Core
+    versions:
+    - "> 1.39.0"
+  - dependency-name: Google.Apis.Sheets.v4
+    versions:
+    - "> 1.39.0.1565"
+  - dependency-name: Microsoft.Bcl
+    versions:
+    - "> 1.1.8"
+  - dependency-name: Microsoft.jQuery.Unobtrusive.Validation
+    versions:
+    - "> 3.2.3"
+  - dependency-name: popper.js
+    versions:
+    - "> 1.14.0"
+  - dependency-name: SharpZipLib
+    versions:
+    - "> 1.0.0"
